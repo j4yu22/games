@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blackjack Game</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Balance Display -->
+        <div class="balance">
+            <h2>Balance: $100</h2>
+        </div>
+
+        <!-- Current Bet Display -->
+        <div class="current-bet">
+            <div class="chips-bet">
+                <!-- Placeholder for chip animation -->
+            </div>
+            <h2>Current Bet: $0</h2>
+        </div>
+
+        <!-- Betting Buttons -->
+        <div class="bet-buttons">
+            <button class="chip" aria-label="Bet 1">$1</button>
+            <button class="chip" aria-label="Bet 5">$5</button>
+            <button class="chip" aria-label="Bet 10">$10</button>
+            <button class="chip" aria-label="Bet 50">$50</button>
+            <button class="chip" aria-label="Bet 100">$100</button>
+            <button class="confirm" aria-label="Confirm Bet">Confirm Bet</button>
+        </div>
+
+        <!-- Dealer's Hand (Initially Hidden) -->
+        <div class="dealer hidden">
+            <h3>Dealer's Hand</h3>
+            <ul class="dealer-hand">
+                <li id="hidden-card"><img src="images/facedown_card.jpg" alt="Hidden Card" class="card"></li>
+                <li><img src="images/placeholder.png" alt="Placeholder Card" class="card"></li>
+            </ul>
+        </div>
+
+        <!-- Player's Hand and Options (Initially Hidden) -->
+        <div class="player hidden">
+            <h3>Player's Hand</h3>
+            <ul class="player-hand">
+                <li><img src="images/placeholder.png" alt="Placeholder Card" class="card"></li>
+                <li><img src="images/placeholder.png" alt="Placeholder Card" class="card"></li>
+            </ul>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="options hidden">
+            <button class="hit" aria-label="Hit" disabled>Hit</button>
+            <button class="stand" aria-label="Stand" disabled>Stand</button>
+            <button class="double" aria-label="Double Down" disabled>Double</button>
+            <button class="split" aria-label="Split" disabled>Split</button>
+        </div>
+
+        <!-- Deck Image -->
+        <div class="deck">
+            <img src="images/facedown_card.jpg" alt="Deck of Cards" class="card">
+        </div>
+    </div>
+    <script src="logic.js"></script>
+    <script src="animations.js"></script>
+</body>
+</html>

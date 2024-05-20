@@ -1,0 +1,139 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: gray;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container {
+    display: grid;
+    grid-template-areas: 
+        "balance deck"
+        "current-bet deck"
+        "bet-buttons deck"
+        "dealer-hand deck"
+        "player-hand deck"
+        "options deck";
+    grid-template-columns: 1fr auto;
+    gap: 20px;
+    width: 90%;
+    max-width: 1200px;
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.balance {
+    grid-area: balance;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.current-bet {
+    grid-area: current-bet;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.bet-buttons {
+    grid-area: bet-buttons;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.dealer {
+    grid-area: dealer-hand;
+    text-align: center;
+}
+
+.player {
+    grid-area: player-hand;
+    text-align: center;
+}
+
+.options {
+    grid-area: options;
+    display: flex;
+    justify-content: space-around;
+}
+
+.deck {
+    grid-area: deck;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    width: 70px;
+    height: 100px;
+    padding-left: 20px;
+    padding-bottom: 15px;
+    background-color: lightgrey;
+}
+
+.deck img {
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
+    padding: 5px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+}
+
+#actions button {
+    margin: 5px;
+}
+
+#log {
+    background: #f1f1f1;
+    border: 1px solid #ccc;
+    padding: 10px;
+    height: 200px;
+    overflow-y: auto;
+    white-space: pre-wrap;
+    font-family: monospace;
+}
+
+.card {
+    display: inline-block;
+    margin: 2px;
+    width: 50px;
+    height: 70px;
+    background-size: cover;
+}
+
+.chip {
+    margin: 5px;
+}
+
+.hidden {
+    display: none;
+}
+
+.deck::before, .deck::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: url('images/facedown.png'); /* Use the same facedown image */
+    border-radius: 5px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.deck::before {
+    top: 5px;
+    left: 5px;
+    z-index: -2;
+}
+
+.deck::after {
+    top: 10px;
+    left: 10px;
+    z-index: -1;
+}
