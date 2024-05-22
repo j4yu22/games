@@ -254,8 +254,8 @@ def bot_surrender(bot_hand):
 
 def insurance(player_hand, dealer_hand, checks):
     if card_eval(dealer_hand[0]) == 11: #only an option if dealer shows an Ace
-        print(f"Dealer's Hand: {display_hand([dealer_hand[0], ('', '?')])}")
-        print(f"Player Hand: {display_hand(player_hand['Player']['cards'])}\n")
+        print(f"\nDealer's Hand: {display_hand([dealer_hand[0], ('', '?')])}")
+        print(f"Player Hand: {display_hand(player_hand['Player']['cards'])}")
         while True:    
             surrender = input("Surrender? (Y/N) ")
             print('\n')  
@@ -436,31 +436,33 @@ def bot_turn(shoe, player_hand, bot_hand, dealer_hand, game_state, first_turn=Tr
                     options += " / Split (sp)"
 
                 if first_turn == True:
-                    for key in player_hand:
-                        print(f"{key} Hand: {display_hand(player_hand[key]['cards'])}")
                     print(f"Dealer's Hand: {display_hand([dealer_hand[0], ('', '?')])}")
                     print('')
+                    for key in player_hand:
+                        print(f"{key} Hand: {display_hand(player_hand[key]['cards'])}")
                     print(f"{bot_key} Hand: {display_hand(bot_hand[bot_key]['cards'])}\n")
 
                 if hand_eval(bot_hand[bot_key]['cards']) == 21:
                     break
 
                 bot_choice = bot_logic(game_state, bot_hand, dealer_hand, bot_key, first_turn)
-                time.sleep(0.5)
+                time.sleep(1)
 
                 if bot_choice == 'h':  # Hit
                     bot_hand[bot_key]['cards'].append(draw_card(shoe))
                     if hand_eval(bot_hand[bot_key]['cards']) > 21:  # Check for bust
                         first_turn = False
-                        print(f"{display_hand(bot_hand[bot_key]['cards'])}")
-                        #time.sleep(1)
+                        print(f"Bot Hand: {display_hand(bot_hand[bot_key]['cards'])}")
                         print('Busted')
+                        time.sleep(1)
                         break
-                    print(f"{display_hand(bot_hand[bot_key]['cards'])}")
+                    print(f"Bot Hand: {display_hand(bot_hand[bot_key]['cards'])}")
                     first_turn = False
 
                 elif bot_choice == 's':  # Stand
                     first_turn = False
+                    print("Bot Stands.")
+                    time.sleep(1)
                     break
 
                 elif bot_choice == 'd' and first_turn:
@@ -470,8 +472,8 @@ def bot_turn(shoe, player_hand, bot_hand, dealer_hand, game_state, first_turn=Tr
                         bot_hand[bot_key]['cards'].append(draw_card(shoe))
                         print(f"{display_hand(bot_hand[bot_key]['cards'])}")
                         if hand_eval(bot_hand[bot_key]['cards']) > 21:  # Check for bust
-                            #time.sleep(1)
                             print('Busted')
+                            time.sleep(1)
                         first_turn = False
                         break
                     else:
@@ -481,11 +483,11 @@ def bot_turn(shoe, player_hand, bot_hand, dealer_hand, game_state, first_turn=Tr
                     bot_hand[bot_key]['cards'].append(draw_card(shoe))
                     if hand_eval(bot_hand[bot_key]['cards']) > 21:  # Check for bust
                         first_turn = False
-                        print(f"{display_hand(bot_hand[bot_key]['cards'])}")
-                        #time.sleep(1)
+                        print(f"Bot Hand: {display_hand(bot_hand[bot_key]['cards'])}")
                         print('Busted')
+                        time.sleep(1)
                         break
-                    print(f"{display_hand(bot_hand[bot_key]['cards'])}")
+                    print(f"Bot Hand: {display_hand(bot_hand[bot_key]['cards'])}")
                     first_turn = False       
 
                 elif bot_choice == 'sp' and first_turn and card1 == card2 and game_state['balance'] >= bot_hand[key]['bet']: 
@@ -540,25 +542,25 @@ def player_turn(shoe, player_hand, bot_hand, dealer_hand, game_state, first_turn
                     options += " / Split (sp)"
 
                 if first_turn == True:
-                    for bot_key in bot_hand:
-                        print(f"{bot_key} Hand: {display_hand(bot_hand[bot_key]['cards'])}")
                     print(f"Dealer's Hand: {display_hand([dealer_hand[0], ('', '?')])}")
                     print('')
+                    for bot_key in bot_hand:
+                        print(f"{bot_key} Hand: {display_hand(bot_hand[bot_key]['cards'])}")
                     print(f"{key} Hand: {display_hand(player_hand[key]['cards'])}\n")
 
                 if hand_eval(player_hand[key]['cards']) == 21:
                     break
 
                 player_choice = input(f"{options} ").lower()
-                time.sleep(0.5)
+                time.sleep(1)
 
                 if player_choice == 'h':  # Hit
                     player_hand[key]['cards'].append(draw_card(shoe))
                     if hand_eval(player_hand[key]['cards']) > 21:  # Check for bust
                         first_turn = False
                         print(f"{display_hand(player_hand[key]['cards'])}")
-                        time.sleep(1)
                         print('Busted')
+                        time.sleep(1)
                         break
                     print(f"{display_hand(player_hand[key]['cards'])}")
                     first_turn = False
@@ -574,8 +576,8 @@ def player_turn(shoe, player_hand, bot_hand, dealer_hand, game_state, first_turn
                         player_hand[key]['cards'].append(draw_card(shoe))
                         print(f"{display_hand(player_hand[key]['cards'])}")
                         if hand_eval(player_hand[key]['cards']) > 21:  # Check for bust
-                            time.sleep(1)
                             print('Busted')
+                            time.sleep(1)
                         first_turn = False
                         break
                     else:
@@ -618,7 +620,7 @@ def dealer_turn(shoe, dealer_hand, player_hand, bot_hand):
         print(f"{bot_key} Hand: {display_hand(bot_hand[bot_key]['cards'])}")
     print(f"\nDealer Hand: {display_hand(dealer_hand)}")
     while True:
-        time.sleep(0.5)
+        time.sleep(1.5)
         points = hand_eval(dealer_hand)
         if points < 17:
             dealer_hand.append(draw_card(shoe))
@@ -626,9 +628,11 @@ def dealer_turn(shoe, dealer_hand, player_hand, bot_hand):
             points = hand_eval(dealer_hand)
             if points > 21:
                 print(f"Dealer busted.")
+                time.sleep(1)
                 break
         else:
             print(f"Dealer stands.")
+            time.sleep(1)
             break
 
     return dealer_hand
@@ -746,6 +750,7 @@ def round():
         
         get_bet(game_state, player_hand)
         get_bot_bet(game_state, bot_hand, true_count)
+        time.sleep(2)
 
         if game_state['quit'] == True:
             net = game_state['balance'] - (100 + rebuy_counter * 100)
@@ -765,7 +770,7 @@ def round():
             print(f"Dealer Hand: {display_hand(dealer_hand)}")
             print('You got Blackjack!!!')
             game_state['balance'] += player_hand['Player']['bet'] * 1.5 + player_hand['Player']['bet']
-            continue
+
         elif checks == 2:
             for key in player_hand:
                 print(f"{key} Hand: {display_hand(player_hand[key]['cards'])}")
@@ -780,7 +785,7 @@ def round():
             print(f"Dealer Hand: {display_hand(dealer_hand)}")
             print('Bot got Blackjack!')
             game_state['bot_balance'] += bot_hand['Bot']['bet'] * 1.5 + bot_hand['Bot']['bet']
-            continue
+
         elif bot_checks == 2:
             for bot_key in bot_hand:
                 print(f"{bot_key} Hand: {display_hand(bot_hand[bot_key]['cards'])}")
@@ -795,6 +800,7 @@ def round():
             player_turn(shoe, player_hand, bot_hand, dealer_hand, game_state)
         if bot_fold != True:
             bot_turn(shoe, player_hand, bot_hand, dealer_hand, game_state)
+            time.sleep(2)
         busted = True
         for key in player_hand:
             if hand_eval(player_hand[key]['cards']) <= 21:
@@ -805,10 +811,12 @@ def round():
                 busted = False
         if busted == False:
             dealer_hand = dealer_turn(shoe, dealer_hand, player_hand, bot_hand)
+            time.sleep(2)
 
         total(player_hand, bot_hand, dealer_hand, game_state)
+        time.sleep(2)
         #count logic
-        print(f"Running count: {game_state['count']}")
+        print(f"\nRunning count: {game_state['count']}")
         print(f"True count: {true_count:.0f}")
         #resets
         game_state['split_count'] = 0
