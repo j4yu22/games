@@ -4,65 +4,70 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Blackjack Game</title>
-    <link rel="stylesheet" type="text/css" href="styles.css">
+    <link rel="stylesheet" type="text/css" href="styles/styles.css">
 </head>
 <body>
-    <div class="container">
-        <!-- Balance Display -->
-        <div class="balance">
-            <h2>Balance: $100</h2>
-        </div>
-
-        <!-- Current Bet Display -->
-        <div class="current-bet">
-            <div class="chips-bet">
-                <!-- Placeholder for chip animation -->
-            </div>
-            <h2>Current Bet: $0</h2>
-        </div>
-
-        <!-- Betting Buttons -->
-        <div class="bet-buttons">
-            <button class="chip" aria-label="Bet 1">$1</button>
-            <button class="chip" aria-label="Bet 5">$5</button>
-            <button class="chip" aria-label="Bet 10">$10</button>
-            <button class="chip" aria-label="Bet 50">$50</button>
-            <button class="chip" aria-label="Bet 100">$100</button>
-            <button class="confirm" aria-label="Confirm Bet">Confirm Bet</button>
-        </div>
-
-        <!-- Dealer's Hand (Initially Hidden) -->
-        <div class="dealer hidden">
-            <h3>Dealer's Hand</h3>
-            <ul class="dealer-hand">
-                <li id="hidden-card"><img src="images/facedown_card.jpg" alt="Hidden Card" class="card"></li>
-                <li><img src="images/placeholder.png" alt="Placeholder Card" class="card"></li>
-            </ul>
-        </div>
-
-        <!-- Player's Hand and Options (Initially Hidden) -->
-        <div class="player hidden">
-            <h3>Player's Hand</h3>
-            <ul class="player-hand">
-                <li><img src="images/placeholder.png" alt="Placeholder Card" class="card"></li>
-                <li><img src="images/placeholder.png" alt="Placeholder Card" class="card"></li>
-            </ul>
-        </div>
-
-        <!-- Action Buttons -->
-        <div class="options hidden">
-            <button class="hit" aria-label="Hit" disabled>Hit</button>
-            <button class="stand" aria-label="Stand" disabled>Stand</button>
-            <button class="double" aria-label="Double Down" disabled>Double</button>
-            <button class="split" aria-label="Split" disabled>Split</button>
-        </div>
-
-        <!-- Deck Image -->
-        <div class="deck">
-            <img src="images/facedown_card.jpg" alt="Deck of Cards" class="card">
-        </div>
+    <div id="money_hud">
+        <h2>Balance: <span id="balance">100</span></h2>
+        <h3>Current Bet: <span id="current_bet"></span></h3>
     </div>
-    <script src="logic.js"></script>
-    <script src="animations.js"></script>
+    <div id="deck">
+        <img src="images/facedown_card.jpg" alt="deck image" width="100px">
+    </div>
+    <div id="chip_buttons">
+        <div>
+            <div id="counter_1" class="chip_counter">0</div>
+            <button id="bet_1" class="chip">
+                <img src="images/chip_1.png" alt="1">
+            </button>
+        </div>
+        <div>
+            <div id="counter_5" class="chip_counter">0</div>
+            <button id="bet_5" class="chip">
+                <img src="images/chip_5.png" alt="5">
+            </button>
+        </div>
+        <div>
+            <div id="counter_25" class="chip_counter">0</div>
+            <button id="bet_25" class="chip">
+                <img src="images/chip_25.png" alt="25">
+            </button>
+        </div>
+        <div>
+            <div id="counter_50" class="chip_counter">0</div>
+            <button id="bet_50" class="chip">
+                <img src="images/chip_50.png" alt="50">
+            </button>
+        </div>
+        <div>
+            <div id="counter_100" class="chip_counter">0</div>
+            <button id="bet_100" class="chip">
+                <img src="images/chip_100.png" alt="100">
+            </button>
+        </div>
+        <button id="confirm_bet">Confirm</button>
+    </div>
+    <div id="dealer_hand">
+        <h3>Dealer hand</h3>
+        <ul>
+            <li id="dealer_card_1" class="card"></li>
+            <li id="dealer_card_2" class="card"></li>
+        </ul>
+    </div>
+    <div id="player_hand">
+        <h3>Player hand</h3>
+        <ul id="player_hand_ul">
+            <li id="player_card_1" class="card"></li>
+            <li id="player_card_2" class="card"></li>
+        </ul>
+    </div>
+    <div id="options">
+        <button id="hit">Hit</button>
+        <button id="stand">Stand</button>
+        <button id="double_down">Double Down</button>
+        <!-- add splitting later -->
+    </div>
+    <script src="scripts/logic.js"></script>
+    <script src="scripts/animations.js"></script>
 </body>
 </html>
