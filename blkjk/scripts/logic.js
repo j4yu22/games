@@ -289,9 +289,9 @@ async function totals() {
 
 async function buyIn() {
     if (balance === 0) {
+        buyInCount += 1;
         alert("Your balance is 0. You are buying back in for 100.");
         balance = 100;
-        buyInCount += 1;
         update_balance();
         console.log(`Player bought in. Total buy-ins: ${buyInCount}`);
     }
@@ -303,7 +303,9 @@ function confirm_bet() {
         console.log("Cannot confirm bet. Bet amount is zero.");
         return; // Exit the function if the bet amount is zero
     }
-    
+    update_bet();
+    update_balance();
+
     // Hide chip buttons and confirm bet button
     document.getElementById('chip_buttons').classList.add('hidden');
 
