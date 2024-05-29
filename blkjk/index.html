@@ -11,7 +11,7 @@
         <h2>Balance: <span id="balance">100</span></h2>
         <h3>Current Bet: <span id="current_bet"></span></h3>
     </div>
-    <div id="deck">
+    <div id="deck" class="hidden">
         <img src="images/facedown_card.jpg" alt="deck image" width="100px">
     </div>
     <div id="chip_buttons">
@@ -47,21 +47,21 @@
         </div>
         <button id="confirm_bet">Confirm</button>
     </div>
-    <div id="dealer_hand">
+    <div id="dealer_hand" class="hidden">
         <h3>Dealer hand</h3>
         <ul>
-            <li id="dealer_card_1" class="card"></li>
+            <li class="card"><img src="images/facedown_card.jpg" alt="Hidden Card" width="100px"></li>
             <li id="dealer_card_2" class="card"></li>
         </ul>
     </div>
-    <div id="player_hand">
+    <div id="player_hand" class="hidden">
         <h3>Player hand</h3>
         <ul id="player_hand_ul">
             <li id="player_card_1" class="card"></li>
             <li id="player_card_2" class="card"></li>
         </ul>
     </div>
-    <div id="options">
+    <div id="options" class="hidden">
         <button id="hit">Hit</button>
         <button id="stand">Stand</button>
         <button id="double_down">Double Down</button>
