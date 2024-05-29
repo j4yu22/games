@@ -7,6 +7,8 @@ let game_state = {
 };
 let dealerHiddenCard = null; // Store the hidden card's value
 let hiddenDealerCard = true; // Flag to manage the display state
+let firstTurn = true; // Flag to manage first turn
+
 // Update balance display
 function update_balance() {
     document.getElementById('balance').textContent = balance;
@@ -78,6 +80,7 @@ function confirm_bet() {
     
     // Move to segment 2 (deal cards, bring up options menu, etc)
     dealInitialCards();
+    firstTurn = true; // Reset the first turn flag
 }
 
 // Create a deck of 52 cards
@@ -191,11 +194,28 @@ function logHandTotals() {
     });
 
     const playerTotal = handEval(playerHand);
-    const dealerTotal = handEval(dealerHand);
+    const dealerTotal = handEval(dealerHand.filter(card => card.rank !== 'i')); // Exclude placeholder card
 
     console.log(`Player Total: ${playerTotal}`);
     console.log(`Dealer Total: ${dealerTotal}`);
 }
+
+function revealDealerCard() {
+    const dealerHandUl = document.getElementById('dealer_hand');
+
+    if (hiddenDealerCard) {
+        hiddenDealerCard = false;
+        const hiddenCardElement = dealerHandUl.querySelector('.card img[alt="Hidden Card"]');
+        if (hiddenCardElement && dealerHiddenCard) {
+            hiddenCardElement.src = `images/${dealerHiddenCard.suit}${dealerHiddenCard.rank}.png`;
+            hiddenCardElement.alt = `${dealerHiddenCard.suit}${dealerHiddenCard.rank}`;
+        } else {
+            console.error("Hidden card element or dealerHiddenCard is not properly set.");
+        }
+    }
+    logHandTotals(); // Log totals after revealing the hidden card
+}
+
 
 function dealInitialCards() {
     const playerCards = [drawCard(), drawCard()];
@@ -223,7 +243,6 @@ function updateHand(handId, cards, hideFirstCard = false) {
     logHandTotals();
 }
 
-
 // Initialize the game
 createShoe();
 
@@ -243,19 +262,30 @@ function hit() {
         return { suit, rank };
     });
 
-    if (handEval(playerCards) > 21) {
+    firstTurn = false; // It's no longer the first turn after the player hits
+    updateOptions(); // Update options based on the first turn flag
+
+    const playerTotal = handEval(playerCards);
+
+    if (playerTotal > 21) {
         console.log("Player busted.");
         document.getElementById('options').classList.add('hidden');
         revealDealerCard();
         // Add any additional logic for handling player bust (e.g., updating balance)
+    } else if (playerTotal === 21) {
+        console.log("Player has 21.");
+        document.getElementById('options').classList.add('hidden');
     }
 }
 
 function stand() {
+    firstTurn = false; // It's no longer the first turn after the player stands
+    updateOptions(); // Update options based on the first turn flag
     document.getElementById('options').classList.add('hidden');
     revealDealerCard();
     logHandTotals();
     console.log("Player stood.");
+    dealerTurn(); // Call dealerTurn after the player stands
 }
 
 function double_down() {
@@ -265,10 +295,23 @@ function double_down() {
         update_balance();
         update_bet();
         hit();
-        document.getElementById('options').classList.add('hidden');
-        dealerTurn();
+
+        const playerHandUl = document.getElementById('player_hand_ul');
+        const playerCards = Array.from(playerHandUl.querySelectorAll('.card img')).map(cardImg => {
+            const suit = cardImg.alt.slice(0, 1);
+            const rank = cardImg.alt.slice(1);
+            return { suit, rank };
+        });
+
+        const playerTotal = handEval(playerCards);
+
+        if (playerTotal <= 21) {
+            dealerTurn();
+        }
+
         logHandTotals();
         console.log("Player doubled down.");
+        document.getElementById('options').classList.add('hidden');
     } else {
         console.log("Not enough balance to double down or already acted.");
     }
@@ -278,53 +321,53 @@ function dealerTurn() {
     const dealerHandUl = document.getElementById('dealer_hand');
 
     // Reveal hidden dealer card
-    if (hiddenDealerCard) {
-        hiddenDealerCard = false;
-        const hiddenCardElement = dealerHandUl.querySelector('.card img[alt="Hidden Card"]');
-        if (hiddenCardElement && dealerHiddenCard) {
-            hiddenCardElement.src = `images/${dealerHiddenCard.suit}${dealerHiddenCard.rank}.png`;
-            hiddenCardElement.alt = `${dealerHiddenCard.suit}${dealerHiddenCard.rank}`;
-        } else {
-            console.error("Hidden card element or dealerHiddenCard is not properly set.");
-        }
-    }
+    revealDealerCard();
 
     let dealerCards = Array.from(dealerHandUl.querySelectorAll('.card img')).map(cardImg => {
-        const [suit, rank] = cardImg.alt.split('');
+        const suit = cardImg.alt.slice(0, 1);
+        const rank = cardImg.alt.slice(1);
         return { suit, rank };
     });
 
-    logHandTotals();
+    // Exclude placeholder card
+    dealerCards = dealerCards.filter(card => card.rank !== 'i');
+    let dealerTotal = handEval(dealerCards);
 
-    while (handEval(dealerCards) < 17) {
+    console.log(`Dealer initial total: ${dealerTotal}`);
+
+    while (dealerTotal < 17) {
         const newCard = drawCard();
         const newCardElement = document.createElement('li');
         newCardElement.className = 'card';
         newCardElement.innerHTML = `<img src="images/${newCard.suit}${newCard.rank}.png" alt="${newCard.suit}${newCard.rank}" width=100px>`;
         dealerHandUl.appendChild(newCardElement);
         dealerCards.push(newCard);
+
+        dealerTotal = handEval(dealerCards);
+        console.log(`Dealer drew ${newCard.suit}${newCard.rank}, new total: ${dealerTotal}`);
         logHandTotals();
     }
-}
 
-function revealDealerCard() {
-    const dealerHandUl = document.getElementById('dealer_hand');
-
-    if (hiddenDealerCard) {
-        hiddenDealerCard = false;
-        const hiddenCardElement = dealerHandUl.querySelector('.card img[alt="Hidden Card"]');
-        if (hiddenCardElement && dealerHiddenCard) {
-            hiddenCardElement.src = `images/${dealerHiddenCard.suit}${dealerHiddenCard.rank}.png`;
-            hiddenCardElement.alt = `${dealerHiddenCard.suit}${dealerHiddenCard.rank}`;
-        } else {
-            console.error("Hidden card element or dealerHiddenCard is not properly set.");
-        }
+    if (dealerTotal >= 17) {
+        console.log('Dealer stands.');
+    } else {
+        console.log('Dealer hits again.');
     }
 }
-
-
 
 // Add event listener for the option buttons
 document.getElementById('hit').addEventListener('click', hit);
 document.getElementById('stand').addEventListener('click', stand);
 document.getElementById('double_down').addEventListener('click', double_down);
+
+// Update options based on the first turn flag
+function updateOptions() {
+    const doubleDownButton = document.getElementById('double_down');
+    if (firstTurn) {
+        doubleDownButton.classList.remove('hidden');
+    } else {
+        doubleDownButton.classList.add('hidden');
+    }
+}
+
+updateOptions(); // Initial call to set the options correctly
