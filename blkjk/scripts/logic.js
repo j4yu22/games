@@ -1,3 +1,6 @@
+update_balance()
+update_bet()
+
 let balance = parseFloat(localStorage.getItem('balance')) || 100;
 let displayed_bet = parseFloat(localStorage.getItem('displayed_bet')) || 0;
 let buyInCount = parseInt(localStorage.getItem('buyInCount')) || 0;
@@ -482,6 +485,7 @@ async function totals() {
     await sleep(2);
 
     // Reset the game for the next round
+    saveGameState()
     resetGame();
 }
 
@@ -513,7 +517,7 @@ function resetGame() {
     if (balance === 0) {
         buyIn();
     }
-
+    saveGameState()
     console.log("Game reset. Ready for next round.");
 }
 
