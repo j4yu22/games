@@ -1,6 +1,3 @@
-update_balance()
-update_bet()
-
 let balance = parseFloat(localStorage.getItem('balance')) || 100;
 let displayed_bet = parseFloat(localStorage.getItem('displayed_bet')) || 0;
 let buyInCount = parseInt(localStorage.getItem('buyInCount')) || 0;
