@@ -40,6 +40,9 @@ function update_bet() {
     saveGameState();
 }
 
+update_balance();
+update_bet();
+
 // Update chip counters
 function update_counter(chip, value) {
     const counter = document.getElementById(`counter_${chip}`);
