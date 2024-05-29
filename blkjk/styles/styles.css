@@ -1,3 +1,191 @@
+body {
+    background-color: #2e2e2e;
+    color: #fff;
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    margin: 0;
+}
+
+#money_hud {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+}
+
+#deck {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
+#chip_buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.chip_counter {
+    color: #fff;
+    background-color: #2e2e2e;
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    text-align: center;
+    line-height: 25px;
+    position: absolute;
+    top: -15px;
+    left: 15px;
+    font-size: 14px;
+}
+
+.chip {
+    background-color: transparent;
+    border: none;
+    margin: 10px;
+    position: relative;
+}
+
+.chip img {
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+}
+
+.chip-value {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    color: white;
+    pointer-events: none;
+    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000; /* Black border */
+}
+
+#confirm_bet {
+    padding: 10px 20px;
+    font-size: 16px;
+    margin-left: 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#confirm_bet:hover {
+    background-color: #45a049;
+}
+
+#dealer_hand, #player_hand {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px 0;
+}
+
+#dealer_hand ul, #player_hand ul {
+    display: flex;
+    list-style-type: none;
+    padding: 0;
+}
+
+#dealer_hand ul li, #player_hand ul li {
+    margin: 0 5px;
+}
+
+#options {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+#options button {
+    padding: 10px 20px;
+    font-size: 16px;
+    margin: 0 10px;
+    background-color: #008CBA;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#options button:hover {
+    background-color: #007B9E;
+}
+
+/* Tips button */
+#tips-button {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+#tips-button:hover {
+    background-color: #45a049;
+}
+
+/* Tips menu */
+.tips-menu {
+    position: fixed;
+    bottom: 70px;
+    left: 20px;
+    background-color: #2e2e2e;
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+    max-width: 500px;
+    z-index: 1000;
+}
+
+.tips-menu h2 {
+    margin-top: 0;
+}
+
+.tips-menu ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.tips-menu li {
+    margin: 5px 0;
+}
+
+.close-tips {
+    padding: 5px 10px;
+    font-size: 14px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.close-tips:hover {
+    background-color: #45a049;
+}
+
 .hidden {
-    display: none;
+    display: none !important;
 }

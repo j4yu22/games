@@ -1,5 +1,6 @@
-let balance = 100;
-let displayed_bet = 0;
+let balance = parseFloat(localStorage.getItem('balance')) || 100;
+let displayed_bet = parseFloat(localStorage.getItem('displayed_bet')) || 0;
+let buyInCount = parseInt(localStorage.getItem('buyInCount')) || 0;
 let shoe = [];
 let game_state = {
     reshuffle: false,
@@ -9,14 +10,34 @@ let dealerHiddenCard = null; // Store the hidden card's value
 let hiddenDealerCard = true; // Flag to manage the display state
 let firstTurn = true; // Flag to manage first turn
 
+function saveGameState() {
+    localStorage.setItem('balance', balance);
+    localStorage.setItem('displayed_bet', displayed_bet);
+    localStorage.setItem('buyInCount', buyInCount);
+}
+
+function buyIn() {
+    if (confirm("Your balance is 0. Would you like to buy in for 100?")) {
+        balance = 100;
+        buyInCount += 1;
+        update_balance();
+        console.log(`Player bought in. Total buy-ins: ${buyInCount}`);
+    }
+}
+
+function sleep(seconds) {
+    return new Promise(resolve => setTimeout(resolve, seconds * 1000));
+}
 // Update balance display
 function update_balance() {
     document.getElementById('balance').textContent = balance;
+    saveGameState();
 }
 
 // Update current bet display
 function update_bet() {
     document.getElementById('current_bet').textContent = displayed_bet;
+    saveGameState();
 }
 
 // Update chip counters
@@ -33,6 +54,7 @@ function get_bet(bet, chip) {
     update_balance();
     update_bet();
     update_counter(chip, bet > 0 ? 1 : -1);
+    firstTurn = true;
 }
 
 // Event listeners for betting buttons
@@ -58,6 +80,7 @@ function betListener(buttonId, betValue, chip) {
 // Initialize betting listeners
 betListener('bet_1', 1, 1);
 betListener('bet_5', 5, 5);
+betListener('bet_10', 10, 10);
 betListener('bet_25', 25, 25);
 betListener('bet_50', 50, 50);
 betListener('bet_100', 100, 100);
@@ -174,7 +197,7 @@ function handEval(hand) {
 
 function logHandTotals() {
     const playerCards = document.querySelectorAll('#player_hand_ul .card img');
-    const dealerCards = document.querySelectorAll('#dealer_hand .card img');
+    const dealerCards = document.querySelectorAll('#dealer_hand ul .card img');
 
     const playerHand = Array.from(playerCards).map(cardImg => {
         const altText = cardImg.alt;
@@ -201,7 +224,7 @@ function logHandTotals() {
 }
 
 function revealDealerCard() {
-    const dealerHandUl = document.getElementById('dealer_hand');
+    const dealerHandUl = document.getElementById('dealer_hand_ul');
 
     if (hiddenDealerCard) {
         hiddenDealerCard = false;
@@ -216,16 +239,62 @@ function revealDealerCard() {
     logHandTotals(); // Log totals after revealing the hidden card
 }
 
+function confirm_bet() {
+    // Hide chip buttons and confirm bet button
+    document.getElementById('chip_buttons').classList.add('hidden');
 
-function dealInitialCards() {
+    // Show dealer hand, player hand, and options
+    document.getElementById('dealer_hand').classList.remove('hidden');
+    document.getElementById('player_hand').classList.remove('hidden');
+    document.getElementById('options').classList.remove('hidden');
+
+    // Play animation of chips going to the current bet area
+    // Reset all counters by chips
+    document.querySelectorAll('.chip_counter').forEach(counter => counter.textContent = '0');
+    
+    // Move to segment 2 (deal cards, bring up options menu, etc)
+    dealInitialCards();
+}
+
+async function dealInitialCards() {
     const playerCards = [drawCard(), drawCard()];
     const dealerCards = [drawCard(), drawCard()];
 
     dealerHiddenCard = dealerCards[0]; // Store the actual value of the hidden card
 
     updateHand('player_hand_ul', playerCards);
-    updateHand('dealer_hand', dealerCards, hiddenDealerCard);
+    updateHand('dealer_hand_ul', dealerCards, hiddenDealerCard);
+
+    firstTurn = true; // Set firstTurn to true at the start of a new round
+    updateOptions(); // Update options to reflect the reset state
+
+    // Check for 21 immediately after dealing cards
+    const playerTotal = handEval(playerCards);
+    const dealerTotal = handEval([dealerCards[0], dealerCards[1]]); // Including hidden card for calculation
+
+    if (playerTotal === 21 || dealerTotal === 21) {
+        document.getElementById('options').classList.add('hidden');
+        if (dealerTotal === 21 && playerTotal === 21) {
+            console.log("Both player and dealer have 21. It's a push.");
+            balance += displayed_bet; // Player gets back the bet
+            displayed_bet = 0;
+        } else if (dealerTotal === 21) {
+            console.log("Dealer has 21. Player loses.");
+            displayed_bet = 0; // Player loses bet
+            revealDealerCard();
+        } else if (playerTotal === 21) {
+            console.log("Player has 21. Player wins.");
+            await sleep(2);
+            balance += Math.ceil(displayed_bet * 2.5);  // Player wins 2.5 times the current bet
+            displayed_bet = 0;
+        }
+        update_balance();
+        update_bet();
+        await sleep(2);
+        resetGame();
+    }
 }
+
 
 function updateHand(handId, cards, hideFirstCard = false) {
     const handElement = document.getElementById(handId);
@@ -246,7 +315,7 @@ function updateHand(handId, cards, hideFirstCard = false) {
 // Initialize the game
 createShoe();
 
-function hit() {
+async function hit() {
     const playerHandUl = document.getElementById('player_hand_ul');
     const newCard = drawCard();
     const newCardElement = document.createElement('li');
@@ -270,55 +339,47 @@ function hit() {
     if (playerTotal > 21) {
         console.log("Player busted.");
         document.getElementById('options').classList.add('hidden');
+        await sleep(2);
         revealDealerCard();
-        // Add any additional logic for handling player bust (e.g., updating balance)
+        totals();   
     } else if (playerTotal === 21) {
         console.log("Player has 21.");
         document.getElementById('options').classList.add('hidden');
+        await sleep(2);
+        dealerTurn();
     }
 }
 
-function stand() {
+async function stand() {
     firstTurn = false; // It's no longer the first turn after the player stands
     updateOptions(); // Update options based on the first turn flag
     document.getElementById('options').classList.add('hidden');
+    await sleep(2);
     revealDealerCard();
     logHandTotals();
     console.log("Player stood.");
     dealerTurn(); // Call dealerTurn after the player stands
 }
 
-function double_down() {
-    if (balance >= displayed_bet && !document.getElementById('options').classList.contains('hidden')) {
+async function double_down() {
+    if (balance >= displayed_bet && !document.getElementById('options').classList.contains('hidden') && firstTurn) {
         balance -= displayed_bet;
         displayed_bet *= 2;
         update_balance();
         update_bet();
-        hit();
-
-        const playerHandUl = document.getElementById('player_hand_ul');
-        const playerCards = Array.from(playerHandUl.querySelectorAll('.card img')).map(cardImg => {
-            const suit = cardImg.alt.slice(0, 1);
-            const rank = cardImg.alt.slice(1);
-            return { suit, rank };
-        });
-
-        const playerTotal = handEval(playerCards);
-
-        if (playerTotal <= 21) {
-            dealerTurn();
-        }
-
-        logHandTotals();
-        console.log("Player doubled down.");
+        firstTurn = false; // It's no longer the first turn after the player doubles down
+        updateOptions(); // Update options based on the first turn flag
+        await hit();
         document.getElementById('options').classList.add('hidden');
+        await sleep(2);
+        dealerTurn(); // Call dealer turn after the player doubles down and hits
     } else {
         console.log("Not enough balance to double down or already acted.");
     }
 }
 
-function dealerTurn() {
-    const dealerHandUl = document.getElementById('dealer_hand');
+async function dealerTurn() {
+    const dealerHandUl = document.getElementById('dealer_hand_ul');
 
     // Reveal hidden dealer card
     revealDealerCard();
@@ -346,21 +407,23 @@ function dealerTurn() {
         dealerTotal = handEval(dealerCards);
         console.log(`Dealer drew ${newCard.suit}${newCard.rank}, new total: ${dealerTotal}`);
         logHandTotals();
+        await sleep(2);
     }
 
     if (dealerTotal >= 17) {
         console.log('Dealer stands.');
-    } else {
-        console.log('Dealer hits again.');
+        await sleep(2);
     }
+
+    totals(); // Call the totals function to determine the outcome
 }
+
 
 // Add event listener for the option buttons
 document.getElementById('hit').addEventListener('click', hit);
 document.getElementById('stand').addEventListener('click', stand);
 document.getElementById('double_down').addEventListener('click', double_down);
 
-// Update options based on the first turn flag
 function updateOptions() {
     const doubleDownButton = document.getElementById('double_down');
     if (firstTurn) {
@@ -371,3 +434,139 @@ function updateOptions() {
 }
 
 updateOptions(); // Initial call to set the options correctly
+
+async function totals() {
+    const playerHandUl = document.getElementById('player_hand_ul');
+    const dealerHandUl = document.getElementById('dealer_hand_ul');
+
+    const playerCards = Array.from(playerHandUl.querySelectorAll('.card img')).map(cardImg => {
+        const suit = cardImg.alt.slice(0, 1);
+        const rank = cardImg.alt.slice(1);
+        return { suit, rank };
+    });
+
+    const dealerCards = Array.from(dealerHandUl.querySelectorAll('.card img')).map(cardImg => {
+        const suit = cardImg.alt.slice(0, 1);
+        const rank = cardImg.alt.slice(1);
+        return { suit, rank };
+    });
+
+    const playerTotal = handEval(playerCards);
+    const dealerTotal = handEval(dealerCards);
+
+    console.log(`Final Player Total: ${playerTotal}`);
+    console.log(`Final Dealer Total: ${dealerTotal}`);
+
+    if (playerTotal > 21) {
+        console.log("Player busts. Dealer wins.");
+        displayed_bet = 0; // Player loses bet
+    } else if (dealerTotal > 21) {
+        console.log("Dealer busts. Player wins.");
+        balance += displayed_bet * 2; // Player wins twice the current bet
+        displayed_bet = 0;
+    } else if (playerTotal > dealerTotal) {
+        console.log("Player wins.");
+        balance += displayed_bet * 2; // Player wins twice the current bet
+        displayed_bet = 0;
+    } else if (playerTotal < dealerTotal) {
+        console.log("Dealer wins.");
+        displayed_bet = 0; // Player loses bet
+    } else {
+        console.log("It's a push.");
+        balance += displayed_bet; // Player gets back the bet
+        displayed_bet = 0;
+    }
+
+    update_balance();
+    update_bet();
+    await sleep(2);
+
+    // Reset the game for the next round
+    resetGame();
+}
+
+function resetGame() {
+    // Clear player and dealer hands
+    const playerHandUl = document.getElementById('player_hand_ul');
+    const dealerHandUl = document.getElementById('dealer_hand_ul');
+    playerHandUl.innerHTML = '';
+    dealerHandUl.innerHTML = '';
+
+    // Hide hands
+    document.getElementById('dealer_hand').classList.add('hidden');
+    document.getElementById('player_hand').classList.add('hidden');
+    
+    // Show betting buttons and confirm bet button
+    document.getElementById('chip_buttons').classList.remove('hidden');
+    document.getElementById('confirm_bet').classList.remove('hidden');
+
+    // Reset other necessary game state variables
+    displayed_bet = 0;
+    update_bet();
+    update_balance();
+
+    // Reset first turn flag
+    firstTurn = true;
+    hiddenDealerCard = true;
+
+    // Check if balance is 0 and prompt for buy-in
+    if (balance === 0) {
+        buyIn();
+    }
+
+    console.log("Game reset. Ready for next round.");
+}
+
+//keyboard shortcuts
+document.addEventListener('keydown', (event) => {
+    switch (event.key) {
+        case '1':
+            document.getElementById('bet_1').click();
+            break;
+        case '2':
+            document.getElementById('bet_5').click();
+            break;
+        case '3':
+            document.getElementById('bet_10').click();
+            break;
+        case '4':
+            document.getElementById('bet_25').click();
+            break;
+        case '5':
+            document.getElementById('bet_50').click();
+            break;
+        case '6':
+            document.getElementById('bet_100').click();
+            break;
+        case 'Enter':
+            if (!document.getElementById('chip_buttons').classList.contains('hidden')) {
+                document.getElementById('confirm_bet').click();
+            }
+            break;
+        case 'h':
+            if (!document.getElementById('options').classList.contains('hidden')) {
+                document.getElementById('hit').click();
+            }
+            break;
+        case 's':
+            if (!document.getElementById('options').classList.contains('hidden')) {
+                document.getElementById('stand').click();
+            }
+            break;
+        case 'd':
+            if (!document.getElementById('options').classList.contains('hidden')) {
+                document.getElementById('double_down').click();
+            }
+            break;
+    }
+});
+
+document.addEventListener('DOMContentLoaded', (event) => {
+    document.getElementById('tips-button').addEventListener('click', () => {
+        document.getElementById('tips_menu').classList.toggle('hidden');
+    });
+
+    document.getElementById('close_tips').addEventListener('click', () => {
+        document.getElementById('tips_menu').classList.add('hidden');
+    });
+});
