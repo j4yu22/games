@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
     if (tipsButton) {
         tipsButton.addEventListener('click', () => {
-            const tipsMenu = document.getElementById('tips_menu');
+            const tipsMenu = document.getElementById('tips-menu');
             if (tipsMenu) {
                 tipsMenu.classList.toggle('hidden');
             }
@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
     if (closeTipsButton) {
         closeTipsButton.addEventListener('click', () => {
-            const tipsMenu = document.getElementById('tips_menu');
+            const tipsMenu = document.getElementById('tips-menu');
             if (tipsMenu) {
                 tipsMenu.classList.add('hidden');
             }
@@ -47,9 +47,10 @@ document.addEventListener('DOMContentLoaded', (event) => {
     createShoe();
 });
 
+
 // Validate and restore the initial game state
 let balance = parseFloat(localStorage.getItem('balance'));
-if (isNaN(balance) || balance < 0) {
+if (isNaN(balance) || balance <= 0) {
     balance = 100;
 }
 
@@ -283,11 +284,11 @@ function revealDealerCard() {
     if (hiddenDealerCard && dealerHiddenCard) {
         hiddenDealerCard = false;
         const hiddenCardElement = dealerHandUl.querySelector('.card img[alt="Hidden Card"]');
-        if (hiddenCardElement) {
+        if (hiddenCardElement && dealerHiddenCard) {
             hiddenCardElement.src = `images/${dealerHiddenCard.suit}${dealerHiddenCard.rank}.png`;
             hiddenCardElement.alt = `${dealerHiddenCard.suit}${dealerHiddenCard.rank}`;
         } else {
-            console.error("Hidden card element is not properly set.");
+            console.error("Hidden card element or dealerHiddenCard is not properly set.");
         }
     } else {
         console.error("Hidden card element or dealerHiddenCard is not properly set.");
