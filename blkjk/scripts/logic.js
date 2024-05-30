@@ -558,7 +558,7 @@ document.getElementById('double_down').addEventListener('click', double_down);
 
 function updateOptions() {
     const doubleDownButton = document.getElementById('double_down');
-    if (firstTurn) {
+    if (firstTurn && balance >= displayed_bet) {
         doubleDownButton.classList.remove('hidden');
     } else {
         doubleDownButton.classList.add('hidden');
