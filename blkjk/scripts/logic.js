@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
     if (tipsButton) {
         tipsButton.addEventListener('click', () => {
-            const tipsMenu = document.getElementById('tips-menu');
+            const tipsMenu = document.getElementById('tips_menu');
             if (tipsMenu) {
                 tipsMenu.classList.toggle('hidden');
             }
