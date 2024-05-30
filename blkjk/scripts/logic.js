@@ -351,9 +351,9 @@ async function totals() {
 async function buyIn() {
     if (balance === 0) {
         buyInCount += 1;
-        alert("Your balance is 0. You are buying back in for 100.");
         balance = 100;
         update_balance();
+        alert("Your balance is 0. You are buying back in for 100.");
         console.log(`Player bought in. Total buy-ins: ${buyInCount}`);
     }
 }
