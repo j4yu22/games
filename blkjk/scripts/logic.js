@@ -525,7 +525,7 @@ async function dealerTurn() {
     if (hiddenDealerCard) {
         revealDealerCard();
     }
-
+    await sleep(2);
     let dealerCards = Array.from(dealerHandUl.querySelectorAll('.card img')).map(cardImg => {
         const suit = cardImg.alt.slice(0, 1);
         const rank = cardImg.alt.slice(1);
@@ -554,7 +554,6 @@ async function dealerTurn() {
 
     if (dealerTotal >= 17) {
         console.log('Dealer stands.');
-        await sleep(2);
     }
 
     totals(); // Call the totals function to determine the outcome
