@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     } else {
         console.error("Element with ID 'close_tips' not found.");
     }
-    
+
     // Initialize betting listeners
     betListener('bet_1', 1, 1);
     betListener('bet_5', 5, 5);
@@ -175,17 +175,18 @@ function createDeck() {
 }
 
 // Create and shuffle the shoe
-function createShoe(numDecks = 3) {
+function createShoe(numDecks = 6) {
     shoe = [];
     for (let i = 0; i < numDecks; i++) {
         shoe = shoe.concat(createDeck());
     }
     shuffleDeck();
-    const reshuffleMarkerPosition = shoe.length - Math.floor(Math.random() * (135 - 125 + 1)) - 125;
+    const reshuffleMarkerPosition = shoe.length - Math.floor(Math.random() * (40 - 20 + 1)) - 20; // Adjusted range for last 20-40 cards
     shoe.splice(reshuffleMarkerPosition, 0, { suit: 'R', rank: 'Marker' });
     game_state.reshuffle = false;
     console.log("New Shoe!");
 }
+
 
 // Shuffle the deck
 function shuffleDeck() {
@@ -282,16 +283,17 @@ function revealDealerCard() {
     const dealerHandUl = document.getElementById('dealer_hand_ul');
 
     if (hiddenDealerCard && dealerHiddenCard) {
-        hiddenDealerCard = false;
+        hiddenDealerCard = false; // Set this flag to false only when we have revealed the hidden card successfully
         const hiddenCardElement = dealerHandUl.querySelector('.card img[alt="Hidden Card"]');
-        if (hiddenCardElement && dealerHiddenCard) {
+        if (hiddenCardElement) {
             hiddenCardElement.src = `images/${dealerHiddenCard.suit}${dealerHiddenCard.rank}.png`;
             hiddenCardElement.alt = `${dealerHiddenCard.suit}${dealerHiddenCard.rank}`;
+            console.log("Revealed dealer card:", dealerHiddenCard);
         } else {
-            console.error("Hidden card element or dealerHiddenCard is not properly set.");
+            console.error("Hidden card element is not properly set. hiddenCardElement is null.");
         }
     } else {
-        console.error("Hidden card element or dealerHiddenCard is not properly set.");
+        console.error("Hidden card element or dealerHiddenCard is not properly set. hiddenDealerCard:", hiddenDealerCard, "dealerHiddenCard:", dealerHiddenCard);
     }
     logHandTotals(); // Log totals after revealing the hidden card
 }
@@ -388,7 +390,12 @@ async function dealInitialCards() {
     const playerCards = [drawCard(), drawCard()];
     const dealerCards = [drawCard(), drawCard()];
 
-    dealerHiddenCard = dealerCards[0]; // Store the actual value of the hidden card
+    if (dealerCards[0]) {
+        dealerHiddenCard = dealerCards[0]; // Store the actual value of the hidden card
+        hiddenDealerCard = true; // Ensure hiddenDealerCard is set to true
+    } else {
+        console.error("Failed to draw initial dealer cards. dealerCards[0] is not set.");
+    }
 
     updateHand('player_hand_ul', playerCards);
     updateHand('dealer_hand_ul', dealerCards, hiddenDealerCard);
@@ -423,7 +430,6 @@ async function dealInitialCards() {
     }
 }
 
-
 function updateHand(handId, cards, hideFirstCard = false) {
     const handElement = document.getElementById(handId);
     handElement.innerHTML = '';
@@ -443,9 +449,6 @@ function updateHand(handId, cards, hideFirstCard = false) {
     });
     logHandTotals();
 }
-
-// Initialize the game
-createShoe();
 
 async function hit() {
     const playerHandUl = document.getElementById('player_hand_ul');
@@ -487,7 +490,12 @@ async function stand() {
     updateOptions(); // Update options based on the first turn flag
     document.getElementById('options').classList.add('hidden');
     await sleep(2);
-    revealDealerCard();
+
+    // Reveal hidden dealer card only if it's still hidden
+    if (hiddenDealerCard) {
+        revealDealerCard();
+    }
+
     logHandTotals();
     console.log("Player stood.");
     dealerTurn(); // Call dealerTurn after the player stands
@@ -513,8 +521,10 @@ async function double_down() {
 async function dealerTurn() {
     const dealerHandUl = document.getElementById('dealer_hand_ul');
 
-    // Reveal hidden dealer card
-    revealDealerCard();
+    // Reveal hidden dealer card only if it's still hidden
+    if (hiddenDealerCard) {
+        revealDealerCard();
+    }
 
     let dealerCards = Array.from(dealerHandUl.querySelectorAll('.card img')).map(cardImg => {
         const suit = cardImg.alt.slice(0, 1);
@@ -595,44 +605,55 @@ function resetGame() {
 }
 
 
-//keyboard shortcuts
 document.addEventListener('keydown', (event) => {
     switch (event.key) {
         case '1':
-            document.getElementById('bet_1').click();
+            if (document.getElementById('bet_1').offsetParent !== null) {
+                document.getElementById('bet_1').click();
+            }
             break;
         case '2':
-            document.getElementById('bet_5').click();
+            if (document.getElementById('bet_5').offsetParent !== null) {
+                document.getElementById('bet_5').click();
+            }
             break;
         case '3':
-            document.getElementById('bet_10').click();
+            if (document.getElementById('bet_10').offsetParent !== null) {
+                document.getElementById('bet_10').click();
+            }
             break;
         case '4':
-            document.getElementById('bet_25').click();
+            if (document.getElementById('bet_25').offsetParent !== null) {
+                document.getElementById('bet_25').click();
+            }
             break;
         case '5':
-            document.getElementById('bet_50').click();
+            if (document.getElementById('bet_50').offsetParent !== null) {
+                document.getElementById('bet_50').click();
+            }
             break;
         case '6':
-            document.getElementById('bet_100').click();
+            if (document.getElementById('bet_100').offsetParent !== null) {
+                document.getElementById('bet_100').click();
+            }
             break;
         case 'Enter':
-            if (!document.getElementById('chip_buttons').classList.contains('hidden')) {
+            if (document.getElementById('confirm_bet').offsetParent !== null) {
                 document.getElementById('confirm_bet').click();
             }
             break;
         case 'h':
-            if (!document.getElementById('options').classList.contains('hidden')) {
+            if (document.getElementById('hit').offsetParent !== null) {
                 document.getElementById('hit').click();
             }
             break;
         case 's':
-            if (!document.getElementById('options').classList.contains('hidden')) {
+            if (document.getElementById('stand').offsetParent !== null) {
                 document.getElementById('stand').click();
             }
             break;
         case 'd':
-            if (!document.getElementById('options').classList.contains('hidden')) {
+            if (document.getElementById('double_down').offsetParent !== null) {
                 document.getElementById('double_down').click();
             }
             break;
