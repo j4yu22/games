@@ -1,6 +1,15 @@
-let balance = parseFloat(localStorage.getItem('balance')) || 100;
-let displayed_bet = parseFloat(localStorage.getItem('displayed_bet')) || 0;
+let balance = parseFloat(localStorage.getItem('balance'));
+if (isNaN(balance) || balance < 0) {
+    balance = 100;
+}
+
+let displayed_bet = parseFloat(localStorage.getItem('displayed_bet'));
+if (isNaN(displayed_bet) || displayed_bet < 0) {
+    displayed_bet = 0;
+}
+
 let buyInCount = parseInt(localStorage.getItem('buyInCount')) || 0;
+
 let shoe = [];
 let game_state = {
     reshuffle: false,
@@ -19,14 +28,16 @@ function saveGameState() {
 function sleep(seconds) {
     return new Promise(resolve => setTimeout(resolve, seconds * 1000));
 }
-// Update balance display
+
 function update_balance() {
+    if (balance < 0) balance = 0;
     document.getElementById('balance').textContent = balance;
     saveGameState();
 }
 
 // Update current bet display
 function update_bet() {
+    if (displayed_bet < 0) displayed_bet = 0;
     document.getElementById('current_bet').textContent = displayed_bet;
     saveGameState();
 }
@@ -41,7 +52,6 @@ function update_counter(chip, value) {
     counter.textContent = current_count + value;
 }
 
-// Handle betting logic
 function get_bet(bet, chip) {
     displayed_bet += bet;
     balance -= bet;
@@ -49,6 +59,7 @@ function get_bet(bet, chip) {
     update_bet();
     update_counter(chip, bet > 0 ? 1 : -1);
     firstTurn = true;
+    saveGameState(); // Save game state after updating bet and balance
 }
 
 // Event listeners for betting buttons
@@ -83,6 +94,13 @@ betListener('bet_100', 100, 100);
 document.getElementById('confirm_bet').addEventListener('click', confirm_bet);
 
 function confirm_bet() {
+    if (displayed_bet === 0) {
+        console.log("Cannot confirm bet. Bet amount is zero.");
+        return; // Exit the function if the bet amount is zero
+    }
+    update_bet();
+    update_balance();
+
     // Hide chip buttons and confirm bet button
     document.getElementById('chip_buttons').classList.add('hidden');
 
@@ -579,7 +597,7 @@ document.addEventListener('keydown', (event) => {
 });
 
 document.addEventListener('DOMContentLoaded', (event) => {
-    document.getElementById('tips-button').addEventListener('click', () => {
+    document.getElementById('tips_button').addEventListener('click', () => {
         document.getElementById('tips_menu').classList.toggle('hidden');
     });
 
