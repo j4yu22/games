@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
     update_balance();
     update_bet();
-
+    buyIn();
     // Create the shoe when the game starts
     createShoe();
 });
@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
 // Validate and restore the initial game state
 let balance = parseFloat(localStorage.getItem('balance'));
-if (isNaN(balance) || balance <= 0) {
+if (isNaN(balance) || balance < 0) {
     balance = 100;
 }
 
