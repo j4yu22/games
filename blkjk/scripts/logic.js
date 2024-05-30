@@ -31,6 +31,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     betListener('bet_25', 25, 25);
     betListener('bet_50', 50, 50);
     betListener('bet_100', 100, 100);
+    betListener('bet_all', 'all', 'all');
 
     // Confirm bet and move to next phase
     document.getElementById('confirm_bet').addEventListener('click', confirm_bet);
@@ -104,6 +105,9 @@ function update_counter(chip, value) {
 }
 
 function get_bet(bet, chip) {
+    if (chip == 'all') {
+        balance = bet;
+    }
     displayed_bet += bet;
     balance -= bet;
     update_balance();
@@ -113,11 +117,12 @@ function get_bet(bet, chip) {
     saveGameState(); // Save game state after updating bet and balance
 }
 
-// Event listeners for betting buttons
 function betListener(buttonId, betValue, chip) {
     const button = document.getElementById(buttonId);
     button.addEventListener('click', () => {
-        if (balance - betValue >= 0) {
+        if (chip === 'all') {
+            get_bet(balance, chip);
+        } else if (balance - betValue >= 0) {
             get_bet(betValue, chip);
         } else {
             console.log('Invalid bet: Balance would go negative');
@@ -125,7 +130,7 @@ function betListener(buttonId, betValue, chip) {
     });
     button.addEventListener('contextmenu', (e) => {
         e.preventDefault();
-        if (displayed_bet - betValue >= 0) {
+        if (chip !== 'all' && displayed_bet - betValue >= 0) {
             get_bet(-betValue, chip);
         } else {
             console.log('Invalid bet: Bet would go negative');
