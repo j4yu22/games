@@ -1,3 +1,53 @@
+document.addEventListener('DOMContentLoaded', (event) => {
+    const tipsButton = document.getElementById('tips-button');
+    const closeTipsButton = document.getElementById('close_tips');
+
+    if (tipsButton) {
+        tipsButton.addEventListener('click', () => {
+            const tipsMenu = document.getElementById('tips_menu');
+            if (tipsMenu) {
+                tipsMenu.classList.toggle('hidden');
+            }
+        });
+    } else {
+        console.error("Element with ID 'tips_button' not found.");
+    }
+
+    if (closeTipsButton) {
+        closeTipsButton.addEventListener('click', () => {
+            const tipsMenu = document.getElementById('tips_menu');
+            if (tipsMenu) {
+                tipsMenu.classList.add('hidden');
+            }
+        });
+    } else {
+        console.error("Element with ID 'close_tips' not found.");
+    }
+
+    // Initialize betting listeners
+    betListener('bet_1', 1, 1);
+    betListener('bet_5', 5, 5);
+    betListener('bet_10', 10, 10);
+    betListener('bet_25', 25, 25);
+    betListener('bet_50', 50, 50);
+    betListener('bet_100', 100, 100);
+
+    // Confirm bet and move to next phase
+    document.getElementById('confirm_bet').addEventListener('click', confirm_bet);
+
+    // Add event listener for the option buttons
+    document.getElementById('hit').addEventListener('click', hit);
+    document.getElementById('stand').addEventListener('click', stand);
+    document.getElementById('double_down').addEventListener('click', double_down);
+
+    update_balance();
+    update_bet();
+
+    // Create the shoe when the game starts
+    createShoe();
+});
+
+// Validate and restore the initial game state
 let balance = parseFloat(localStorage.getItem('balance'));
 if (isNaN(balance) || balance < 0) {
     balance = 100;
@@ -81,14 +131,6 @@ function betListener(buttonId, betValue, chip) {
         }
     });
 }
-
-// Initialize betting listeners
-betListener('bet_1', 1, 1);
-betListener('bet_5', 5, 5);
-betListener('bet_10', 10, 10);
-betListener('bet_25', 25, 25);
-betListener('bet_50', 50, 50);
-betListener('bet_100', 100, 100);
 
 // Confirm bet and move to next phase
 document.getElementById('confirm_bet').addEventListener('click', confirm_bet);
@@ -594,14 +636,4 @@ document.addEventListener('keydown', (event) => {
             }
             break;
     }
-});
-
-document.addEventListener('DOMContentLoaded', (event) => {
-    document.getElementById('tips_button').addEventListener('click', () => {
-        document.getElementById('tips_menu').classList.toggle('hidden');
-    });
-
-    document.getElementById('close_tips').addEventListener('click', () => {
-        document.getElementById('tips_menu').classList.add('hidden');
-    });
 });
