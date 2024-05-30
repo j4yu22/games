@@ -10,12 +10,12 @@ document.addEventListener('DOMContentLoaded', (event) => {
             }
         });
     } else {
-        console.error("Element with ID 'tips_button' not found.");
+        console.error("Element with ID 'tips-button' not found.");
     }
 
     if (closeTipsButton) {
         closeTipsButton.addEventListener('click', () => {
-            const tipsMenu = document.getElementById('tips-menu');
+            const tipsMenu = document.getElementById('tips_menu');
             if (tipsMenu) {
                 tipsMenu.classList.add('hidden');
             }
@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     } else {
         console.error("Element with ID 'close_tips' not found.");
     }
-
+    
     // Initialize betting listeners
     betListener('bet_1', 1, 1);
     betListener('bet_5', 5, 5);
