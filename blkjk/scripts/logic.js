@@ -1,6 +1,67 @@
-let balance = parseFloat(localStorage.getItem('balance')) || 100;
-let displayed_bet = parseFloat(localStorage.getItem('displayed_bet')) || 0;
+document.addEventListener('DOMContentLoaded', (event) => {
+    const tipsButton = document.getElementById('tips-button');
+    const closeTipsButton = document.getElementById('close_tips');
+
+    if (tipsButton) {
+        tipsButton.addEventListener('click', () => {
+            const tipsMenu = document.getElementById('tips_menu');
+            if (tipsMenu) {
+                tipsMenu.classList.toggle('hidden');
+            }
+        });
+    } else {
+        console.error("Element with ID 'tips-button' not found.");
+    }
+
+    if (closeTipsButton) {
+        closeTipsButton.addEventListener('click', () => {
+            const tipsMenu = document.getElementById('tips_menu');
+            if (tipsMenu) {
+                tipsMenu.classList.add('hidden');
+            }
+        });
+    } else {
+        console.error("Element with ID 'close_tips' not found.");
+    }
+
+    // Initialize betting listeners
+    betListener('bet_1', 1, 1);
+    betListener('bet_5', 5, 5);
+    betListener('bet_10', 10, 10);
+    betListener('bet_25', 25, 25);
+    betListener('bet_50', 50, 50);
+    betListener('bet_100', 100, 100);
+    betListener('bet_all', 'all', 'all');
+
+    // Confirm bet and move to next phase
+    document.getElementById('confirm_bet').addEventListener('click', confirm_bet);
+
+    // Add event listener for the option buttons
+    document.getElementById('hit').addEventListener('click', hit);
+    document.getElementById('stand').addEventListener('click', stand);
+    document.getElementById('double_down').addEventListener('click', double_down);
+
+    update_balance();
+    update_bet();
+    buyIn();
+    // Create the shoe when the game starts
+    createShoe();
+});
+
+
+// Validate and restore the initial game state
+let balance = parseFloat(localStorage.getItem('balance'));
+if (isNaN(balance) || balance < 0) {
+    balance = 100;
+}
+
+let displayed_bet = parseFloat(localStorage.getItem('displayed_bet'));
+if (isNaN(displayed_bet) || displayed_bet < 0) {
+    displayed_bet = 0;
+}
+
 let buyInCount = parseInt(localStorage.getItem('buyInCount')) || 0;
+
 let shoe = [];
 let game_state = {
     reshuffle: false,
@@ -16,26 +77,19 @@ function saveGameState() {
     localStorage.setItem('buyInCount', buyInCount);
 }
 
-function buyIn() {
-    if (confirm("Your balance is 0. Would you like to buy in for 100?")) {
-        balance = 100;
-        buyInCount += 1;
-        update_balance();
-        console.log(`Player bought in. Total buy-ins: ${buyInCount}`);
-    }
-}
-
 function sleep(seconds) {
     return new Promise(resolve => setTimeout(resolve, seconds * 1000));
 }
-// Update balance display
+
 function update_balance() {
+    if (balance < 0) balance = 0;
     document.getElementById('balance').textContent = balance;
     saveGameState();
 }
 
 // Update current bet display
 function update_bet() {
+    if (displayed_bet < 0) displayed_bet = 0;
     document.getElementById('current_bet').textContent = displayed_bet;
     saveGameState();
 }
@@ -50,21 +104,25 @@ function update_counter(chip, value) {
     counter.textContent = current_count + value;
 }
 
-// Handle betting logic
 function get_bet(bet, chip) {
+    if (chip == 'all') {
+        balance = bet;
+    }
     displayed_bet += bet;
     balance -= bet;
     update_balance();
     update_bet();
     update_counter(chip, bet > 0 ? 1 : -1);
     firstTurn = true;
+    saveGameState(); // Save game state after updating bet and balance
 }
 
-// Event listeners for betting buttons
 function betListener(buttonId, betValue, chip) {
     const button = document.getElementById(buttonId);
     button.addEventListener('click', () => {
-        if (balance - betValue >= 0) {
+        if (chip === 'all') {
+            get_bet(balance, chip);
+        } else if (balance - betValue >= 0) {
             get_bet(betValue, chip);
         } else {
             console.log('Invalid bet: Balance would go negative');
@@ -72,7 +130,7 @@ function betListener(buttonId, betValue, chip) {
     });
     button.addEventListener('contextmenu', (e) => {
         e.preventDefault();
-        if (displayed_bet - betValue >= 0) {
+        if (chip !== 'all' && displayed_bet - betValue >= 0) {
             get_bet(-betValue, chip);
         } else {
             console.log('Invalid bet: Bet would go negative');
@@ -80,18 +138,17 @@ function betListener(buttonId, betValue, chip) {
     });
 }
 
-// Initialize betting listeners
-betListener('bet_1', 1, 1);
-betListener('bet_5', 5, 5);
-betListener('bet_10', 10, 10);
-betListener('bet_25', 25, 25);
-betListener('bet_50', 50, 50);
-betListener('bet_100', 100, 100);
-
 // Confirm bet and move to next phase
 document.getElementById('confirm_bet').addEventListener('click', confirm_bet);
 
 function confirm_bet() {
+    if (displayed_bet === 0) {
+        console.log("Cannot confirm bet. Bet amount is zero.");
+        return; // Exit the function if the bet amount is zero
+    }
+    update_bet();
+    update_balance();
+
     // Hide chip buttons and confirm bet button
     document.getElementById('chip_buttons').classList.add('hidden');
 
@@ -123,17 +180,18 @@ function createDeck() {
 }
 
 // Create and shuffle the shoe
-function createShoe(numDecks = 3) {
+function createShoe(numDecks = 6) {
     shoe = [];
     for (let i = 0; i < numDecks; i++) {
         shoe = shoe.concat(createDeck());
     }
     shuffleDeck();
-    const reshuffleMarkerPosition = shoe.length - Math.floor(Math.random() * (135 - 125 + 1)) - 125;
+    const reshuffleMarkerPosition = shoe.length - Math.floor(Math.random() * (40 - 20 + 1)) - 20; // Adjusted range for last 20-40 cards
     shoe.splice(reshuffleMarkerPosition, 0, { suit: 'R', rank: 'Marker' });
     game_state.reshuffle = false;
     console.log("New Shoe!");
 }
+
 
 // Shuffle the deck
 function shuffleDeck() {
@@ -147,14 +205,14 @@ function shuffleDeck() {
 function drawCard() {
     if (shoe.length === 0) {
         console.log("The deck is empty...");
-        return null;
+        createShoe(); // Reshuffle the shoe when it's empty
     }
     let card = shoe.pop();
     if (card.suit === 'R' && card.rank === 'Marker') {
         game_state.reshuffle = true;
-        if (shoe.length > 0) {
-            card = shoe.pop();
-        }
+        console.log("Reshuffle marker hit!");
+        createShoe(); // Reshuffle the shoe when reshuffle marker is hit
+        card = shoe.pop(); // Draw a new card after reshuffling
     }
     const value = cardEval(card);
     if (value < 7) {
@@ -229,20 +287,93 @@ function logHandTotals() {
 function revealDealerCard() {
     const dealerHandUl = document.getElementById('dealer_hand_ul');
 
-    if (hiddenDealerCard) {
-        hiddenDealerCard = false;
+    if (hiddenDealerCard && dealerHiddenCard) {
+        hiddenDealerCard = false; // Set this flag to false only when we have revealed the hidden card successfully
         const hiddenCardElement = dealerHandUl.querySelector('.card img[alt="Hidden Card"]');
-        if (hiddenCardElement && dealerHiddenCard) {
+        if (hiddenCardElement) {
             hiddenCardElement.src = `images/${dealerHiddenCard.suit}${dealerHiddenCard.rank}.png`;
             hiddenCardElement.alt = `${dealerHiddenCard.suit}${dealerHiddenCard.rank}`;
+            console.log("Revealed dealer card:", dealerHiddenCard);
         } else {
-            console.error("Hidden card element or dealerHiddenCard is not properly set.");
+            console.error("Hidden card element is not properly set. hiddenCardElement is null.");
         }
+    } else {
+        console.error("Hidden card element or dealerHiddenCard is not properly set. hiddenDealerCard:", hiddenDealerCard, "dealerHiddenCard:", dealerHiddenCard);
     }
     logHandTotals(); // Log totals after revealing the hidden card
 }
 
+async function totals() {
+    const playerHandUl = document.getElementById('player_hand_ul');
+    const dealerHandUl = document.getElementById('dealer_hand_ul');
+
+    const playerCards = Array.from(playerHandUl.querySelectorAll('.card img')).map(cardImg => {
+        const suit = cardImg.alt.slice(0, 1);
+        const rank = cardImg.alt.slice(1);
+        return { suit, rank };
+    });
+
+    const dealerCards = Array.from(dealerHandUl.querySelectorAll('.card img')).map(cardImg => {
+        const suit = cardImg.alt.slice(0, 1);
+        const rank = cardImg.alt.slice(1);
+        return { suit, rank };
+    });
+
+    const playerTotal = handEval(playerCards);
+    const dealerTotal = handEval(dealerCards);
+
+    console.log(`Final Player Total: ${playerTotal}`);
+    console.log(`Final Dealer Total: ${dealerTotal}`);
+
+    if (playerTotal > 21) {
+        console.log("Player busts. Dealer wins.");
+        displayed_bet = 0; // Player loses bet
+    } else if (dealerTotal > 21) {
+        console.log("Dealer busts. Player wins.");
+        balance += Math.ceil(displayed_bet * 2); // Player wins twice the current bet
+        displayed_bet = 0;
+    } else if (playerTotal > dealerTotal) {
+        console.log("Player wins.");
+        balance += Math.ceil(displayed_bet * 2); // Player wins twice the current bet
+        displayed_bet = 0;
+    } else if (playerTotal < dealerTotal) {
+        console.log("Dealer wins.");
+        displayed_bet = 0; // Player loses bet
+    } else {
+        console.log("It's a push.");
+        balance += displayed_bet; // Player gets back the bet
+        displayed_bet = 0;
+    }
+
+    update_balance();
+    update_bet();
+    await sleep(2);
+
+    await buyIn(); // Call the buyIn function here if the balance is 0
+
+    // Reset the game for the next round
+    resetGame();
+}
+
+async function buyIn() {
+    if (balance === 0) {
+        buyInCount += 1;
+        balance = 100;
+        update_balance();
+        alert("Your balance is 0. You are buying back in for 100.");
+        console.log(`Player bought in. Total buy-ins: ${buyInCount}`);
+    }
+}
+
+
 function confirm_bet() {
+    if (displayed_bet === 0) {
+        console.log("Cannot confirm bet. Bet amount is zero.");
+        return; // Exit the function if the bet amount is zero
+    }
+    update_bet();
+    update_balance();
+
     // Hide chip buttons and confirm bet button
     document.getElementById('chip_buttons').classList.add('hidden');
 
@@ -257,13 +388,19 @@ function confirm_bet() {
     
     // Move to segment 2 (deal cards, bring up options menu, etc)
     dealInitialCards();
+    firstTurn = true; // Reset the first turn flag
 }
 
 async function dealInitialCards() {
     const playerCards = [drawCard(), drawCard()];
     const dealerCards = [drawCard(), drawCard()];
 
-    dealerHiddenCard = dealerCards[0]; // Store the actual value of the hidden card
+    if (dealerCards[0]) {
+        dealerHiddenCard = dealerCards[0]; // Store the actual value of the hidden card
+        hiddenDealerCard = true; // Ensure hiddenDealerCard is set to true
+    } else {
+        console.error("Failed to draw initial dealer cards. dealerCards[0] is not set.");
+    }
 
     updateHand('player_hand_ul', playerCards);
     updateHand('dealer_hand_ul', dealerCards, hiddenDealerCard);
@@ -298,11 +435,14 @@ async function dealInitialCards() {
     }
 }
 
-
 function updateHand(handId, cards, hideFirstCard = false) {
     const handElement = document.getElementById(handId);
     handElement.innerHTML = '';
     cards.forEach((card, index) => {
+        if (!card) {
+            console.error("Invalid card detected:", card);
+            return; // Skip invalid cards
+        }
         const cardElement = document.createElement('li');
         cardElement.className = 'card';
         if (hideFirstCard && index === 0) {
@@ -314,9 +454,6 @@ function updateHand(handId, cards, hideFirstCard = false) {
     });
     logHandTotals();
 }
-
-// Initialize the game
-createShoe();
 
 async function hit() {
     const playerHandUl = document.getElementById('player_hand_ul');
@@ -358,7 +495,12 @@ async function stand() {
     updateOptions(); // Update options based on the first turn flag
     document.getElementById('options').classList.add('hidden');
     await sleep(2);
-    revealDealerCard();
+
+    // Reveal hidden dealer card only if it's still hidden
+    if (hiddenDealerCard) {
+        revealDealerCard();
+    }
+
     logHandTotals();
     console.log("Player stood.");
     dealerTurn(); // Call dealerTurn after the player stands
@@ -384,9 +526,11 @@ async function double_down() {
 async function dealerTurn() {
     const dealerHandUl = document.getElementById('dealer_hand_ul');
 
-    // Reveal hidden dealer card
-    revealDealerCard();
-
+    // Reveal hidden dealer card only if it's still hidden
+    if (hiddenDealerCard) {
+        revealDealerCard();
+    }
+    await sleep(2);
     let dealerCards = Array.from(dealerHandUl.querySelectorAll('.card img')).map(cardImg => {
         const suit = cardImg.alt.slice(0, 1);
         const rank = cardImg.alt.slice(1);
@@ -415,7 +559,6 @@ async function dealerTurn() {
 
     if (dealerTotal >= 17) {
         console.log('Dealer stands.');
-        await sleep(2);
     }
 
     totals(); // Call the totals function to determine the outcome
@@ -429,7 +572,7 @@ document.getElementById('double_down').addEventListener('click', double_down);
 
 function updateOptions() {
     const doubleDownButton = document.getElementById('double_down');
-    if (firstTurn) {
+    if (firstTurn && balance >= displayed_bet) {
         doubleDownButton.classList.remove('hidden');
     } else {
         doubleDownButton.classList.add('hidden');
@@ -437,57 +580,6 @@ function updateOptions() {
 }
 
 updateOptions(); // Initial call to set the options correctly
-
-async function totals() {
-    const playerHandUl = document.getElementById('player_hand_ul');
-    const dealerHandUl = document.getElementById('dealer_hand_ul');
-
-    const playerCards = Array.from(playerHandUl.querySelectorAll('.card img')).map(cardImg => {
-        const suit = cardImg.alt.slice(0, 1);
-        const rank = cardImg.alt.slice(1);
-        return { suit, rank };
-    });
-
-    const dealerCards = Array.from(dealerHandUl.querySelectorAll('.card img')).map(cardImg => {
-        const suit = cardImg.alt.slice(0, 1);
-        const rank = cardImg.alt.slice(1);
-        return { suit, rank };
-    });
-
-    const playerTotal = handEval(playerCards);
-    const dealerTotal = handEval(dealerCards);
-
-    console.log(`Final Player Total: ${playerTotal}`);
-    console.log(`Final Dealer Total: ${dealerTotal}`);
-
-    if (playerTotal > 21) {
-        console.log("Player busts. Dealer wins.");
-        displayed_bet = 0; // Player loses bet
-    } else if (dealerTotal > 21) {
-        console.log("Dealer busts. Player wins.");
-        balance += displayed_bet * 2; // Player wins twice the current bet
-        displayed_bet = 0;
-    } else if (playerTotal > dealerTotal) {
-        console.log("Player wins.");
-        balance += displayed_bet * 2; // Player wins twice the current bet
-        displayed_bet = 0;
-    } else if (playerTotal < dealerTotal) {
-        console.log("Dealer wins.");
-        displayed_bet = 0; // Player loses bet
-    } else {
-        console.log("It's a push.");
-        balance += displayed_bet; // Player gets back the bet
-        displayed_bet = 0;
-    }
-
-    update_balance();
-    update_bet();
-    await sleep(2);
-
-    // Reset the game for the next round
-    saveGameState()
-    resetGame();
-}
 
 function resetGame() {
     // Clear player and dealer hands
@@ -513,64 +605,61 @@ function resetGame() {
     firstTurn = true;
     hiddenDealerCard = true;
 
-    // Check if balance is 0 and prompt for buy-in
-    if (balance === 0) {
-        buyIn();
-    }
-    saveGameState()
     console.log("Game reset. Ready for next round.");
 }
 
-//keyboard shortcuts
+
 document.addEventListener('keydown', (event) => {
     switch (event.key) {
         case '1':
-            document.getElementById('bet_1').click();
+            if (document.getElementById('bet_1').offsetParent !== null) {
+                document.getElementById('bet_1').click();
+            }
             break;
         case '2':
-            document.getElementById('bet_5').click();
+            if (document.getElementById('bet_5').offsetParent !== null) {
+                document.getElementById('bet_5').click();
+            }
             break;
         case '3':
-            document.getElementById('bet_10').click();
+            if (document.getElementById('bet_10').offsetParent !== null) {
+                document.getElementById('bet_10').click();
+            }
             break;
         case '4':
-            document.getElementById('bet_25').click();
+            if (document.getElementById('bet_25').offsetParent !== null) {
+                document.getElementById('bet_25').click();
+            }
             break;
         case '5':
-            document.getElementById('bet_50').click();
+            if (document.getElementById('bet_50').offsetParent !== null) {
+                document.getElementById('bet_50').click();
+            }
             break;
         case '6':
-            document.getElementById('bet_100').click();
+            if (document.getElementById('bet_100').offsetParent !== null) {
+                document.getElementById('bet_100').click();
+            }
             break;
         case 'Enter':
-            if (!document.getElementById('chip_buttons').classList.contains('hidden')) {
+            if (document.getElementById('confirm_bet').offsetParent !== null) {
                 document.getElementById('confirm_bet').click();
             }
             break;
         case 'h':
-            if (!document.getElementById('options').classList.contains('hidden')) {
+            if (document.getElementById('hit').offsetParent !== null) {
                 document.getElementById('hit').click();
             }
             break;
         case 's':
-            if (!document.getElementById('options').classList.contains('hidden')) {
+            if (document.getElementById('stand').offsetParent !== null) {
                 document.getElementById('stand').click();
             }
             break;
         case 'd':
-            if (!document.getElementById('options').classList.contains('hidden')) {
+            if (document.getElementById('double_down').offsetParent !== null) {
                 document.getElementById('double_down').click();
             }
             break;
     }
-});
-
-document.addEventListener('DOMContentLoaded', (event) => {
-    document.getElementById('tips-button').addEventListener('click', () => {
-        document.getElementById('tips_menu').classList.toggle('hidden');
-    });
-
-    document.getElementById('close_tips').addEventListener('click', () => {
-        document.getElementById('tips_menu').classList.add('hidden');
-    });
 });

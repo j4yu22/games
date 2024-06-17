@@ -11,60 +11,68 @@
         <h2>Balance: <span id="balance">100</span></h2>
         <h3>Current Bet: <span id="current_bet"></span></h3>
     </div>
-    <div id="deck">
-        <img src="images/facedown_card.jpg" alt="deck image" width="100px">
-    </div>
+    <div id="deck" class="card-deck">
+        <img src="images/facedown_card.jpg" alt="deck image" class="facedown-card card">
+    </div>    
     <div id="chip_buttons">
-        <div>
-            <div id="counter_1" class="chip_counter">0</div>
+        <div class="chip-wrapper">
             <button id="bet_1" class="chip">
+                <div id="counter_1" class="chip_counter">0</div>
                 <img src="images/bet_1.jpg" alt="1">
                 <div class="chip-value">1</div>
             </button>
         </div>
-        <div>
-            <div id="counter_5" class="chip_counter">0</div>
+        <div class="chip-wrapper">
             <button id="bet_5" class="chip">
+                <div id="counter_5" class="chip_counter">0</div>
                 <img src="images/bet_5.jpg" alt="5">
                 <div class="chip-value">5</div>
             </button>
         </div>
-        <div>
-            <div id="counter_10" class="chip_counter">0</div>
+        <div class="chip-wrapper">
             <button id="bet_10" class="chip">
+                <div id="counter_10" class="chip_counter">0</div>
                 <img src="images/bet_10.jpg" alt="10">
                 <div class="chip-value">10</div>
             </button>
         </div>
-        <div>
-            <div id="counter_25" class="chip_counter">0</div>
+        <div class="chip-wrapper">
             <button id="bet_25" class="chip">
+                <div id="counter_25" class="chip_counter">0</div>
                 <img src="images/bet_25.jpg" alt="25">
                 <div class="chip-value">25</div>
             </button>
         </div>
-        <div>
-            <div id="counter_50" class="chip_counter">0</div>
+        <div class="chip-wrapper">
             <button id="bet_50" class="chip">
+                <div id="counter_50" class="chip_counter">0</div>
                 <img src="images/bet_50.jpg" alt="50">
                 <div class="chip-value">50</div>
             </button>
         </div>
-        <div>
-            <div id="counter_100" class="chip_counter">0</div>
+        <div class="chip-wrapper">
             <button id="bet_100" class="chip">
+                <div id="counter_100" class="chip_counter">0</div>
                 <img src="images/bet_100.jpg" alt="100">
                 <div class="chip-value">100</div>
             </button>
         </div>
+        <div class="chip-wrapper">
+            <button id="bet_all" class="chip">
+                <img src="images/all_in.jpg" alt="All">
+                <div class="chip-value">All In</div>
+            </button>
+        </div>
         <button id="confirm_bet">Confirm</button>
     </div>
+    
     <div id="dealer_hand" class="hidden">
         <h3>Dealer hand</h3>
-        <ul id="dealer_hand_ul"> <!-- Corrected ID -->
-            <li class="card"><img src="images/facedown_card.jpg" alt="Hidden Card" width="100px"></li>
-            <li id="dealer_card_2" class="card"></li>
-        </ul>
+        <ul id="dealer_hand_ul">
+            <li class="card">
+                <img src="images/facedown_card.jpg" alt="Hidden Card" class="card">
+            </li>
+        </ul>        
     </div>
     <div id="player_hand" class="hidden">
         <h3>Player hand</h3>
