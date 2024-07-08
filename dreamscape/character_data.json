@@ -1,0 +1,27 @@
+{
+    "Name": "10",
+    "Class_Level": "PLAYER NAME 10",
+    "Race": "EXPERIENCE NEXT LEVEL",
+    "Experience": "NEXT LEVEL",
+    "Background": "[6]",
+    "Alignment": "Lawful Neutral",
+    "Attributes": {
+        "Strength": "Not Found",
+        "Dexterity": "Not Found",
+        "Constitution": "Not Found",
+        "Intelligence": "Not Found",
+        "Wisdom": "Not Found",
+        "Charisma": "Not Found"
+    },
+    "Proficiencies": {
+        "Armor": "Light, Medium, Shields (druids will not wear armor or use shields made of metal)",
+        "Weapons": "Club, Dagger, Dart, Javelin, Mace, Quarterstaff, Scimitar, Sickle, Sling, Spear",
+        "Tools": "[11]",
+        "Languages": "[13] EQUIPPED ITEMS"
+    },
+    "Skills": {
+        "Acrobatics": "Not Found",
+        "Animal Handling": "Not Found",
+        "Arcana": "Not Found"
+    }
+}
