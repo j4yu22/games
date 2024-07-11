@@ -10,50 +10,99 @@ def extract_text_from_pdf(file_path):
             full_text += page.extract_text() + "\n"
     return full_text
 
+def safe_search(pattern, text):
+    match = re.search(pattern, text)
+    return match.group(1).strip() if match else "Not Found"
+
 def parse_character_sheet(text):
     data = {}
 
-    # Debug print statement to inspect the text content
-    print(text)
+    # Print the raw text for debugging
+    print("Raw PDF text:\n", text)
 
-    def safe_search(pattern, text):
-        match = re.search(pattern, text)
-        return match.group(1).strip() if match else "Not Found"
-
-    # Using regex to extract data; this needs to be customized based on the exact PDF layout
-    data['Name'] = safe_search(r'PLAYER NAME\s+([^\n]+)', text)
-    data['Class_Level'] = safe_search(r'CLASS\(ES\) & LEVEL\(S\)\s+([^\n]+)', text)
-    data['Race'] = safe_search(r'RACE\s+([^\n]+)', text)
-    data['Experience'] = safe_search(r'EXPERIENCE\s+([^\n]+)', text)
-    data['Background'] = safe_search(r'BACKGROUND:\s+([^\n]+)', text)
-    data['Alignment'] = safe_search(r'ALIGNMENT:\s+([^\n]+)', text)
+    # General character information
+    data['Character Name'] = safe_search(r'\bNAME\b\s+([^\n]+)', text)
+    data['Classes_Levels'] = safe_search(r'\bCLASS\(ES\) & LEVEL\(S\)\s+([^\n]+)', text)
+    data['Race'] = safe_search(r'\bRACE\b\s+([^\n]+)', text)
     
-    # Attributes
-    data['Attributes'] = {
-        'Strength': safe_search(r'STR\s+(\d+)', text),
-        'Dexterity': safe_search(r'DEX\s+(\d+)', text),
-        'Constitution': safe_search(r'CON\s+(\d+)', text),
-        'Intelligence': safe_search(r'INT\s+(\d+)', text),
-        'Wisdom': safe_search(r'WIS\s+(\d+)', text),
-        'Charisma': safe_search(r'CHA\s+(\d+)', text)
+    # Ability Scores
+    data['Ability Scores'] = {
+        'Strength': safe_search(r'STR\s*\d*\s*([\d]+)', text),
+        'Dexterity': safe_search(r'DEX\s*\d*\s*([\d]+)', text),
+        'Constitution': safe_search(r'CON\s*\d*\s*([\d]+)', text),
+        'Intelligence': safe_search(r'INT\s*\d*\s*([\d]+)', text),
+        'Wisdom': safe_search(r'WIS\s*\d*\s*([\d]+)', text),
+        'Charisma': safe_search(r'CHA\s*\d*\s*([\d]+)', text)
     }
 
-    # Proficiencies
-    data['Proficiencies'] = {
-        'Armor': safe_search(r'Armor Proficiencies:\s+([^\n]+)', text),
-        'Weapons': safe_search(r'Weapon Proficiencies:\s+([^\n]+)', text),
-        'Tools': safe_search(r'Tool Proficiency:\s+([^\n]+)', text),
-        'Languages': safe_search(r'LANGUAGES\s+([^\n]+)', text)
+    # Proficiency Bonus
+    data['Proficiency Bonus'] = safe_search(r'PROFICIENCY BONUS\s+(\+\d+)', text)
+
+    # Saving Throws
+    data['Saving Throws'] = {
+        'Strength': safe_search(r'Strength\s*\+?([\d]+)', text),
+        'Dexterity': safe_search(r'Dexterity\s*\+?([\d]+)', text),
+        'Constitution': safe_search(r'Constitution\s*\+?([\d]+)', text),
+        'Intelligence': safe_search(r'Intelligence\s*\+?([\d]+)', text),
+        'Wisdom': safe_search(r'Wisdom\s*\+?([\d]+)', text),
+        'Charisma': safe_search(r'Charisma\s*\+?([\d]+)', text)
     }
 
-    # Skills (only listing a few for example purposes)
-    data['Skills'] = {
-        'Acrobatics': safe_search(r'Acrobatics \(Dex\)\s+\+?(\d+)', text),
-        'Animal Handling': safe_search(r'Animal Handling\(Wis\)\s+\+?(\d+)', text),
-        'Arcana': safe_search(r'Arcana\(Int\)\s+\+?(\d+)', text)
+    # Skills
+    skills = [
+        'Acrobatics', 'Animal Handling', 'Arcana', 'Athletics', 'Deception',
+        'History', 'Insight', 'Intimidation', 'Investigation', 'Medicine',
+        'Nature', 'Perception', 'Performance', 'Persuasion', 'Religion',
+        'Sleight of Hand', 'Stealth', 'Survival'
+    ]
+    data['Skills'] = {skill: safe_search(rf'{skill}\s*\(.*?\)\s*\+?([\d]+)', text) for skill in skills}
+
+    # AC, Initiative, Speed, Hit Points
+    data['AC'] = safe_search(r'\bAC\b\s+([\d]+)', text)
+    data['Initiative'] = safe_search(r'\bINIT\b\s+([\d]+)', text)
+    data['Speed'] = safe_search(r'\bSPEED\b\s+([\d]+)', text)
+    data['Hit Point Max'] = safe_search(r'Hit Point Max\s+([\d]+)', text)
+    data['Current HP'] = safe_search(r'CURRENT HIT POINTS\s+([\d]+)', text)
+    data['Temp HP'] = safe_search(r'TEMPORARY HIT POINTS\s+([\d]+)', text)
+
+    # Attacks and Notes
+    attacks_pattern = re.compile(r'NAME\s+ATK BONUS\s+DAMAGE/TYPE\s+([^\n]+)\s*\+?([\d]+)\s*([^\n]+)', re.DOTALL)
+    data['Attacks and Notes'] = [
+        {
+            'Attack Name': match[0].strip(),
+            'Atk Bonus': match[1].strip(),
+            'Damage Type': match[2].strip()
+        }
+        for match in attacks_pattern.findall(text)
+    ]
+
+    # Passive Perception
+    data['Passive Perception'] = safe_search(r'PASSIVE WISDOM \(PERCEPTION\)\s+([\d]+)', text)
+
+    # Languages
+    data['Languages'] = safe_search(r'LANGUAGES\s+([^\n]+)', text)
+
+    # Features and Traits
+    data['Features and Traits'] = safe_search(r'FEATURES & TRAITS\s+([^\n]+)', text)
+
+    # Spellcasting Information
+    data['Spellcasting'] = {
+        'Class': safe_search(r'SPELLCASTING\s+CLASS\s+([^\n]+)', text),
+        'Ability': safe_search(r'SPELLCASTING\s+ABILITY\s+([^\n]+)', text),
+        'Save DC': safe_search(r'SPELL SAVE DC\s+([\d]+)', text),
+        'Attack Bonus': safe_search(r'SPELL ATTACK BONUS\s+(\+\d+)', text),
     }
 
-    # Add other necessary fields similarly...
+    # Spell Slots
+    spell_slots_pattern = re.compile(r'(\d+)\s*:\s*\[?(\d+)\]?')
+    data['Spell Slots'] = {match[0]: match[1] for match in spell_slots_pattern.findall(text)}
+
+    # Prepared Spells and Cantrips
+    spells_pattern = re.compile(r'(CANTRIPS|LEVEL \d+ SPELLS)(.*?)\s*(?=CANTRIPS|LEVEL \d+ SPELLS|$)', re.DOTALL)
+    data['Prepared Spells and Cantrips'] = {
+        match[0]: [spell.strip() for spell in match[1].split('\n') if spell.strip()]
+        for match in spells_pattern.findall(text)
+    }
 
     return data
 
@@ -77,6 +126,11 @@ def main():
     save_to_json(character_data, output_file)
     
     print(f"Character data saved to {output_file}")
+    
+    # Print the contents of the JSON file
+    with open(output_file, 'r') as json_file:
+        data = json.load(json_file)
+        print(json.dumps(data, indent=4))
 
 if __name__ == "__main__":
     main()
