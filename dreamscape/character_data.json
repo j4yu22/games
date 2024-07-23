@@ -2,7 +2,7 @@
     "Character Name": "Ronso",
     "Classes_Levels": "Circle of Wildfire Druid 10",
     "Race": "Half-Elf",
-    "Background": "Prismari Student",
+    "Background": "Not Found",
     "Ability Scores": {
         "Strength": "8",
         "Dexterity": "18",
@@ -42,149 +42,94 @@
     },
     "AC": "17",
     "Initiative": "+4",
-    "Speed": "30",
+    "Speed": "30 ft",
     "Hit Point Max": "78",
     "Current HP": "78",
     "Temp HP": "0",
-    "Attack Info": [
-        {
-            "Attack Name": "(GFB) Flaming Twinblade",
-            "Attack Modifier": "+8",
-            "Attack Description": "2 fid n4 es+ s5 e[ ,m +a 1Agi Cca , l 1 dsl 8a s +h i 3n fg i] r+ e 2 tod 8 a d+ j a2 cd e6 n[ tf i tr ae r- gG etF (B G] F|* B* )* , S ei fm fep ctl se oM f e al ne ie m W ate ea dp so hn i eA lt dtack.***"
-        },
-        {
-            "Attack Name": "Fire Bolt",
-            "Attack Modifier": "+7",
-            "Attack Description": "2 Od n1 0 a [ hfi ir t,e t] h|* e* t* aR ra gn etg e tad k S ep s e 2l dl 1A 0t t fa irc ek . d* a* m* age. A flammable object hit by this spell ignites if it isn't being worn or carried."
-        },
-        {
-            "Attack Name": "-",
-            "Attack Modifier": "-",
-            "Attack Description": "-"
-        },
-        {
-            "Attack Name": "-",
-            "Attack Modifier": "-",
-            "Attack Description": "-"
-        },
-        {
-            "Attack Name": "-",
-            "Attack Modifier": "-",
-            "Attack Description": "-"
-        }
-    ],
     "Passive Perception": "17",
-    "Languages": [
-        "Elvish",
-        "Sylvan",
-        "Druidic"
-    ],
-    "Inventory": [
-        "GP: 299 Magic Items",
-        "Health Pots: 12/0/0 Flametongue DBS +1 w/ Animated Shield (very rare?)",
-        "Food: 3 Ring of Fire Resistance (rare)",
-        "Ring of Searing (homebrew)",
-        "Amulet of Restoration (*2 PB to each instance of healing)",
-        "Bag of Holding",
-        "Beholder CP - 38 hp, -1 4th, -1 5th",
-        "Wildshape Charges - 1 Feat: Elemental Adept (Fire)",
-        "DBS link Feat: Revenant Blade Cauterizing Flames"
-    ],
-    "Spellcasting": {
-        "Class": "Druid",
-        "Ability": "Wisdom",
+    "Languages": "Common Elvish Sylvan Druidic",
+    "Inventory": "GP: 299 Magic Items Health Pots: 12/0/0 Flametongue DBS +1 w/ Animated Shield (very rare?) Food: 3 Ring of Fire Resistance (rare) Ring of Searing (homebrew) Amulet of Restoration (*2 PB to each instance of healing) Bag of Holding Beholder CP - 38 hp, -1 4th, -1 5th Wildshape Charges - 1 Feat: Elemental Adept (Fire) DBS link Feat: Revenant Blade Cauterizing Flames FEATURES & TRAITS",
+    "Spell Modifiers": {
+        "Casting Class": "Druid",
+        "Casting Ability": "Wisdom",
         "Save DC": "15",
-        "Attack Bonus": "+7"
+        "Spell Attack Modifier": "+7"
     },
     "Spell Slots": {
         "Level 1": {
-            "current": 0,
-            "max": 0
+            "Current": "1",
+            "Max": "4"
         },
         "Level 2": {
-            "current": 0,
-            "max": 0
+            "Current": "2",
+            "Max": "3"
         },
         "Level 3": {
-            "current": 0,
-            "max": 0
+            "Current": "2",
+            "Max": "3"
         },
         "Level 4": {
-            "current": 0,
-            "max": 0
+            "Current": "2",
+            "Max": "3"
         },
         "Level 5": {
-            "current": 0,
-            "max": 0
+            "Current": "2",
+            "Max": "2"
         },
         "Level 6": {
-            "current": 0,
-            "max": 0
+            "Current": "Not Found",
+            "Max": "Not Found"
         },
         "Level 7": {
-            "current": 0,
-            "max": 0
+            "Current": "Not Found",
+            "Max": "Not Found"
         },
         "Level 8": {
-            "current": 0,
-            "max": 0
+            "Current": "Not Found",
+            "Max": "Not Found"
         },
         "Level 9": {
-            "current": 0,
-            "max": 0
+            "Current": "Not Found",
+            "Max": "Not Found"
         }
     },
     "Prepared Spells and Cantrips": {
-        "Cantrips": [
-            "\u25c9 Green Flame Blade \u25c9 Guidance \u25c9 Control Flames",
-            "\u25c9 Firebolt \u25c9 Mending \u3007",
-            "CANTRIPS",
-            "\u25c9 Prestitigitation \u25c9 Druidcraft \u3007",
-            "\u3007 \u25c9 Absorb Elements \u25c9 Shield SLOTS MAX",
-            "\u3007 \u3007 \u25c9 Burning Hands 1 4",
-            "\u3007 \u3007 \u25c9 Cure Wounds",
-            "\u3007 \u3007 \u25c9 Healing word",
-            "\u3007 \u3007 \u25c9 Speak with Animals(R)",
-            "MAX SLOTS \u25c9 Flaming Sphere \u3007 \u3007",
-            "3 2 \u25c9 Scorching Ray \u3007 \u3007",
-            "\u25c9 Lesser Restoration \u3007 \u3007",
-            "\u25c9 Moonbeam \u3007 \u3007",
-            "\u25c9 Spikegrowth \u3007 \u3007",
-            "\u3007 \u3007 \u25c9 Haste",
-            "\u3007 \u3007 \u25c9 Dispel Magic 2 3",
-            "\u3007 \u3007 \u25c9 Revivify",
-            "\u3007 \u3007 \u25c9 Conjure Animals",
-            "\u3007 \u3007 \u25c9 Aura of Vitality",
-            "\u25c9 Wall of Fire \u3007 \u3007",
-            "3 2 \u25c9 Aura of Life \u3007 \u3007",
-            "\u25c9 Fire Shield \u3007 \u3007",
-            "\u25c9 Polymorph \u3007 \u3007",
-            "\u3007 \u3007 \u25c9 Reincarnate",
-            "\u3007 \u3007 \u25c9 Flame Strike 2 2",
-            "\u3007 \u3007 \u25c9 Mass Cure Wounds",
-            "\u3007 \u3007 \u25c9 Greater Restoration",
-            "\u3007 \u3007 \u3007",
-            "\u3007 \u3007 \u3007",
-            "\u3007 \u3007 \u3007",
-            "\u3007 \u3007 \u3007",
-            "\u3007 \u3007 \u3007",
-            "\u3007 \u3007 \u3007",
-            "\u3007 \u3007 \u3007",
-            "\u3007 \u3007 \u3007",
-            "\u3007 \u3007 \u3007",
-            "\u3007 \u3007 \u3007",
-            "\u3007 \u3007 \u3007",
-            "\u3007 \u3007 \u3007",
-            "\u3007 \u3007 \u3007"
-        ],
-        "Level 1": [],
-        "Level 2": [],
-        "Level 3": [],
-        "Level 4": [],
-        "Level 5": [],
-        "Level 6": [],
-        "Level 7": [],
-        "Level 8": [],
-        "Level 9": []
+        "Cantrips": "Green Flame Blade Guidance Control Flames Firebolt Mending Prestitigitation Druidcraft",
+        "Level 1": "Absorb Elements Shield Burning Hands Cure Wounds Healing word Speak with Animals(R)",
+        "Level 2": "Flaming Sphere Scorching Ray Lesser Restoration Moonbeam Spikegrowth",
+        "Level 3": "Haste Dispel Magic Revivify Conjure Animals Aura of Vitality",
+        "Level 4": "Wall of Fire Aura of Life Fire Shield Polymorph",
+        "Level 5": "Reincarnate Flame Strike Mass Cure Wounds Greater Restoration",
+        "Level 6": "",
+        "Level 7": "",
+        "Level 8": "",
+        "Level 9": ""
+    },
+    "Attack Info": {
+        "Attack 1": {
+            "Name": "(GFB) Flaming Twinblade",
+            "Bonus": "+8",
+            "Description": "2d4+5[magical slashing]+2d8 + 2d6[fire-GFB]|***Simple Melee Weapon Attack.*** finesse, +1AC, 1d8 + 3 fire to adjacent target(GFB), effects of animated shield"
+        },
+        "Attack 2": {
+            "Name": "Fire Bolt",
+            "Bonus": "+7",
+            "Description": "2d10[fire]|***Ranged Spell Attack.*** On a hit, the target takes 2d10 fire damage. A flammable object hit by this spell ignites if it isn't being worn or carried."
+        },
+        "Attack 3": {
+            "Name": "Not Found",
+            "Bonus": "-",
+            "Description": "-"
+        },
+        "Attack 4": {
+            "Name": "Not Found",
+            "Bonus": "-",
+            "Description": "-"
+        },
+        "Attack 5": {
+            "Name": "Not Found",
+            "Bonus": "-",
+            "Description": "-"
+        }
     }
 }
