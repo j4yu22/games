@@ -1,5 +1,6 @@
 {
     "Character Name": "Ronso",
+    "Level": "10",
     "Classes_Levels": "Circle of Wildfire Druid 10",
     "Race": "Half-Elf",
     "Background": "Not Found",
@@ -94,16 +95,73 @@
         }
     },
     "Prepared Spells and Cantrips": {
-        "Cantrips": "Green Flame Blade Guidance Control Flames Firebolt Mending Prestitigitation Druidcraft",
-        "Level 1": "Absorb Elements Shield Burning Hands Cure Wounds Healing word Speak with Animals(R)",
-        "Level 2": "Flaming Sphere Scorching Ray Lesser Restoration Moonbeam Spikegrowth",
-        "Level 3": "Haste Dispel Magic Revivify Conjure Animals Aura of Vitality",
-        "Level 4": "Wall of Fire Aura of Life Fire Shield Polymorph",
-        "Level 5": "Reincarnate Flame Strike Mass Cure Wounds Greater Restoration",
-        "Level 6": "",
-        "Level 7": "",
-        "Level 8": "",
-        "Level 9": ""
+        "Cantrips": {
+            "Cantrips": [
+                "Green Flame Blade",
+                "Firebolt",
+                "Prestitigitation",
+                "Guidance",
+                "Mending",
+                "Druidcraft",
+                "Control Flames"
+            ]
+        },
+        "Level 1": {
+            "Level 1": [
+                "Shield",
+                "Burning Hands",
+                "Cure Wounds",
+                "Healing word",
+                "Speak with Animals(R)",
+                "Absorb Elements"
+            ]
+        },
+        "Level 2": {
+            "Level 2": [
+                "Flaming Sphere",
+                "Scorching Ray",
+                "Lesser Restoration",
+                "Moonbeam",
+                "Spikegrowth"
+            ]
+        },
+        "Level 3": {
+            "Level 3": [
+                "Haste",
+                "Dispel Magic",
+                "Revivify",
+                "Conjure Animals",
+                "Aura of Vitality"
+            ]
+        },
+        "Level 4": {
+            "Level 4": [
+                "Wall of Fire",
+                "Aura of Life",
+                "Fire Shield",
+                "Polymorph"
+            ]
+        },
+        "Level 5": {
+            "Level 5": [
+                "Reincarnate",
+                "Flame Strike",
+                "Mass Cure Wounds",
+                "Greater Restoration"
+            ]
+        },
+        "Level 6": {
+            "Level 6": []
+        },
+        "Level 7": {
+            "Level 7": []
+        },
+        "Level 8": {
+            "Level 8": []
+        },
+        "Level 9": {
+            "Level 9": []
+        }
     },
     "Attack Info": {
         "Attack 1": {
