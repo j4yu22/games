@@ -1,4 +1,5 @@
 import re
+import json
 
 class Entity:
     def __init__(self, name, meta, ac, hp, speed, attributes, senses, languages, challenge, traits, actions):
@@ -72,6 +73,22 @@ class Entity:
             print(f"  Description: {action['description']}")
         print()
 
+    def __str__(self):
+        entity_dict = {
+            "name": self.name,
+            "meta": self.meta,
+            "ac": self.ac,
+            "hp": self.hp,
+            "speed": self.speed,
+            "attributes": self.attributes,
+            "senses": self.senses,
+            "languages": self.languages,
+            "challenge": self.challenge,
+            "traits": self.traits,
+            "actions": self.actions
+        }
+        return json.dumps(entity_dict, indent=4)
+
 # Example usage:
 if __name__ == "__main__":
     entity = Entity(
@@ -87,4 +104,4 @@ if __name__ == "__main__":
         traits="<p><em><strong>Keen Hearing and Smell.</strong></em> The hound has advantage on Wisdom (Perception) checks that rely on hearing or smell.</p>",
         actions="<p><em><strong>Bite.</strong></em> <em>Melee Weapon Attack:</em> +5 to hit, reach 5 ft., one target. <em>Hit:</em> 7 (1d8 + 3) piercing damage.</p>"
     )
-    entity.display()
+    print(entity)

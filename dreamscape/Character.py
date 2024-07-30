@@ -111,6 +111,8 @@ class Character:
             'Attack 5': attack_info['Attack 5']
         }
 
+    def __str__(self):
+        return json.dumps(self.__dict__, indent=4)
 # Load character data from the JSON file
 with open('json/character_data.json') as f:
     character_data = json.load(f)
@@ -119,6 +121,4 @@ with open('json/character_data.json') as f:
 character = Character(character_data)
 
 # Print specific attributes for verification
-print(f"Attack 1 Name: {character.attack_info['Attack 1']['Name']}")
-print(f"Acrobatics: {character.skills['Acrobatics']}")
-print(f"Speed: {character.speed}")
+print(character)
