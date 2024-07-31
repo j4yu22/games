@@ -27,15 +27,15 @@ def fetch_spell_description(spell_name):
         return None
 
 class Spell:
-    def __init__(self, name, level_cast, caster_level):
+    def __init__(self, name, level_cast=None, caster_level=None):
         self.name = name.replace(' ', '-').lower()
-        self.level_cast = level_cast
-        self.caster_level = caster_level
         self.description = fetch_spell_description(self.name)
+        self.level_cast = level_cast if level_cast else self.extract_spell_level()
+        self.caster_level = caster_level if caster_level else character_data['Level']
         self.spell_slot_used = None
         self.range = None
         self.spell_attack_modifier = None
-        self.spell_save_dc = None
+        self.spell_save_dc = character_data['Spell Modifiers']['Save DC']
         self.spell_save_ability = None
         self.damage_dice = None
         self.effects_applied = None
@@ -43,6 +43,10 @@ class Spell:
 
         if self.description:
             self.parse_spell_information()
+
+    def extract_spell_level(self):
+        match = re.search(r'(\d+)(?:st|nd|rd|th)-level', self.description, re.IGNORECASE)
+        return int(match.group(1)) if match else None
 
     def parse_spell_information(self):
         # Extract basic information using regex or simple string parsing
@@ -57,8 +61,7 @@ class Spell:
         self.range = range_match.group(1) if range_match else "Unknown"
 
     def extract_advanced_info(self):
-        caster_level = character_data['Level']
-        prompt = f"{self.description} and the caster is level {caster_level}"
+        prompt = f"{self.description} and the caster is level {self.caster_level}. The spell is cast at level {self.level_cast} (use this to calculate damage die). If something is not specified, return None."
 
         response = openai.ChatCompletion.create(
             model="gpt-4o-mini",
@@ -68,13 +71,11 @@ class Spell:
             ],
             max_tokens=1500
         )
-        print(response)
         parsed_response = response['choices'][0]['message']['content'].strip()
         self.parse_advanced_info_response(parsed_response)
 
     def parse_advanced_info_response(self, response_text):
         # Parse the response from OpenAI API to fill in the spell attributes
-        # This can be done using regex or other parsing techniques
         spell_info = response_text.split('\n')
         for info in spell_info:
             if "spell attack modifier(if any):" in info:
@@ -85,16 +86,14 @@ class Spell:
                 self.damage_dice = info.split(': ')[1].strip()
 
     def display(self):
-        print(f"Spell Name: {self.name}")
-        print(f"Spell Slot Used: {self.spell_slot_used}")
+        print(f"Spell Name: {self.name.replace('-', ' ').title()}")
+        print(f"Spell Slot Used: {self.level_cast}")
         print(f"Range: {self.range}")
         print(f"Spell Attack Modifier: {self.spell_attack_modifier}")
         print(f"Spell Save DC: {self.spell_save_dc}")
         print(f"Spell Save Ability: {self.spell_save_ability}")
         print(f"Damage Dice: {self.damage_dice}")
-        print(f"Effects Applied: {self.effects_applied}")
-        print(f"Effects Applied if Failed Saving Throw: {self.effects_applied_if_failed_saving_throw}")
 
 # Example usage
-spell = Spell(name="fire bolt", level_cast=0, caster_level=character_data['Level'])
+spell = Spell(name="fireball")
 spell.display()

@@ -38,7 +38,6 @@ class Event:
         if to_hit_roll >= target_ac:
             self.success = True
             self.description = f"{attack_roll} + {attack_modifier} = {to_hit_roll} (Hit)"
-            print(self.description)
             self.roll_damage(damage_dice_str)
         else:
             self.success = False
@@ -152,4 +151,3 @@ class Event:
 entity = 'bjork'
 event = Event(event_type="attack", entity=entity, target=None)
 event.perform_event(attack_modifier=5, damage_dice_str='2d6 + 5', target_ac=13)
-print(event.description)

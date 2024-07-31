@@ -1,12 +1,14 @@
+# Entity.py
 import re
-import json
+from Event import Event
 
 class Entity:
     def __init__(self, name, meta, ac, hp, speed, attributes, senses, languages, challenge, traits, actions):
         self.name = name
         self.meta = meta
-        self.ac = ac
-        self.hp = hp
+        self.ac = self.extract_ac(ac)
+        self.hp = self.roll_hp(hp)
+        self.current_hp = self.hp  # Initialize current_hp with max hp
         self.speed = speed
         self.attributes = attributes
         self.senses = senses
@@ -15,10 +17,23 @@ class Entity:
         self.traits = traits
         self.actions = self.parse_actions(actions)
 
+    def extract_ac(self, ac_str):
+        match = re.search(r'\d+', ac_str)
+        return int(match.group()) if match else 0
+
+    def roll_hp(self, hp_str):
+        match = re.search(r'(\d+)d(\d+)(\s*[+-]\s*\d+)?', hp_str)
+        if match:
+            num_dice = int(match.group(1))
+            die_size = int(match.group(2))
+            modifier = int(match.group(3).replace(' ', '')) if match.group(3) else 0
+            event = Event(event_type="roll", entity=self.name)
+            total_hp = event.roll(die_size, num_dice) + modifier
+            return total_hp
+        return 0
+
     def parse_actions(self, actions):
         action_list = []
-
-        # Splitting the actions string into individual action descriptions
         action_descriptions = re.split(r'(?=<p><em><strong>)', actions)
         for action in action_descriptions:
             if action.strip():
@@ -49,13 +64,12 @@ class Entity:
         return match.group(1) if match else None
 
     def extract_damage(self, action):
-        # Extract all instances of Hit: x (damage)
         matches = re.findall(r'Hit: \d+ \(([\d+d+\- ]+)\)', action)
         return ', '.join(matches) if matches else None
 
     def extract_description(self, action):
-        description = re.sub(r'<.*?>', '', action)  # Remove HTML tags
-        description = re.sub(r'[\r\n]', '', description)  # Remove newlines
+        description = re.sub(r'<.*?>', '', action)
+        description = re.sub(r'[\r\n]', '', description)
         return description.strip()
 
     def display(self):
@@ -72,36 +86,3 @@ class Entity:
                 print(f"  Save DC: {action['save_dc']}")
             print(f"  Description: {action['description']}")
         print()
-
-    def __str__(self):
-        entity_dict = {
-            "name": self.name,
-            "meta": self.meta,
-            "ac": self.ac,
-            "hp": self.hp,
-            "speed": self.speed,
-            "attributes": self.attributes,
-            "senses": self.senses,
-            "languages": self.languages,
-            "challenge": self.challenge,
-            "traits": self.traits,
-            "actions": self.actions
-        }
-        return json.dumps(entity_dict, indent=4)
-
-# Example usage:
-if __name__ == "__main__":
-    entity = Entity(
-        name="Example Monster",
-        meta="Medium fiend, lawful evil",
-        ac="15 (Natural Armor)",
-        hp="45 (7d8 + 14)",
-        speed="30 ft.",
-        attributes={"STR": "17", "DEX": "12", "CON": "14", "INT": "6", "WIS": "13", "CHA": "6"},
-        senses="Darkvision 60 ft., Passive Perception 10",
-        languages="Infernal",
-        challenge="3 (700 XP)",
-        traits="<p><em><strong>Keen Hearing and Smell.</strong></em> The hound has advantage on Wisdom (Perception) checks that rely on hearing or smell.</p>",
-        actions="<p><em><strong>Bite.</strong></em> <em>Melee Weapon Attack:</em> +5 to hit, reach 5 ft., one target. <em>Hit:</em> 7 (1d8 + 3) piercing damage.</p>"
-    )
-    print(entity)

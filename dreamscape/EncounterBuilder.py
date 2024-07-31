@@ -74,7 +74,6 @@ class EncounterBuilder:
         player_level = self.get_player_level()
         player_cr = math.ceil(player_level / 2)
         target_cr = self.get_target_cr(player_cr, difficulty)
-        print(f"Target_CR: {target_cr}")
         return self.select_monsters_for_encounter(target_cr)
 
     def display_encounter(self, encounter):
@@ -110,7 +109,6 @@ class EncounterBuilder:
     def run(self, difficulty):
         encounter = self.generate_encounter(difficulty)
         self.save_encounter(encounter, 'json/current_encounter.json')
-        self.display_encounter(encounter)
 
 # Example usage:
 if __name__ == "__main__":

@@ -119,6 +119,3 @@ with open('json/character_data.json') as f:
 
 # Create a Character object
 character = Character(character_data)
-
-# Print specific attributes for verification
-print(character)

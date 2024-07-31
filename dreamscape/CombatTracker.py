@@ -1,81 +1,113 @@
-import tkinter as tk
-from tkinter import scrolledtext
+# CombatTracker.py
+import json
+import random
+from EncounterBuilder import EncounterBuilder
+from Entity import Entity
+from Event import Event
 
 class CombatTracker:
-    def __init__(self, root):
-        self.root = root
-        self.root.title("Combat Tracker")
+    def __init__(self, character_file, encounter_file, monster_file):
+        self.character_file = character_file
+        self.encounter_file = encounter_file
+        self.monster_file = monster_file
+        self.character = self.load_character()
+        self.character['Current HP'] = int(self.character['Current HP'])  # Ensure Current HP is an integer
+        self.enemies = self.build_encounter()
+        self.initiative_order = self.determine_initiative()
 
-        # Frame for enemies and statuses
-        self.enemies_frame = tk.Frame(root)
-        self.enemies_frame.pack(side=tk.TOP, fill=tk.X)
-        self.enemies_labels = []
-        for i in range(4):  # Assuming a maximum of 4 enemies
-            enemy_name = tk.Label(self.enemies_frame, text=f"Enemy {i + 1}")
-            enemy_status = tk.Label(self.enemies_frame, text="Status: Healthy")
-            enemy_name.grid(row=0, column=i)
-            enemy_status.grid(row=1, column=i)
-            self.enemies_labels.append((enemy_name, enemy_status))
+    def load_character(self):
+        with open(self.character_file, 'r') as file:
+            character_data = json.load(file)
+        return character_data
 
-        # Frame for initiative
-        self.initiative_frame = tk.Frame(root)
-        self.initiative_frame.pack(side=tk.LEFT, fill=tk.Y)
-        tk.Label(self.initiative_frame, text="Initiative").pack()
-        self.initiative_list = tk.Listbox(self.initiative_frame)
-        self.initiative_list.pack(fill=tk.BOTH, expand=True)
+    def build_encounter(self):
+        difficulty = input("Enter encounter difficulty (easy, medium, hard, deadly): ").lower()
+        encounter_builder = EncounterBuilder(self.monster_file, self.character_file)
+        encounter = encounter_builder.generate_encounter(difficulty)
+        enemies = []
+        for enemy_data in encounter:
+            enemy = Entity(
+                name=enemy_data['name'],
+                meta=enemy_data['meta'],
+                ac=enemy_data['Armor Class'],
+                hp=enemy_data['Hit Points'],
+                speed=enemy_data['Speed'],
+                attributes={
+                    'STR': enemy_data['STR'],
+                    'DEX': enemy_data['DEX'],
+                    'CON': enemy_data['CON'],
+                    'INT': enemy_data['INT'],
+                    'WIS': enemy_data['WIS'],
+                    'CHA': enemy_data['CHA']
+                },
+                senses=enemy_data.get('Senses', ''),
+                languages=enemy_data.get('Languages', ''),
+                challenge=enemy_data['Challenge'],
+                traits=enemy_data.get('Traits', ''),
+                actions=enemy_data.get('Actions', '')
+            )
+            enemies.append(enemy)
+        return enemies
 
-        # Frame for main storytelling paragraphs
-        self.story_frame = tk.Frame(root)
-        self.story_frame.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
-        self.story_text = scrolledtext.ScrolledText(self.story_frame, wrap=tk.WORD, width=40, height=10)
-        self.story_text.pack(fill=tk.BOTH, expand=True)
+    def roll_initiative(self, entity):
+        event = Event(event_type="initiative", entity=entity)
+        event.roll_initiative(int(entity.attributes['DEX']))
+        return event.roll_result
 
-        # Frame for HP and spell slots
-        self.hp_spell_frame = tk.Frame(root)
-        self.hp_spell_frame.pack(side=tk.LEFT, fill=tk.Y)
-        tk.Label(self.hp_spell_frame, text="HP").pack()
-        self.hp_label = tk.Label(self.hp_spell_frame, text="Current HP / Max HP")
-        self.hp_label.pack()
-        tk.Label(self.hp_spell_frame, text="Spell Slots").pack()
-        self.spell_slots_label = tk.Label(self.hp_spell_frame, text="Spell Slots Info")
-        self.spell_slots_label.pack()
+    def determine_initiative(self):
+        initiatives = [(self.roll_initiative(enemy), enemy) for enemy in self.enemies]
+        
+        player_entity = Entity(
+            name=self.character['Character Name'],
+            meta="Player Character",
+            ac=self.character['AC'],
+            hp=self.character['Hit Point Max'],
+            speed=self.character['Speed'],
+            attributes={
+                'STR': self.character['Ability Scores']['Strength'],
+                'DEX': self.character['Ability Scores']['Dexterity'],
+                'CON': self.character['Ability Scores']['Constitution'],
+                'INT': self.character['Ability Scores']['Intelligence'],
+                'WIS': self.character['Ability Scores']['Wisdom'],
+                'CHA': self.character['Ability Scores']['Charisma']
+            },
+            senses="",
+            languages=self.character['Languages'],
+            challenge="",
+            traits="",
+            actions=""
+        )
+        
+        player_initiative = self.roll_initiative(player_entity)
+        
+        initiatives.append((player_initiative, player_entity))
+        
+        initiatives.sort(key=lambda x: (x[0], int(x[1].attributes['DEX'])), reverse=True)
+        return [entity for _, entity in initiatives]
 
-        # Frame for roll log
-        self.roll_log_frame = tk.Frame(root)
-        self.roll_log_frame.pack(side=tk.RIGHT, fill=tk.Y)
-        tk.Label(self.roll_log_frame, text="Roll Log").pack()
-        self.roll_log_text = scrolledtext.ScrolledText(self.roll_log_frame, wrap=tk.WORD, width=20, height=10)
-        self.roll_log_text.pack(fill=tk.BOTH, expand=True)
-        self.toggle_button = tk.Button(self.roll_log_frame, text="Toggle Roll Log", command=self.toggle_roll_log)
-        self.toggle_button.pack()
+    def display_status(self):
+        print(f"{self.character['Character Name']}: {self.character['Current HP']} / {self.character['Hit Point Max']}")
+        for enemy in self.enemies:
+            status = "Healthy" if enemy.current_hp > (enemy.hp // 3) else "Bloodied" if enemy.current_hp > 0 else "Dead"
+            print(f"{enemy.name}: {status}")
+        print()  # Remove the additional newline here
 
-    def toggle_roll_log(self):
-        if self.roll_log_text.winfo_ismapped():
-            self.roll_log_text.pack_forget()
-        else:
-            self.roll_log_text.pack(fill=tk.BOTH, expand=True)
+    def run_combat(self):
+        while self.enemies and self.character['Current HP'] > 0:
+            self.display_status()
+            # Simulate combat turns here
+            # For now, just decrease HP of enemies for demonstration
+            for enemy in self.enemies:
+                if enemy.current_hp > 0:
+                    enemy.current_hp -= 10  # Placeholder for actual combat logic
 
-    def update_enemy_status(self, enemy_index, status):
-        self.enemies_labels[enemy_index][1].config(text=f"Status: {status}")
-
-    def update_initiative(self, initiative_list):
-        self.initiative_list.delete(0, tk.END)
-        for item in initiative_list:
-            self.initiative_list.insert(tk.END, item)
-
-    def update_story(self, story_text):
-        self.story_text.insert(tk.END, story_text + '\n')
-
-    def update_hp(self, current_hp, max_hp):
-        self.hp_label.config(text=f"{current_hp} / {max_hp}")
-
-    def update_spell_slots(self, spell_slots_info):
-        self.spell_slots_label.config(text=spell_slots_info)
-
-    def update_roll_log(self, roll_log_text):
-        self.roll_log_text.insert(tk.END, roll_log_text + '\n')
+            # Remove dead enemies
+            self.enemies = [enemy for enemy in self.enemies if enemy.current_hp > 0]
 
 if __name__ == "__main__":
-    root = tk.Tk()
-    tracker = CombatTracker(root)
-    root.mainloop()
+    monster_file_path = 'json/srd_5e_monsters.json'
+    character_file_path = 'json/character_data.json'
+    encounter_file_path = 'json/current_encounter.json'
+
+    combat_tracker = CombatTracker(character_file_path, encounter_file_path, monster_file_path)
+    combat_tracker.run_combat()
