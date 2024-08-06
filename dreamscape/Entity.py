@@ -2,6 +2,7 @@
 import re
 from Event import Event
 
+
 class Entity:
     def __init__(self, name, meta, ac, hp, speed, attributes, senses, languages, challenge, traits, actions):
         self.name = name
@@ -17,11 +18,16 @@ class Entity:
         self.traits = traits
         self.actions = self.parse_actions(actions)
 
+
     def extract_ac(self, ac_str):
+        if isinstance(ac_str, int):
+            return ac_str
         match = re.search(r'\d+', ac_str)
         return int(match.group()) if match else 0
 
     def roll_hp(self, hp_str):
+        if isinstance(hp_str, int):
+            return hp_str
         match = re.search(r'(\d+)d(\d+)(\s*[+-]\s*\d+)?', hp_str)
         if match:
             num_dice = int(match.group(1))
@@ -34,18 +40,14 @@ class Entity:
 
     def parse_actions(self, actions):
         action_list = []
-        action_descriptions = re.split(r'(?=<p><em><strong>)', actions)
-        for action in action_descriptions:
-            if action.strip():
-                action_name = self.extract_action_name(action)
-                atk_mod = self.extract_atk_mod(action)
-                save_dc = self.extract_save_dc(action)
-                damage = self.extract_damage(action)
-                description = self.extract_description(action)
+        for action_name, action_details in actions.items():
+            if action_details['Name'] != 'Not Found':
+                atk_mod = action_details.get('Bonus')
+                damage = action_details.get('Damage')
+                description = action_details.get('Description', '')
                 action_list.append({
                     'name': action_name,
                     'atk_mod': atk_mod,
-                    'save_dc': save_dc,
                     'damage': damage,
                     'description': description
                 })
@@ -82,7 +84,5 @@ class Entity:
                 print(f"  Attack Modifier: {action['atk_mod']}")
             if action['damage']:
                 print(f"  Damage: {action['damage']}")
-            if action['save_dc']:
-                print(f"  Save DC: {action['save_dc']}")
             print(f"  Description: {action['description']}")
         print()
