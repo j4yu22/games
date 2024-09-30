@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 Thug rolled initiative: [20] + 0 = 20
 Rust Monster rolled initiative: [14] + 1 = 15
 Lion rolled initiative: [7] + 2 = 9
@@ -38,3 +39,24 @@ Ronso rolled damage: (4, 4) + (8, 2) + (1, 2) = 21
 Rust Monster attacks Ronso for 2 damage
 Ronso rolled attack: [14] + 8 = 22
 Ronso rolled damage: (1, 2) + (3, 8) + (5, 5) = 24
+=======
+Ronso rolled initiative: [8] + 4 = 12
+Nothic rolled initiative: [7] + 3 = 10
+Ronso rolled attack: [15] + 8 = 23
+Ronso rolled damage: (2, 1) + (5, 7) + (5, 3) = 23
+Nothic attacks Ronso for 3 damage
+Ronso rolled attack: [12] + 8 = 20
+Ronso rolled damage: (2, 1) + (1, 8) + (3, 6) = 21
+Swarm of Bats rolled a 20-sided die: [1] = 1
+Swarm of Bats rolled initiative: [1] + 2 = 3
+Twig Blight rolled a 20-sided die: [17] = 17
+Twig Blight rolled initiative: [17] + 1 = 18
+Cultist rolled a 20-sided die: [6] = 6
+Cultist rolled initiative: [6] + 1 = 7
+Riding Horse rolled a 20-sided die: [7] = 7
+Riding Horse rolled initiative: [7] + 0 = 7
+Giant Elk rolled a 20-sided die: [8] = 8
+Giant Elk rolled initiative: [8] + 3 = 11
+Ronso rolled a 20-sided die: [9] = 9
+Ronso rolled initiative: [9] + 4 = 13
+>>>>>>> 095ddb78b03112e945e5adcf24332933e5a7b9dd

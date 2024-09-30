@@ -1,0 +1,17 @@
+Combat Sequence
+    Import Character sheet
+    Make adequate combat encounter
+    Roll initiative
+    Each entity gets a call of turn()
+        each turn allows for one action, bonus action, and movement.
+            list of actions:
+            - attack
+            - cast spell
+            - shove
+            - grapple
+            - dash
+            - hide
+            - disengage
+            - use object
+        bonus action and movement are tracked as resources
+    combat ends when either the player or creatures have 0 hp
