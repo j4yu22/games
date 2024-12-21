@@ -36,7 +36,7 @@ class Biome:
         Generate a forest biome.
         """
         map_data = [["grass" for _ in range(cols)] for _ in range(rows)]
-        self.add_water(map_data)
+        self.add_pond(map_data)
         self.add_tree_clusters(map_data)
         return map_data
 
@@ -49,34 +49,55 @@ class Biome:
         self.add_walls(map_data)
         return map_data
 
-    def add_water(self, map_data):
+    def add_pond(self, map_data):
         """
-        Add connected water tiles to a forest biome.
+        Add connected water tiles to a forest biome, scaled dynamically with map size, with 30% more water.
         """
         rows, cols = len(map_data), len(map_data[0])
+        total_tiles = rows * cols
+
+        # Scale the number of steps for water generation with the map size
+        base_min_steps = max(10, total_tiles // 50)  # At least 10 steps for smaller maps
+        base_max_steps = max(20, total_tiles // 20)  # Larger maps have more water
+        min_steps = int(base_min_steps * 1.5)  # Increase steps by 30%
+        max_steps = int(base_max_steps * 1.5)  # Increase steps by 30%
+
+        steps = random.randint(min_steps, max_steps)  # Total number of steps for water generation
+
+        # Start the water generation at a random position
         start_x, start_y = random.randint(0, cols - 1), random.randint(0, rows - 1)
-        steps = random.randint(rows * cols // 10, rows * cols // 5)
         x, y = start_x, start_y
+
         for _ in range(steps):
             map_data[y][x] = "water"
-            direction = random.choice([(0, 1), (1, 0), (0, -1), (-1, 0)])
+            # Randomly choose a direction for water to spread
+            direction = random.choice([(0, 1), (1, 0), (0, -1), (-1, 0)])  # Up, right, down, left
             x = max(0, min(cols - 1, x + direction[0]))
             y = max(0, min(rows - 1, y + direction[1]))
 
     def add_tree_clusters(self, map_data):
         """
-        Add tree clusters to a forest biome.
+        Add tree clusters to a forest biome, scaled dynamically with map size, with 30% more density.
         """
         rows, cols = len(map_data), len(map_data[0])
-        num_clusters = random.randint(5, 10)
+        total_tiles = rows * cols
+
+        # Scale the number of clusters and their sizes with the map size
+        base_num_clusters = random.randint(total_tiles // 50, total_tiles // 25)  # 1-2% of tiles as cluster centers
+        num_clusters = int(base_num_clusters * 1.7)  # Increase clusters by 30%
+
+        min_cluster_size = max(5, total_tiles // 200)  # At least 3 tiles per cluster
+        max_cluster_size = max(15, total_tiles // 50)  # At least 10 tiles for larger clusters
+
         for _ in range(num_clusters):
             cluster_x = random.randint(0, cols - 1)
             cluster_y = random.randint(0, rows - 1)
-            cluster_size = random.randint(5, 15)
+            cluster_size = random.randint(min_cluster_size, max_cluster_size)
+
             for _ in range(cluster_size):
                 x = max(0, min(cols - 1, cluster_x + random.randint(-2, 2)))
                 y = max(0, min(rows - 1, cluster_y + random.randint(-2, 2)))
-                if map_data[y][x] != "water":
+                if map_data[y][x] != "water":  # Avoid placing trees in water
                     map_data[y][x] = "trees"
 
     def add_pits(self, map_data):

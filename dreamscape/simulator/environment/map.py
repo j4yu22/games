@@ -32,45 +32,60 @@ def main():
         print("Invalid biome. Defaulting to forest.")
         biome_input = "forest"
 
-    # Generate map and biome
+    # Initialize the map and biome
     biome = Biome(biome_input)
     game_map = GenerateMap(rows, cols, GRID_SIZE, font, COLORS, biome)
 
-    def query_loop():
-        """
-        Separate thread for querying squares from the console.
-        """
-        while True:
-            cell = input("Enter a square to query (e.g., B3): ").strip()
-            if cell.lower() == "exit":
-                print("Exiting query loop.")
-                break
-            result = game_map.query_terrain(cell)
-            print(result)
+    # Instructions
+    print("Instructions:")
+    print("- Type a square (e.g., B3) to query it.")
+    print("- Type 'NEXT' to regenerate the map.")
+    print("- Close the Pygame window to exit.")
 
-    # Start query loop in a separate thread
-    query_thread = threading.Thread(target=query_loop, daemon=True)
-    query_thread.start()
-
-    # Main game loop
     running = True
+    user_input = ""  # Store typed input for querying
+
     while running:
+        screen.fill((0, 0, 0))  # Clear the screen
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
 
-            # Handle zoom and pan events
+            # Handle typing input for queries
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_RETURN:  # Enter key to submit input
+                    if user_input.upper() == "NEXT":
+                        print("Regenerating map...")
+                        game_map = GenerateMap(rows, cols, GRID_SIZE, font, COLORS, biome)
+                    else:
+                        query_result = game_map.query_terrain(user_input.upper())
+                        print(query_result)
+                    user_input = ""  # Reset input after processing
+                elif event.key == pygame.K_BACKSPACE:  # Backspace to delete
+                    user_input = user_input[:-1]
+                else:
+                    user_input += event.unicode.upper()  # Add typed character
+
+            # Handle map interaction events (panning, zooming)
             game_map.handle_events(event)
 
-        # Update map logic (e.g., panning)
+        # Update the game map (camera)
         game_map.update()
 
-        # Draw map
-        screen.fill((0, 0, 0))  # Clear screen
+        # Draw the map
         game_map.draw_grid(screen)
+
+        # Display current input on the screen
+        input_label = font.render(f"Input: {user_input}", True, COLORS["label"])
+        screen.blit(input_label, (10, screen.get_height() - 30))
+
+        # Refresh the display
         pygame.display.flip()
         clock.tick(60)
 
     pygame.quit()
+
+
 if __name__ == "__main__":
     main()

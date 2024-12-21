@@ -1,6 +1,7 @@
 import pygame
 import string
 
+
 class GenerateMap:
     def __init__(self, rows, cols, grid_size, font, colors, biome):
         self.rows = rows
@@ -27,7 +28,7 @@ class GenerateMap:
         self.map_data = [
             [
                 {
-                    "name": f"{string.ascii_uppercase[row]}{col + 1}",
+                    "name": f"{self.get_row_label(row)}{col + 1}",
                     "type": base_map[row][col],
                     "color": self.biome.get_tile_color(base_map[row][col]),
                     "properties": self.biome.get_tile_type(base_map[row][col]),
@@ -39,6 +40,20 @@ class GenerateMap:
 
         # Determine and apply spawn zones
         self.apply_spawn_zones()
+
+    def get_row_label(self, row):
+        """
+        Generate row labels (e.g., A-Z, AA-ZZ) for rows beyond the alphabet limit.
+        """
+        letters = string.ascii_uppercase
+        if row < 26:
+            return letters[row]
+        else:
+            label = ""
+            while row >= 0:
+                label = letters[row % 26] + label
+                row = row // 26 - 1
+            return label
 
     def apply_spawn_zones(self):
         """
@@ -120,20 +135,30 @@ class GenerateMap:
 
         # Draw labels
         for row in range(self.rows):
-            label = self.font.render(string.ascii_uppercase[row], True, self.colors["label"])
+            label = self.font.render(self.get_row_label(row), True, self.colors["label"])
             screen.blit(label, (5, row * self.grid_size * self.zoom - self.camera_y + 10))
         for col in range(self.cols):
             label = self.font.render(str(col + 1), True, self.colors["label"])
             screen.blit(label, (col * self.grid_size * self.zoom - self.camera_x + 10, 5))
-    
+
     def query_terrain(self, cell):
         """
         Query the terrain type of a cell (e.g., "B3").
         """
         try:
             col = int(cell[1:]) - 1  # Convert column (e.g., "3" -> 2)
-            row = string.ascii_uppercase.index(cell[0].upper())  # Convert row (e.g., "B" -> 1)
+            row = self.get_row_index(cell[0].upper())  # Convert row (e.g., "B" -> 1)
             tile = self.map_data[row][col]  # Get the tile dictionary
             return f"{tile['name']}: {tile['type']} ({tile['properties']})"
         except (IndexError, ValueError):
             return f"{cell}: Invalid cell"
+
+    def get_row_index(self, label):
+        """
+        Convert a row label (e.g., "A", "AA") back to its numeric index.
+        """
+        letters = string.ascii_uppercase
+        index = 0
+        for char in label:
+            index = index * 26 + letters.index(char) + 1
+        return index - 1
