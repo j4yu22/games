@@ -1,0 +1,487 @@
+{
+    "Field Bosses":{
+        "Bell Bearing Hunter": {
+            "runes": 30000,
+            "drop": 1,
+            "HP": 14156,
+            "min_level": 10,
+            "difficulty": "extreme"
+        },
+
+        "Death Rite Bird": {
+            "runes": 40000,
+            "drop": 1,
+            "HP": 12856,
+            "min_level": 7,
+            "difficulty": "hard"
+        },
+
+        "Royal Revenant": {
+            "runes": 15000,
+            "drop": 1,
+            "HP": 6854,
+            "min_level": 2,
+            "difficulty": "easy"
+        },
+
+        "Tree Sentinel": {
+            "runes": 30000,
+            "drop": 1,
+            "HP": 12199,
+            "min_level": 6,
+            "difficulty": "medium"
+        },
+
+        "Ulcerated Tree Spirit": {
+            "runes": 30000,
+            "drop": 1,
+            "HP": 17127,
+            "min_level": 0,
+            "difficulty": "hard"
+        },
+
+        "Valiant Gargoyle": {
+            "runes": 45000,
+            "drop": 1,
+            "HP": 7537,
+            "min_level": 10,
+            "difficulty": "medium"
+        },
+
+        "Golden Hippopotamus": {
+            "runes": 0,
+            "drop": 1,
+            "HP": 0,
+            "min_level": 0,
+            "difficulty": "easy"
+        },
+
+        "Leonine Misbegotten": {
+            "runes": 0,
+            "drop": 1,
+            "HP": 0,
+            "min_level": 0,
+            "difficulty": "easy"
+        },
+
+        "Grafted Scion": {
+            "runes": 0,
+            "drop": 1,
+            "HP": 0,
+            "min_level": 0,
+            "difficulty": "easy"
+        },
+
+        "Miranda Blossom": {
+            "runes": 0,
+            "drop": 1,
+            "HP": 0,
+            "min_level": 0,
+            "difficulty": "easy"
+        },
+
+        "Red Wolf of the King Consort": {
+            "runes": 0,
+            "drop": 1,
+            "HP": 0,
+            "min_level": 0,
+            "difficulty": "easy"
+        },
+
+        "Dragon Tree Sentinel": {
+            "runes": 45000,
+            "drop": 1,
+            "HP": 13948,
+            "min_level": 8,
+            "difficulty": "hard"
+        },
+
+        "Black Blade Kindred": {
+            "runes": 0,
+            "drop": 1,
+            "HP": 0,
+            "min_level": 0,
+            "difficulty": "hard"
+        },
+
+        "Ancestor Spirit": {
+            "runes": 0,
+            "drop": 1,
+            "HP": 0,
+            "min_level": 0,
+            "difficulty": "hard"
+        },
+
+        "Night's Calvary": {
+            "runes": 0,
+            "drop": 1,
+            "HP": 0,
+            "min_level": 0,
+            "difficulty": "medium"
+        },
+
+        "Ancient Hero Zamor": {
+            "runes": 0,
+            "drop": 1,
+            "HP": 0,
+            "min_level": 0,
+            "difficulty": "easy"
+        },
+        
+        "Erdtree Avatar": {
+            "runes": 0,
+            "drop": 1,
+            "HP": 0,
+            "min_level": 0,
+            "difficulty": "medium"
+        },
+
+        "Black Knife Assassin": {
+            "runes": 0,
+            "drop": 1,
+            "HP": 0,
+            "min_level": 0,
+            "difficulty": "medium"
+        }
+    },
+
+    "POIs": {
+        "Church": {
+            "runes": 0,
+            "drop": 1,
+            "HP": 0,
+            "min_level": 0,
+            "merchant": 0,
+            "note": "Add flask charges"
+        },
+
+        "Sorcerer's Rise": {
+            "runes": 0,
+            "drop": 1,
+            "HP": 0,
+            "min_level": 0,
+            "merchant": 0,
+            "note": "Drops sorcery related items"
+        },
+
+        "Township": {
+            "runes": 0,
+            "drop": 1,
+            "HP": 0,
+            "min_level": 0,
+            "merchant": 2,
+            "note": "guarunteed stonesword key; purple smithing stone; big merch"
+        },
+
+        "Cathedral": {
+            "runes": 0,
+            "drop": 1,
+            "HP": 0,
+            "min_level": 0,
+            "merchant": 0,
+            "note": "likely stonesword key; seals"
+        },
+
+        "Fire Cathedral": {
+            "runes": 0,
+            "drop": 1,
+            "HP": 0,
+            "min_level": 0,
+            "merchant": 0,
+            "note": "likely stonesword key; seals"
+        },
+
+        "Holy Cathedral": {
+            "runes": 0,
+            "drop": 1,
+            "HP": 0,
+            "min_level": 0,
+            "merchant": 0,
+            "note": "likely stonesword key; seals"
+        },
+
+        "Fort": {
+            "runes": 0,
+            "drop": 1,
+            "HP": 0,
+            "min_level": 0,
+            "merchant": 1,
+            "note": "likely stonesword key; staff room"
+        },
+
+        "Magic Fort": {
+            "runes": 0,
+            "drop": 1,
+            "HP": 0,
+            "min_level": 0,
+            "merchant": 1,
+            "note": "likely stonesword key; staff room"
+        },
+
+        "Camp": {
+            "runes": 0,
+            "drop": 1,
+            "HP": 0,
+            "min_level": 0,
+            "merchant": 1,
+            "note": "n/a"
+        },
+
+        "Madness Camp": {
+            "runes": 0,
+            "drop": 1,
+            "HP": 0,
+            "min_level": 0,
+            "merchant": 1,
+            "note": "n/a"
+        },
+
+        "Fire Camp": {
+            "runes": 0,
+            "drop": 1,
+            "HP": 0,
+            "min_level": 0,
+            "merchant": 1,
+            "note": "only good if matching weakness"
+        },
+
+        "Lightning Camp": {
+            "runes": 0,
+            "drop": 1,
+            "HP": 0,
+            "min_level": 0,
+            "merchant": 1,
+            "note": "only good if matching weakness"
+        },
+
+        "Ruins": {
+            "runes": 0,
+            "drop": 1,
+            "HP": 0,
+            "min_level": 0,
+            "merchant": 0,
+            "note": "n/a"
+        },
+
+        "Frost Ruins": {
+            "runes": 0,
+            "drop": 1,
+            "HP": 0,
+            "min_level": 0,
+            "merchant": 0,
+            "note": "n/a"
+        },
+
+        "Magic Ruins": {
+            "runes": 0,
+            "drop": 1,
+            "HP": 0,
+            "min_level": 0,
+            "merchant": 0,
+            "note": "n/a"
+        },
+
+        "Lightning Ruins": {
+            "runes": 0,
+            "drop": 1,
+            "HP": 0,
+            "min_level": 0,
+            "merchant": 0,
+            "note": "only good if matching weakness"
+        },
+
+        "Sleep Ruins": {
+            "runes": 0,
+            "drop": 1,
+            "HP": 0,
+            "min_level": 0,
+            "merchant": 0,
+            "note": "only source of sleep"
+        },
+
+        "Fire Ruins": {
+            "runes": 0,
+            "drop": 1,
+            "HP": 0,
+            "min_level": 0,
+            "merchant": 0,
+            "note": "only good if matching weakness"
+        },
+
+        "Death Ruins": {
+            "runes": 0,
+            "drop": 1,
+            "HP": 0,
+            "min_level": 0,
+            "merchant": 0,
+            "note": "n/a"
+        },
+
+        "Bleed Ruins": {
+            "runes": 0,
+            "drop": 1,
+            "HP": 0,
+            "min_level": 0,
+            "merchant": 0,
+            "note": "n/a"
+        },
+
+        "North Mine": {
+            "runes": 0,
+            "drop": 1,
+            "HP": 0,
+            "min_level": 0,
+            "merchant": 0,
+            "note": "guarunteed purple smithing stone"
+        },
+
+        "South Mine": {
+            "runes": 0,
+            "drop": 1,
+            "HP": 0,
+            "min_level": 0,
+            "merchant": 0,
+            "note": "guarunteed purple smithing stone"
+        },
+
+        "Castle": {
+            "runes": 0,
+            "drop": 1,
+            "HP": 0,
+            "min_level": 0,
+            "merchant": 1,
+            "note": "3 variations: crucible, banished, trolls"
+        }
+    
+    },
+
+    "Evergaols": {
+        "Death Rite Bird": {
+            "runes": 60000,
+            "drop": 1,
+            "HP": 13585,
+            "min_level": 8,
+            "difficulty": "hard"
+        },
+        
+        "Ancient Dragon": {
+            "runes": 55000,
+            "drop": 1,
+            "HP": 5049,
+            "min_level": 5,
+            "difficulty": "hard"
+        },
+
+        "Godskin Duo": {
+            "runes": 55000,
+            "drop": 1,
+            "HP": 13382,
+            "min_level": 8,
+            "difficulty": "hard"
+        },
+        
+        "Godskin Apostle": {
+            "runes": 0,
+            "drop": 1,
+            "HP": 0,
+            "min_level": 0,
+            "difficulty": "medium"
+        },
+
+        "Godksin Noble": {
+            "runes": 0,
+            "drop": 1,
+            "HP": 0,
+            "min_level": 0,
+            "difficulty": "medium"
+        },
+
+        "Banished Knights": {
+            "runes": 0,
+            "drop": 1,
+            "HP": 0,
+            "min_level": 0,
+            "difficulty": "hard"
+        },
+
+        "Beastly Brigade": {
+            "runes": 0,
+            "drop": 1,
+            "HP": 0,
+            "min_level": 0,
+            "difficulty": "medium"
+        },
+
+        "Beastmen of Farum Azula": {
+            "runes": 0,
+            "drop": 1,
+            "HP": 0,
+            "min_level": 0,
+            "difficulty": "medium"
+        },
+
+        "Bloodhound Knight": {
+            "runes": 0,
+            "drop": 1,
+            "HP": 0,
+            "min_level": 0,
+            "difficulty": "medium"
+        },
+
+        "Crucible Knight (sword)": {
+            "runes": 0,
+            "drop": 1,
+            "HP": 0,
+            "min_level": 0,
+            "difficulty": "medium"
+        },
+
+        "Crucible Knight (spear)": {
+            "runes": 0,
+            "drop": 1,
+            "HP": 0,
+            "min_level": 0,
+            "difficulty": "easy"
+        },  
+
+        "Nox Warriors": {
+            "runes": 0,
+            "drop": 1,
+            "HP": 0,
+            "min_level": 0,
+            "difficulty": "medium"
+        },
+
+        "Omen": {
+            "runes": 0,
+            "drop": 1,
+            "HP": 0,
+            "min_level": 0,
+            "difficulty": "easy"
+        },
+
+        "Stoneskin Lords": {
+            "runes": 0,
+            "drop": 1,
+            "HP": 0,
+            "min_level": 0,
+            "difficulty": "medium"
+        },
+
+        "Grave Warden Duelist": {
+            "runes": 0,
+            "drop": 1,
+            "HP": 0,
+            "min_level": 0,
+            "difficulty": "easy"
+        },
+
+        "Dragonkin Soldier": {
+            "runes": 0,
+            "drop": 1,
+            "HP": 0,
+            "min_level": 0,
+            "difficulty": "hard"
+        }
+    }
+}

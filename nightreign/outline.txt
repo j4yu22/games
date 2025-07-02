@@ -1,0 +1,106 @@
+goal: create a python program that will be able to be fed an image
+of a nightreign map, and create an optimal route for the user
+
+features:
+map reader - a class that will be able to parse the image and match
+it to a seed as recorded in the google sheet
+
+pathing algorithm - an algorithm that will help the user gain as
+many runes/passive drops as possible in as short of an amount of time
+as possible. it should prioritize POIs according to relevance in power
+gain, and time to complete. some POIs should only be done after a
+certain level, like storm POIs, red eyed field bosses, and castle
+rooftop
+
+path display - some way of displaying the ideal path a user should
+take, most likely a path overlayed over a screen shot of their map
+after they began their run, but for now just a path overlayed over
+the initial image fed to the program would work
+
+General strategy:
+start
+    get level 2, either by a camp, or nearby cathedral or fort
+    
+    clear an evergaol, take runes for level 4
+
+pre close 1
+    continue clearing as many evergaols, churches, mage towers (only
+    if recluse or caster duchess in team), and 1 mine
+    
+    camps that align with boss weakness are best done on this day 
+
+post close 1
+    any pre close 1 POIs that are within circle
+
+    scout castle, do castle basement if there is time
+
+night 1
+    do 1 POI, or non red eyed field boss as circle closes
+
+pre close 2
+    100% castle
+    
+    shifting earth
+
+    any POIs from the opposite side of what was done previously (if top
+    was done day 1, do bottom, if bottom was done day 1, do top)
+
+    any red eyed field bosses along the way
+
+    storm POIs
+
+post close 2
+    complete shifting earth
+
+    any POIs from day 2, mainly evergaols and red eyed field bosses
+
+night 2
+    anything that will get runes on the way to final circle
+
+    if already level 15, there is no need to risk death to storm here
+
+Timeline:
+    time till first circle beings to close - 270 sec 
+    time till first circle finishes closing - 180 sec  
+    time till second circle begins to close - 210 sec 
+    time till second circle finishes closing - 180 sec  
+
+    total time per day (excluding any boss fights) - 840 sec (14 min)
+
+Map contents:
+A1 - End 1
+B1 - FB 1; FB 2; Bird to E2
+C1 - POI 1
+D1 - EG 1; Start 3
+E1 - POI 2; FB 3
+F1 - End 3
+A2 - EG 2; Start 1
+B2 - POI 3; FB 4
+C2 - POI 4; FB 5
+D2 - Mine 1; End 2; Bird to B3
+E2 - POI 5; Mine 1; EG 3; Start 4; Bird to D5
+F2 - Start 5
+A3 - End 4
+B3 - POI 6; Bird to D5
+C3 - Start 2; End 5; EG 4
+D3 - FB 6; POI 7
+E3 - POI 8
+F3 - POI 9; EG 5; FB 7
+A4 - Start 6
+B4 - POI 10
+C4 - Castle
+D4 - End 12
+E4 - POI 11
+F4 - End 6; Start 8
+A5 - Start 9
+B5 - POI 12; EG 6
+C5 - End 8; FB 8; Start 10; End 9
+D5 - Start 7; Mine 2; Bird to B2
+E5 - POI 12; Mine 2; End 11
+F5 - POI 13
+A6 - 
+B6 - End 7; FB 9
+C6 - POI 14
+D6 - End 10; Start 11;
+E6 - EG 7; FB 10; Bird to E2
+F6 - POI 15

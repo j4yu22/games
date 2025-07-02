@@ -1,0 +1,509 @@
+{
+    "End 1": {
+        "Type": "End",
+        "Grid": "A1",
+        "Power": 0,
+        "Time" : 0,
+        "Min_Level": 0
+    },
+
+    "End 2": {
+        "Type": "End",
+        "Grid": "D2",
+        "Power": 0,
+        "Time" : 0,
+        "Min_Level": 0
+    },
+
+    "End 3": {
+        "Type": "End",
+        "Grid": "F1",
+        "Power": 0,
+        "Time" : 0,
+        "Min_Level": 0
+    },
+
+    "End 4": {
+        "Type": "End",
+        "Grid": "A3",
+        "Power": 0,
+        "Time" : 0,
+        "Min_Level": 0
+    },
+
+    "End 5": {
+        "Type": "End",
+        "Grid": "C3",
+        "Power": 0,
+        "Time" : 0,
+        "Min_Level": 0
+    },
+
+    "End 6": {
+        "Type": "End",
+        "Grid": "F4",
+        "Power": 0,
+        "Time" : 0,
+        "Min_Level": 0
+    },
+
+    "End 7": {
+        "Type": "End",
+        "Grid": "B6",
+        "Power": 0,
+        "Time" : 0,
+        "Min_Level": 0
+    },
+
+    "End 8": {
+        "Type": "End",
+        "Grid": "C5",
+        "Power": 0,
+        "Time" : 0,
+        "Min_Level": 0
+    },
+
+    "End 9": {
+        "Type": "End",
+        "Grid": "C5",
+        "Power": 0,
+        "Time" : 0,
+        "Min_Level": 0
+    },
+
+    "End 10": {
+        "Type": "End",
+        "Grid": "D6",
+        "Power": 0,
+        "Time" : 0,
+        "Min_Level": 0
+    },
+
+    "End 11": {
+        "Type": "End",
+        "Grid": "E5",
+        "Power": 0,
+        "Time" : 0,
+        "Min_Level": 0
+    },
+
+    "End 12": {
+        "Type": "End",
+        "Grid": "D4",
+        "Power": 0,
+        "Time" : 0,
+        "Min_Level": 0
+    },
+
+    "Start 1": {
+        "Type": "Start",
+        "Grid": "A2",
+        "Power": 0,
+        "Time" : 0,
+        "Min_Level": 0
+    },
+
+    "Start 2": {
+        "Type": "Start",
+        "Grid": "C3",
+        "Power": 0,
+        "Time" : 0,
+        "Min_Level": 0
+    },
+
+    "Start 3": {
+        "Type": "Start",
+        "Grid": "D1",
+        "Power": 0,
+        "Time" : 0,
+        "Min_Level": 0
+    },
+
+    "Start 4": {
+        "Type": "Start",
+        "Grid": "E2",
+        "Power": 0,
+        "Time" : 0,
+        "Min_Level": 0
+    },
+
+    "Start 5": {
+        "Type": "Start",
+        "Grid": "F2",
+        "Power": 0,
+        "Time" : 0,
+        "Min_Level": 0
+    },
+
+    "Start 6": {
+        "Type": "Start",
+        "Grid": "A4",
+        "Power": 0,
+        "Time" : 0,
+        "Min_Level": 0
+    },
+
+    "Start 7": {
+        "Type": "Start",
+        "Grid": "D5",
+        "Power": 0,
+        "Time" : 0,
+        "Min_Level": 0
+    },
+
+    "Start 8": {
+        "Type": "Start",
+        "Grid": "F4",
+        "Power": 0,
+        "Time" : 0,
+        "Min_Level": 0
+    },
+
+    "Start 9": {
+        "Type": "Start",
+        "Grid": "A5",
+        "Power": 0,
+        "Time" : 0,
+        "Min_Level": 0
+    },
+
+    "Start 10": {
+        "Type": "Start",
+        "Grid": "C5",
+        "Power": 0,
+        "Time" : 0,
+        "Min_Level": 0
+    },
+
+    "Start 11": {
+        "Type": "Start",
+        "Grid": "D6",
+        "Power": 0,
+        "Time" : 0,
+        "Min_Level": 0
+    },
+
+    "FB 1": {
+        "Type": "FB",
+        "Grid": "B1",
+        "Power": 0,
+        "Time" : 0,
+        "Min_Level": 0
+    },
+
+    "FB 2": {
+        "Type": "FB",
+        "Grid": "B1",
+        "Power": 0,
+        "Time" : 0,
+        "Min_Level": 0
+    },
+
+    "FB 3": {
+        "Type": "FB",
+        "Grid": "E1",
+        "Power": 0,
+        "Time" : 0,
+        "Min_Level": 0
+    },
+
+    "FB 4": {
+        "Type": "FB",
+        "Grid": "B2",
+        "Power": 0,
+        "Time" : 0,
+        "Min_Level": 0
+    },
+
+    "FB 5": {
+        "Type": "FB",
+        "Grid": "C2",
+        "Power": 0,
+        "Time" : 0,
+        "Min_Level": 0
+    },
+
+    "FB 6": {
+        "Type": "FB",
+        "Grid": "D3",
+        "Power": 0,
+        "Time" : 0,
+        "Min_Level": 0
+    },
+
+    "FB 7": {
+        "Type": "FB",
+        "Grid": "F3",
+        "Power": 0,
+        "Time" : 0,
+        "Min_Level": 0
+    },
+
+    "FB 8": {
+        "Type": "FB",
+        "Grid": "C5",
+        "Power": 0,
+        "Time" : 0,
+        "Min_Level": 0
+    },
+
+    "FB 9": {
+        "Type": "FB",
+        "Grid": "B6",
+        "Power": 0,
+        "Time" : 0,
+        "Min_Level": 0
+    },
+
+    "FB 10": {
+        "Type": "FB",
+        "Grid": "E6",
+        "Power": 0,
+        "Time" : 0,
+        "Min_Level": 0
+    },
+
+    "POI 1": {
+        "Type": "POI",
+        "Grid": "C1",
+        "Power": 0,
+        "Time" : 0,
+        "Min_Level": 0
+    },
+
+    "POI 2": {
+        "Type": "POI",
+        "Grid": "E1",
+        "Power": 0,
+        "Time" : 0,
+        "Min_Level": 0
+    },
+
+    "POI 3": {
+        "Type": "POI",
+        "Grid": "B2",
+        "Power": 0,
+        "Time" : 0,
+        "Min_Level": 0
+    },
+
+    "POI 4": {
+        "Type": "POI",
+        "Grid": "C2",
+        "Power": 0,
+        "Time" : 0,
+        "Min_Level": 0
+    },
+
+    "POI 5": {
+        "Type": "POI",
+        "Grid": "E2",
+        "Power": 0,
+        "Time" : 0,
+        "Min_Level": 0
+    },
+
+    "POI 6": {
+        "Type": "POI",
+        "Grid": "B3",
+        "Power": 0,
+        "Time" : 0,
+        "Min_Level": 0
+    },
+
+    "POI 7": {
+        "Type": "POI",
+        "Grid": "D3",
+        "Power": 0,
+        "Time" : 0,
+        "Min_Level": 0
+    },
+
+    "POI 8": {
+        "Type": "POI",
+        "Grid": "E3",
+        "Power": 0,
+        "Time" : 0,
+        "Min_Level": 0
+    },
+
+    "POI 9": {
+        "Type": "POI",
+        "Grid": "F3",
+        "Power": 0,
+        "Time" : 0,
+        "Min_Level": 0
+    },
+
+    "POI 10": {
+        "Type": "POI",
+        "Grid": "B4",
+        "Power": 0,
+        "Time" : 0,
+        "Min_Level": 0
+    },
+
+    "POI 11": {
+        "Type": "POI",
+        "Grid": "E4",
+        "Power": 0,
+        "Time" : 0,
+        "Min_Level": 0
+    },
+
+    "POI 12": {
+        "Type": "POI",
+        "Grid": "B5",
+        "Power": 0,
+        "Time" : 0,
+        "Min_Level": 0
+    },
+
+    "POI 13": {
+        "Type": "POI",
+        "Grid": "E5",
+        "Power": 0,
+        "Time" : 0,
+        "Min_Level": 0
+    },
+
+    "POI 14": {
+        "Type": "POI",
+        "Grid": "F5",
+        "Power": 0,
+        "Time" : 0,
+        "Min_Level": 0
+    },
+
+    "POI 15": {
+        "Type": "POI",
+        "Grid": "C6",
+        "Power": 0,
+        "Time" : 0,
+        "Min_Level": 0
+    },
+
+    "POI 16": {
+        "Type": "POI",
+        "Grid": "F6",
+        "Power": 0,
+        "Time" : 0,
+        "Min_Level": 0
+    },
+
+    "EG 1": {
+        "Type": "EG",
+        "Grid": "D1",
+        "Power": 0,
+        "Time" : 0,
+        "Min_Level": 0
+    },
+
+    "EG 2": {
+        "Type": "EG",
+        "Grid": "A2",
+        "Power": 0,
+        "Time" : 0,
+        "Min_Level": 0
+    },
+
+    "EG 3": {
+        "Type": "EG",
+        "Grid": "E2",
+        "Power": 0,
+        "Time" : 0,
+        "Min_Level": 0
+    },
+
+    "EG 4": {
+        "Type": "EG",
+        "Grid": "C3",
+        "Power": 0,
+        "Time" : 0,
+        "Min_Level": 0
+    },
+
+    "EG 5": {
+        "Type": "EG",
+        "Grid": "F3",
+        "Power": 0,
+        "Time" : 0,
+        "Min_Level": 0
+    },
+
+    "EG 6": {
+        "Type": "EG",
+        "Grid": "B5",
+        "Power": 0,
+        "Time" : 0,
+        "Min_Level": 0
+    },
+
+    "EG 7": {
+        "Type": "EG",
+        "Grid": "E6",
+        "Power": 0,
+        "Time" : 0,
+        "Min_Level": 0
+    },
+
+    "Mine 1": {
+        "Type": "Mine",
+        "Grid": ["D2","E2"],
+        "Power": 0,
+        "Time" : 0,
+        "Min_Level": 0
+    },
+
+    "Mine 2": {
+        "Type": "Mine",
+        "Grid": ["D5","E5"],
+        "Power": 0,
+        "Time" : 0,
+        "Min_Level": 0
+    },
+
+    "Bird 1": {
+        "Type": "Bird",
+        "Grid": "B1",
+        "Covers": ["C1", "D1", "E1", "E2"]
+    },
+
+    "Bird 2": {
+        "Type": "Bird",
+        "Grid": "D2",
+        "Covers": ["C2","B2", "B3"]
+    },
+
+    "Bird 3": {
+        "Type": "Bird",
+        "Grid": "E2",
+        "Covers": ["E3", "E4", "D5"]
+    },
+
+    "Bird 4": {
+        "Type": "Bird",
+        "Grid": "B3",
+        "Covers": ["B4", "C4", "C5", "D5"]
+    },
+
+    "Bird 5": {
+        "Type": "Bird",
+        "Grid": "D5",
+        "Covers": ["C5", "B5", "B4", "B3"]
+    },
+
+    "Bird 6": {
+        "Type": "Bird",
+        "Grid": "E6",
+        "Covers": ["E5", "F5", "F4", "F3", "F2", "E2"]
+    },
+
+    "Castle": {
+        "Type": "Castle",
+        "Grid": "C4",
+        "Power": 0,
+        "Time" : 0,
+        "Min_Level": 0
+    }
+}
