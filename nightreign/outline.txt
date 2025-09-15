@@ -104,3 +104,88 @@ C6 - POI 14
 D6 - End 10; Start 11;
 E6 - EG 7; FB 10; Bird to E2
 F6 - POI 15
+
+Algorithm Planning:
+    things to consider while planning a route:
+        start
+        end
+        priority POIs
+        distance between objectives
+        outer first, inner last
+
+    optimal start from each spawn (assuming 3 stonesword keys in a team):
+        1: level 2 from starting camp; A2 evergaol; clear topside
+        2: level 2 from starting camp; C3 evergaol; clear topside
+        3: level 2 from starting camp; D1 evergaol; clear topside
+        4: level 2 from starting camp; F2 camp if present; E2 evergaol; clear topside
+        5: level 2 from starting camp; E2 evergaol; clear topside
+        6: circle dependent
+            - if topside closing circle:
+                get level 2 from B3 POI; clear topside
+            - if bottomside closing circle:
+                clear either b4 or b5 (whichever is likely to give stonesword); clear B5 evergaol; clear bottomside
+        7: level 2 from E5 POI; E6 evergaol
+        8: level 2 from starting camp; F3 evergaol
+        9: level 2 from B5 POI; B5 evergaol
+        10: level 2 from starting camp; D5 mine; E6 evergaol
+        11: level 2 from starting camp; E6 evergaol
+
+    regardless of where circle will close it seems like the start of a run (up to level 4)
+    is always the same, with the exception of start 6. the players should always take runes
+    for the first evergaol they clear. when they do they will be level 4. level 4 makes 
+    everything other than storm POIs and red eyed bosses doable. castle contents and basement
+    are an option here, but generally castle can be done late day 1, or early day 2. the 
+    exception to this is if castle basement has the bell bearing hunter, in which case it must
+    either be done day 2 or skipped entirely (probably the latter).
+
+    to determine optimal pathing post level 4, players should navigate towards the night 1 end
+    prioritizing the outer points. generally it seems like the same optimal 'micro routes' can be used,
+    but they should be modified to accomodate stonesword key sources. generally knowing which side of
+    the map the night 1 circle will close on will determine which of these micro routes will be effective.
+
+    for maximum efficiency castle should be 100% completed day 2, so that the player doesn't need
+    to route through the castle twice. the exception to this is if crucible knights are present,
+    in which case going there right after level 4 would instantly power level the player to 
+    breeze through any red eyed field bosses, strong evergaols, storm POIs, or any other difficult
+    content in the game.
+
+    micro routes can be done forwards or backwards, but here are a few:
+        bottom side from left (reversable from right side, but castle is the only option afterwards):
+            B5 evergaol
+            C5 field boss
+            C5 church / sorcerer's rise (if caster)
+            D5 mine all the way through
+            E6 evergaol
+            castle/tree to E2/tree to B2
+        
+        topside from right (reversable from top left side as well):
+            E2 evergaol
+            E2 mine all the way through
+            D1 church / sorcerer's rise (if caster)
+            D1 evergaol
+            C2 field boss
+            C3 evergaol
+            C3 church / sorcerer's rise (if caster)
+            castle
+
+        topside from top (possible with B1 tree and start 3, likely not reversable):
+            D1 evergaol
+            D2 mine
+            E2 evergaol
+            E2 church / sorcerer's rise
+            D3 field boss
+            C2 field boss
+            C3 evergaol
+            C3 church / sorcerer's rise (if caster)
+            castle
+
+    any POIs that are within 1 grid square and that are along the flow of the path
+    that have a high likelyhood of a stonesword key should be included either before
+    or after these micro routes, but not during as they are about as efficient as it
+    gets, and they involve evergaols that are near the border of the map.
+
+    stonesword key probable locations are completely irrelevant if township is
+    on the map, because each teammate can buy a stonesword key for an additional
+    3 keys, making a total of 6
+
+    

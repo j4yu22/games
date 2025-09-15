@@ -191,7 +191,7 @@ def get_bot_bet(game_state, bot_hand, true_count):
         except ValueError:
             print("Bot Borken.")
 
-
+#test comment
 def display_hand(hand):
     """
     Display a hand of cards, formatted, followed by the total points of the hand.
