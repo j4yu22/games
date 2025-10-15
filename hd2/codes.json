@@ -1,0 +1,366 @@
+{
+  "1": {
+    "name": "MG-43 Machine Gun",
+    "code": ["down", "left", "down", "up", "right"]
+  },
+  "2": {
+    "name": "APW-1 Anti-Materiel Rifle",
+    "code": ["down", "left", "right", "up", "down"]
+  },
+  "3": {
+    "name": "M-105 Stalwart",
+    "code": ["down", "left", "down", "up", "up", "right"]
+  },
+  "4": {
+    "name": "EAT-17 Expendable Anti-Tank",
+    "code": ["down", "down", "left", "right", "up"]
+  },
+  "5": {
+    "name": "GR-8 Recoilless Rifle",
+    "code": ["down", "left", "right", "right", "left"]
+  },
+  "6": {
+    "name": "FLAM-40 Flamethrower",
+    "code": ["down", "left", "up", "down", "right"]
+  },
+  "7": {
+    "name": "AC-8 Autocannon",
+    "code": ["down", "left", "down", "up", "up", "right"]
+  },
+  "8": {
+    "name": "MG-206 Heavy Machine Gun",
+    "code": ["down", "left", "up", "down", "down"]
+  },
+  "9": {
+    "name": "RL-77 Airburst Rocket Launcher",
+    "code": ["down", "up", "left", "up", "right"]
+  },
+  "10": {
+    "name": "MLS-4X Commando",
+    "code": ["down", "left", "up", "up", "right"]
+  },
+  "11": {
+    "name": "RS-422 Railgun",
+    "code": ["down", "right", "right", "down", "right"]
+  },
+  "12": {
+    "name": "FAF-14 Spear",
+    "code": ["down", "down", "up", "down", "up"]
+  },
+  "13": {
+    "name": "StA-X3 W.A.S.P. Launcher",
+    "code": ["down", "up", "right", "up", "left", "down"]
+  },
+  "14": {
+    "name": "Orbital Gatling Barrage",
+    "code": ["right", "up", "left", "up"]
+  },
+  "15": {
+    "name": "Orbital Airburst Strike",
+    "code": ["right", "right", "down", "up"]
+  },
+  "16": {
+    "name": "Orbital 120mm HE Barrage",
+    "code": ["right", "down", "left", "up", "down"]
+  },
+  "17": {
+    "name": "Orbital 380mm HE Barrage",
+    "code": ["down", "up", "left", "up", "left"]
+  },
+  "18": {
+    "name": "Orbital Walking Barrage",
+    "code": ["right", "down", "left", "down", "right"]
+  },
+  "19": {
+    "name": "Orbital Laser",
+    "code": ["right", "up", "up", "down"]
+  },
+  "20": {
+    "name": "Orbital Napalm Barrage",
+    "code": ["right", "up", "left", "down", "up"]
+  },
+  "21": {
+    "name": "Orbital Railcannon Strike",
+    "code": ["right", "up", "down", "down", "right"]
+  },
+  "22": {
+    "name": "Eagle Strafing Run",
+    "code": ["up", "right", "right"]
+  },
+  "23": {
+    "name": "Eagle Airstrike",
+    "code": ["up", "right", "down", "right"]
+  },
+  "24": {
+    "name": "Eagle Cluster Bomb",
+    "code": ["up", "right", "down", "down", "right"]
+  },
+  "25": {
+    "name": "Eagle Napalm Airstrike",
+    "code": ["up", "right", "up"]
+  },
+  "26": {
+    "name": "LIFT-850 Jump Pack",
+    "code": ["down", "up", "up", "down", "up"]
+  },
+  "27": {
+    "name": "Eagle Smoke Strike",
+    "code": ["up", "right", "down"]
+  },
+  "28": {
+    "name": "Eagle 110mm Rocket Pods",
+    "code": ["up", "right", "up", "left"]
+  },
+  "29": {
+    "name": "Eagle 500kg Bomb",
+    "code": ["up", "right", "down", "down", "right"]
+  },
+  "30": {
+    "name": "M-102 Fast Recon Vehicle",
+    "code": ["left", "right", "down", "down", "up"]
+  },
+  "31": {
+    "name": "Orbital Precision Strike",
+    "code": ["right", "right", "up"]
+  },
+  "32": {
+    "name": "Orbital Gas Strike",
+    "code": ["right", "down", "up", "down"]
+  },
+  "33": {
+    "name": "Orbital EMS Strike",
+    "code": ["right", "down", "up", "down"]
+  },
+  "34": {
+    "name": "Orbital Smoke Strike",
+    "code": ["right", "down", "up"]
+  },
+  "35": {
+    "name": "E/MG-101 HMG Emplacement",
+    "code": ["up", "down", "right", "right", "left"]
+  },
+  "36": {
+    "name": "FX-12 Shield Generator Relay",
+    "code": ["down", "down", "left", "right", "right"]
+  },
+  "37": {
+    "name": "A/ARC-3 Tesla Tower",
+    "code": ["up", "down", "right", "left", "right"]
+  },
+  "38": {
+    "name": "E/GL-21 Grenadier Battlement",
+    "code": ["down", "right", "down", "right", "up"]
+  },
+  "39": {
+    "name": "MD-6 Anti-Personnel Minefield",
+    "code": ["down", "up", "right", "down"]
+  },
+  "40": {
+    "name": "B-1 Supply Pack",
+    "code": ["left", "right", "down", "up", "up", "right"]
+  },
+  "41": {
+    "name": "GL-21 Grenade Launcher",
+    "code": ["down", "right", "down", "left", "up"]
+  },
+  "43": {
+    "name": "LAS-98 Laser Cannon",
+    "code": ["down", "left", "down", "up", "right"]
+  },
+  "44": {
+    "name": "MD-I4 Incendiary Mines",
+    "code": ["down", "left", "left", "down"]
+  },
+  "45": {
+    "name": "AX/LAS-5 'Guard Dog' Rover",
+    "code": ["down", "up", "right", "right", "up"]
+  },
+  "46": {
+    "name": "SH-20 Ballistic Shield Backpack",
+    "code": ["down", "left", "down", "down", "left"]
+  },
+  "47": {
+    "name": "ARC-3 Arc Thrower",
+    "code": ["down", "right", "down", "left", "right"]
+  },
+  "48": {
+    "name": "MD-17 Anti-Tank Mines",
+    "code": ["down", "up", "right", "up"]
+  },
+  "49": {
+    "name": "LAS-99 Quasar Cannon",
+    "code": ["down", "up", "up", "right"]
+  },
+  "50": {
+    "name": "SH-32 Shield Generator Pack",
+    "code": ["down", "up", "left", "right", "up"]
+  },
+  "51": {
+    "name": "MD-8 Gas Mines",
+    "code": ["down", "left", "left", "right"]
+  },
+  "52": {
+    "name": "A/MG-43 Machine Gun Sentry",
+    "code": ["down", "up", "right", "down", "up"]
+  },
+  "53": {
+    "name": "A/G-16 Gatling Sentry",
+    "code": ["down", "up", "right", "left", "up"]
+  },
+  "54": {
+    "name": "A/M-12 Mortar Sentry",
+    "code": ["down", "right", "right", "down"]
+  },
+  "55": {
+    "name": "AX/AR-23 'Guard Dog'",
+    "code": ["down", "up", "up", "down", "up"]
+  },
+  "56": {
+    "name": "A/AC-8 Autocannon Sentry",
+    "code": ["down", "up", "right", "left", "right"]
+  },
+  "57": {
+    "name": "A/MLS-4X Rocket Sentry",
+    "code": ["down", "up", "right", "right", "left"]
+  },
+  "58": {
+    "name": "A/M-23 EMS Mortar Sentry",
+    "code": ["down", "up", "down", "down", "right"]
+  },
+  "59": {
+    "name": "EXO-45 Patriot Exosuit",
+    "code": ["left", "down", "up", "right", "down"]
+  },
+  "60": {
+    "name": "EXO-49 Emancipator Exosuit",
+    "code": ["left", "down", "right", "down", "up"]
+  },
+  "61": {
+    "name": "TX-41 Sterilizer",
+    "code": ["down", "left", "up", "right"]
+  },
+  "62": {
+    "name": "AX/TX-13 'Guard Dog' Dog Breath",
+    "code": ["down", "left", "left", "up", "up"]
+  },
+  "63": {
+    "name": "SH-51 Directional Shield",
+    "code": ["down", "right", "right", "up"]
+  },
+  "64": {
+    "name": "E/AT-12 Anti-Tank Emplacement",
+    "code": ["down", "left", "right", "right"]
+  },
+  "65": {
+    "name": "A/FLAM-40 Flame Sentry",
+    "code": ["down", "right", "up", "up"]
+  },
+  "66": {
+    "name": "B-100 Portable Hellbomb",
+    "code": ["down", "right", "up", "up"]
+  },
+  "67": {
+    "name": "LIFT-860 Hover Pack",
+    "code": ["down", "up", "down", "left", "up"]
+  },
+  "68": {
+    "name": "CQC-1 One True Flag",
+    "code": ["down", "left", "right", "up"]
+  },
+  "69": {
+    "name": "GL-52 De-Escalator",
+    "code": ["down", "up", "right", "up", "down"]
+  },
+  "70": {
+    "name": "AX/ARC-3 'Guard Dog' K-9",
+    "code": ["down", "up", "left", "up", "down"]
+  },
+  "71": {
+    "name": "AX/ARC-3 'Guard Dog' K-9",
+    "code": ["down", "up", "left", "up", "right"]
+  },
+  "72": {
+    "name": "PLAS-45 Epoch",
+    "code": ["left", "up", "right", "right"]
+  },
+  "73": {
+    "name": "A/LAS-98 Laser Sentry",
+    "code": ["down", "up", "right", "up", "right"]
+  },
+  "74": {
+    "name": "LIFT-182 Warp Pack",
+    "code": ["left", "up", "down", "left", "right"]
+  },
+  "75": {
+    "name": "S-11 Speargun",
+    "code": ["down", "up", "right", "up", "right"]
+  },
+  "76": {
+    "name": "EAT-700 Expendable Napalm",
+    "code": ["down", "down", "left", "left"]
+  },
+  "77": {
+    "name": "MS-11 Solo Silo",
+    "code": ["down", "right", "up", "down"]
+  },
+  "78": {
+    "name": "Reinforce",
+    "code": ["up", "down", "right", "left", "up"]
+  },
+  "79": {
+    "name": "SoS Beacon",
+    "code": ["up", "down", "right", "up"]
+  },
+  "80": {
+    "name": "Resupply",
+    "code": ["down", "down", "up", "right"]
+  },
+  "81": {
+    "name": "Eagle Rearm",
+    "code": ["up", "up", "left", "right"]
+  },
+  "82": {
+    "name": "SSSD Delivery",
+    "code": ["down", "down", "up", "up"]
+  },
+  "83": {
+    "name": "Prospecting Drill",
+    "code": ["down", "down", "left", "right", "down"]
+  },
+  "84": {
+    "name": "Super Earth Flag",
+    "code": ["down", "up", "down", "up"]
+  },
+  "85": {
+    "name": "Hellbomb",
+    "code": ["down", "up", "left", "up", "right", "up"]
+  },
+  "86": {
+    "name": "Upload Data",
+    "code": ["left", "up", "up", "up"]
+  },
+  "87": {
+    "name": "Seismic Probe",
+    "code": ["down", "up", "left", "right", "down"]
+  },
+  "88": {
+    "name": "Orbital Illumination Flare",
+    "code": ["right", "right", "left"]
+  },
+  "89": {
+    "name": "SEAF Artillery",
+    "code": ["right", "up", "down"]
+  },
+  "90": {
+    "name": "Dark Fluid Vessel",
+    "code": ["up", "left", "right", "up"]
+  },
+  "91": {
+    "name": "Tectonic Drill",
+    "code": ["up", "down", "up", "up", "down"]
+  },
+  "92": {
+    "name": "Hive Breaker Drill",
+    "code": ["left", "up", "down", "down"]
+  }
+}

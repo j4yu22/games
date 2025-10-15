@@ -3,7 +3,7 @@ import openai
 import json
 
 # Load API key from the NOSHARING folder
-with open('D:/python/gitstuff/NOSHARING/openai_api-key.json') as f:
+with open('O:/coding/python/gitstuff/NOSHARING/openai_api-key.json') as f:
     api_key_data = json.load(f)
     openai.api_key = api_key_data['spell_parser_key']
 

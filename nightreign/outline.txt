@@ -1,0 +1,191 @@
+goal: create a python program that will be able to be fed an image
+of a nightreign map, and create an optimal route for the user
+
+features:
+map reader - a class that will be able to parse the image and match
+it to a seed as recorded in the google sheet
+
+pathing algorithm - an algorithm that will help the user gain as
+many runes/passive drops as possible in as short of an amount of time
+as possible. it should prioritize POIs according to relevance in power
+gain, and time to complete. some POIs should only be done after a
+certain level, like storm POIs, red eyed field bosses, and castle
+rooftop
+
+path display - some way of displaying the ideal path a user should
+take, most likely a path overlayed over a screen shot of their map
+after they began their run, but for now just a path overlayed over
+the initial image fed to the program would work
+
+General strategy:
+start
+    get level 2, either by a camp, or nearby cathedral or fort
+    
+    clear an evergaol, take runes for level 4
+
+pre close 1
+    continue clearing as many evergaols, churches, mage towers (only
+    if recluse or caster duchess in team), and 1 mine
+    
+    camps that align with boss weakness are best done on this day 
+
+post close 1
+    any pre close 1 POIs that are within circle
+
+    scout castle, do castle basement if there is time
+
+night 1
+    do 1 POI, or non red eyed field boss as circle closes
+
+pre close 2
+    100% castle
+    
+    shifting earth
+
+    any POIs from the opposite side of what was done previously (if top
+    was done day 1, do bottom, if bottom was done day 1, do top)
+
+    any red eyed field bosses along the way
+
+    storm POIs
+
+post close 2
+    complete shifting earth
+
+    any POIs from day 2, mainly evergaols and red eyed field bosses
+
+night 2
+    anything that will get runes on the way to final circle
+
+    if already level 15, there is no need to risk death to storm here
+
+Timeline:
+    time till first circle beings to close - 270 sec 
+    time till first circle finishes closing - 180 sec  
+    time till second circle begins to close - 210 sec 
+    time till second circle finishes closing - 180 sec  
+
+    total time per day (excluding any boss fights) - 840 sec (14 min)
+
+Map contents:
+A1 - End 1
+B1 - FB 1; FB 2; Bird to E2
+C1 - POI 1
+D1 - EG 1; Start 3
+E1 - POI 2; FB 3
+F1 - End 3
+A2 - EG 2; Start 1
+B2 - POI 3; FB 4
+C2 - POI 4; FB 5
+D2 - Mine 1; End 2; Bird to B3
+E2 - POI 5; Mine 1; EG 3; Start 4; Bird to D5
+F2 - Start 5
+A3 - End 4
+B3 - POI 6; Bird to D5
+C3 - Start 2; End 5; EG 4
+D3 - FB 6; POI 7
+E3 - POI 8
+F3 - POI 9; EG 5; FB 7
+A4 - Start 6
+B4 - POI 10
+C4 - Castle
+D4 - End 12
+E4 - POI 11
+F4 - End 6; Start 8
+A5 - Start 9
+B5 - POI 12; EG 6
+C5 - End 8; FB 8; Start 10; End 9
+D5 - Start 7; Mine 2; Bird to B2
+E5 - POI 12; Mine 2; End 11
+F5 - POI 13
+A6 - 
+B6 - End 7; FB 9
+C6 - POI 14
+D6 - End 10; Start 11;
+E6 - EG 7; FB 10; Bird to E2
+F6 - POI 15
+
+Algorithm Planning:
+    things to consider while planning a route:
+        start
+        end
+        priority POIs
+        distance between objectives
+        outer first, inner last
+
+    optimal start from each spawn (assuming 3 stonesword keys in a team):
+        1: level 2 from starting camp; A2 evergaol; clear topside
+        2: level 2 from starting camp; C3 evergaol; clear topside
+        3: level 2 from starting camp; D1 evergaol; clear topside
+        4: level 2 from starting camp; F2 camp if present; E2 evergaol; clear topside
+        5: level 2 from starting camp; E2 evergaol; clear topside
+        6: circle dependent
+            - if topside closing circle:
+                get level 2 from B3 POI; clear topside
+            - if bottomside closing circle:
+                clear either b4 or b5 (whichever is likely to give stonesword); clear B5 evergaol; clear bottomside
+        7: level 2 from E5 POI; E6 evergaol
+        8: level 2 from starting camp; F3 evergaol
+        9: level 2 from B5 POI; B5 evergaol
+        10: level 2 from starting camp; D5 mine; E6 evergaol
+        11: level 2 from starting camp; E6 evergaol
+
+    regardless of where circle will close it seems like the start of a run (up to level 4)
+    is always the same, with the exception of start 6. the players should always take runes
+    for the first evergaol they clear. when they do they will be level 4. level 4 makes 
+    everything other than storm POIs and red eyed bosses doable. castle contents and basement
+    are an option here, but generally castle can be done late day 1, or early day 2. the 
+    exception to this is if castle basement has the bell bearing hunter, in which case it must
+    either be done day 2 or skipped entirely (probably the latter).
+
+    to determine optimal pathing post level 4, players should navigate towards the night 1 end
+    prioritizing the outer points. generally it seems like the same optimal 'micro routes' can be used,
+    but they should be modified to accomodate stonesword key sources. generally knowing which side of
+    the map the night 1 circle will close on will determine which of these micro routes will be effective.
+
+    for maximum efficiency castle should be 100% completed day 2, so that the player doesn't need
+    to route through the castle twice. the exception to this is if crucible knights are present,
+    in which case going there right after level 4 would instantly power level the player to 
+    breeze through any red eyed field bosses, strong evergaols, storm POIs, or any other difficult
+    content in the game.
+
+    micro routes can be done forwards or backwards, but here are a few:
+        bottom side from left (reversable from right side, but castle is the only option afterwards):
+            B5 evergaol
+            C5 field boss
+            C5 church / sorcerer's rise (if caster)
+            D5 mine all the way through
+            E6 evergaol
+            castle/tree to E2/tree to B2
+        
+        topside from right (reversable from top left side as well):
+            E2 evergaol
+            E2 mine all the way through
+            D1 church / sorcerer's rise (if caster)
+            D1 evergaol
+            C2 field boss
+            C3 evergaol
+            C3 church / sorcerer's rise (if caster)
+            castle
+
+        topside from top (possible with B1 tree and start 3, likely not reversable):
+            D1 evergaol
+            D2 mine
+            E2 evergaol
+            E2 church / sorcerer's rise
+            D3 field boss
+            C2 field boss
+            C3 evergaol
+            C3 church / sorcerer's rise (if caster)
+            castle
+
+    any POIs that are within 1 grid square and that are along the flow of the path
+    that have a high likelyhood of a stonesword key should be included either before
+    or after these micro routes, but not during as they are about as efficient as it
+    gets, and they involve evergaols that are near the border of the map.
+
+    stonesword key probable locations are completely irrelevant if township is
+    on the map, because each teammate can buy a stonesword key for an additional
+    3 keys, making a total of 6
+
+    
