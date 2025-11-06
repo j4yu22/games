@@ -15,13 +15,14 @@ import psutil
 import os
 import time
 import pyautogui
+import random
 
 # PyAutoGUI Functions
-def check_image(image_path, confidence=0.9):
+def check_image(image_path, confidence=0.8):
     """
     safely check if an image is visible on screen.
     """
-    time.sleep(0.5)
+    time.sleep(1 + random.uniform(0.2, 0.6))
     try:
         result = pyautogui.locateOnScreen(image_path, confidence=confidence)
         return result is not None
@@ -31,11 +32,11 @@ def check_image(image_path, confidence=0.9):
         print(f"[WARN] error checking image '{image_path}': {e}")
         return False
 
-def click_image(image_path, confidence=0.9):
+def click_image(image_path, confidence=0.8):
     """
     safely find and click an image on screen.
     """
-    time.sleep(0.5)
+    time.sleep(1 + random.uniform(0.2, 0.6))
     try:
         location = pyautogui.locateCenterOnScreen(image_path, confidence=confidence)
         if location:
@@ -77,7 +78,7 @@ def launch_game():
     launched = False
     launched_counter = 0
     while not launched:
-        if check_image("images/header.png", confidence=0.9):
+        if check_image("images/header.png", confidence=0.8):
             launched = True
 
         elif launched_counter > 500:
@@ -98,13 +99,14 @@ def check_squad_fill():
 def clear_inventory():
     """clear inventory by readying up with free loadout and cancelling"""
     cancel_matchmaking = [1975, 1360]
-    click_image("images/play.png", confidence=0.9)
+    click_image("images/play.png", confidence=0.8)
     pyautogui.click()
-    click_image("images/free_loadout.png", confidence=0.9)
-    click_image("images/ready_up.png", confidence=0.9)
+    click_image("images/free_loadout.png", confidence=0.8)
+    pyautogui.click()
+    click_image("images/ready_up.png", confidence=0.8)
     time.sleep(1.5)
-    if check_image("images/confirm.png", confidence=0.9):
-        click_image("images/cancel.png", confidence=0.9)
+    if check_image("images/confirm.png", confidence=0.8):
+        click_image("images/cancel.png", confidence=0.8)
     else:
         pyautogui.click(cancel_matchmaking)
     print("Inventory cleared.")
@@ -118,18 +120,22 @@ def find_night_raid():
 
     time.sleep(1)
     pyautogui.click(buried_city)
+    pyautogui.click()
     if check_image("images/confirm.png", confidence=0.9):
         click_image("images/confirm.png", confidence=0.9)
         return
     pyautogui.click(spaceport)
+    pyautogui.click()
     if check_image("images/confirm.png", confidence=0.9):
         click_image("images/confirm.png", confidence=0.9)
         return
     pyautogui.click(dam_battlegrounds)
+    pyautogui.click()
     if check_image("images/confirm.png", confidence=0.9):
         click_image("images/confirm.png", confidence=0.9)
         return
     pyautogui.click(blue_gate)
+    pyautogui.click()
     if check_image("images/confirm.png", confidence=0.9):
         click_image("images/confirm.png", confidence=0.9)
         return
@@ -139,7 +145,7 @@ def death_check():
     """check if player is dead in raid"""
     dead = False
     while not dead:
-        if check_image("images/death_screen.png", confidence=0.9):
+        if check_image("images/death_screen.png", confidence=0.8):
             dead = True
         time.sleep(3)
 
@@ -156,40 +162,40 @@ def loop():
     while True:
         #pre raid
         check_squad_fill()
-        click_image("images/play.png", confidence=0.9)
+        click_image("images/play.png", confidence=0.8)
         find_night_raid()
-        click_image("images/confirm.png", confidence=0.9)
+        click_image("images/confirm.png", confidence=0.8)
         if not check_image("images/empty_inventory.png", confidence=0.8):
-            click_image("images/back.png", confidence=0.9)
-            time.sleep(0.1)
+            click_image("images/back.png", confidence=0.8)
+            time.sleep(1)
             pyautogui.click()
             clear_inventory()
             continue
-        click_image("images/ready_up.png", confidence=0.9)
-        click_image("images/ready_up_anyways.png", confidence=0.9)
+        click_image("images/ready_up.png", confidence=0.8)
+        click_image("images/ready_up_anyways.png", confidence=0.8)
         #in raid
         death_check()
         #post raid
         time.sleep(5)
-        click_image("images/continue.png", confidence=0.9)
-        check_image("images/unload_backpack.png", confidence=0.9)
-        click_image("images/unload_backpack.png", confidence=0.9)
-        click_image("images/continue.png", confidence=0.9)
+        click_image("images/continue.png", confidence=0.8)
+        click_image("images/unload_backpack.png", confidence=0.8)
+        click_image("images/continue.png", confidence=0.8)
         pyautogui.click()
         pyautogui.click()
-        if check_image("images/skip.png", confidence=0.9):
-            click_image("images/skip.png", confidence=0.9)
+        pyautogui.click()
+        if check_image("images/skip.png", confidence=0.8):
+            click_image("images/skip.png", confidence=0.8)
         time.sleep(10)
-        if check_image("images/workshop.png", confidence=0.9):
-            click_image("images/workshop.png", confidence=0.9)
+        if check_image("images/workshop.png", confidence=0.8):
+            click_image("images/workshop.png", confidence=0.8)
         else:
             workshop_coords = [325, 40]
             pyautogui.click(workshop_coords)
-        click_image("images/scrappy.png", confidence=0.9)
-        if check_image("images/claim.png", confidence=0.9):
-            click_image("images/claim.png", confidence=0.9)
-        click_image("images/back.png", confidence=0.9)
-        time.sleep(0.1)
+        click_image("images/scrappy.png", confidence=0.8)
+        if check_image("images/claim.png", confidence=0.8):
+            click_image("images/claim.png", confidence=0.8)
+        click_image("images/back.png", confidence=0.8)
+        time.sleep(1)
         pyautogui.click()
         loop_counter += 1
         print(f"Completed AFK runs: {loop_counter}")
