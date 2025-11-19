@@ -154,7 +154,7 @@ def startup():
     """handle pre loop startup tasks"""
     launch_game()
     check_squad_fill()
-    clear_inventory()
+    # clear_inventory()
 
 def loop():
     """enter, afk, exit, offload loop"""
@@ -163,14 +163,19 @@ def loop():
         #pre raid
         check_squad_fill()
         click_image("images/play.png", confidence=0.8)
-        find_night_raid()
-        click_image("images/confirm.png", confidence=0.8)
-        if not check_image("images/empty_inventory.png", confidence=0.8):
-            click_image("images/back.png", confidence=0.8)
-            time.sleep(1)
-            pyautogui.click()
-            clear_inventory()
-            continue
+        time.sleep(1)
+        pyautogui.click()
+
+        # find_night_raid()
+        
+        # click_image("images/confirm.png", confidence=0.8)
+        
+        # if not check_image("images/empty_inventory.png", confidence=0.8):
+        #     click_image("images/back.png", confidence=0.8)
+        #     time.sleep(1)
+        #     pyautogui.click()
+        #     clear_inventory()
+        #     continue
         click_image("images/ready_up.png", confidence=0.8)
         click_image("images/ready_up_anyways.png", confidence=0.8)
         #in raid
