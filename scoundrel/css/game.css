@@ -1,0 +1,309 @@
+/* css/game.css */
+
+:root {
+    --bg: #0f1116;
+    --panel: #171a22;
+    --panel-2: #1e2230;
+    --text: #e8eaf0;
+    --muted: #a9afc0;
+    --border: rgba(255, 255, 255, 0.10);
+
+    --gap: 18px;
+    --radius: 16px;
+
+    --deck-panel-height: 210px;
+    --room-panel-height: 210px;
+}
+
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    background: radial-gradient(1200px 800px at 50% 0%, #1a1f2c 0%, var(--bg) 55%);
+    color: var(--text);
+    min-height: 100vh;
+}
+
+.is-hidden { display: none !important; }
+
+/* ---------- Page shell ---------- */
+
+.game {
+    min-height: 100vh;
+    padding: 22px 18px 28px;
+    display: grid;
+    grid-template-rows: auto auto auto;
+    gap: var(--gap);
+    align-content: start;
+}
+
+/* ---------- Header (title + stats) ---------- */
+
+.top-header {
+    display: grid;
+    justify-items: center;
+    gap: 10px;
+}
+
+.title {
+    margin: 0;
+    font-weight: 750;
+    letter-spacing: 0.6px;
+    font-size: 3rem;
+    text-align: center;
+}
+
+.top-stats {
+    display: flex;
+    gap: 18px;
+    padding: 10px 14px;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.04);
+}
+
+.stat {
+    display: grid;
+    grid-auto-flow: column;
+    gap: 8px;
+    align-items: baseline;
+}
+
+.stat-label {
+    color: var(--muted);
+    text-transform: lowercase;
+    font-size: 0.95rem;
+}
+
+.stat-value {
+    font-weight: 800;
+    letter-spacing: 0.3px;
+}
+
+/* ---------- Main row (deck left, room right) ---------- */
+
+.main-row {
+    display: grid;
+    grid-template-columns: 140px 500px 70px;
+    gap: 28px;
+
+    /* center-align the deck + room panels + run button vertically */
+    align-items: center;
+
+    /* center the whole row on the page */
+    justify-content: center;
+}
+
+.deck-area {
+    display: grid;
+    justify-items: start;
+    padding: 18px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: linear-gradient(180deg, var(--panel) 0%, var(--panel-2) 100%);
+    height: fit-content;
+}
+
+/* Room container */
+.room-area {
+    padding: 18px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.room {
+    display: grid;
+    grid-template-columns: repeat(4, auto);
+    justify-content: start;
+    gap: 18px;
+    align-items: end;
+}
+
+.room-row {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 18px;
+    align-items: start;
+}
+
+.run-slot {
+    display: flex;
+    align-items: start;
+    justify-content: end;
+}
+.deck-area {
+    height: var(--deck-panel-height);
+}
+
+.room-area {
+    height: var(--room-panel-height);
+}
+
+/* ---------- Lower row (combat + discard placeholders) ---------- */
+
+.lower-row {
+    display: grid;
+    grid-template-columns: 500px 140px;
+    gap: 28px;
+
+    align-items: start;
+    justify-content: center;
+}
+
+.placeholder {
+    position: relative;
+    min-height: unset;
+    border-radius: var(--radius);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.03);
+
+    /* reserve space so content never overlaps the label */
+    padding: 44px 18px 18px;
+
+    /* don't clip the cards/shadows near the top edge */
+    overflow: visible;
+}
+
+.placeholder-label {
+    position: absolute;
+    top: 12px;
+    left: 14px;
+    color: rgba(255, 255, 255, 0.35);
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+
+    /* keep label above cards */
+    z-index: 5;
+    pointer-events: none;
+}
+
+/* Discard: if you later show cards, you can unhide #discard and hide #discardLabel */
+.discard-pile {
+    position: absolute;
+    right: 14px;
+    bottom: 14px;
+}
+
+.combat-area {
+    width: 100%;
+    height: var(--deck-panel-height);
+}
+
+.discard-area {
+    width: 100%;
+    height: var(--room-panel-height);
+}
+
+/* ---------- Run button ---------- */
+
+.run-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--text);
+    padding: 10px 14px;
+    font-weight: 750;
+    border-radius: 14px;
+    cursor: pointer;
+}
+
+.run-icon {
+    width: 60px;
+    height: 60px;
+    opacity: 0.9;
+}
+
+.run-text {
+    font-size: 0.85rem;
+    letter-spacing: 0.3px;
+    text-transform: uppercase;
+}
+
+.run-btn:hover .run-icon {
+    transform: translateX(2px);
+}
+
+.run-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+
+/* ---------- Mobile layout ---------- */
+
+@media (max-width: 900px) {
+
+    /* Flatten the desktop row wrappers so their children can be laid out by .game grid */
+    .main-row,
+    .lower-row {
+        display: contents;
+    }
+
+    /* Mobile grid:
+       Row 1: Deck | Discard
+       Row 2: Combat | Run
+       Row 3: Room (full width)
+    */
+    .game {
+        padding: 18px 14px 22px;
+        gap: 14px;
+
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-areas:
+            "header  header"
+            "deck    discard"
+            "combat  run"
+            "room    room";
+        align-content: start;
+    }
+
+    .top-header { grid-area: header; }
+
+    .deck-area   { grid-area: deck; }
+    .discard-area{ grid-area: discard; }
+
+    .combat-area { grid-area: combat; }
+    .run-area    { grid-area: run; }
+
+    .room-area   { grid-area: room; }
+
+    /* Let panels size naturally on mobile */
+    .deck-area,
+    .discard-area,
+    .combat-area,
+    .room-area {
+        width: 100%;
+        height: auto;
+    }
+
+    /* Make Run button "normal size" and centered next to combat */
+    .run-area {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .run-btn {
+        padding: 10px 14px;
+        border-radius: 14px;
+    }
+
+    /* Room at bottom: 4 across if possible, otherwise it will squeeze evenly */
+    .room {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        justify-content: stretch;
+        gap: 10px;
+    }
+
+    .title {
+        font-size: 2.2rem;
+    }
+}

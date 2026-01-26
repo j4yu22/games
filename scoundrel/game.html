@@ -1,0 +1,76 @@
+<!-- game.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Scoundrel</title>
+
+  <link rel="stylesheet" href="css/card.css" />
+  <link rel="stylesheet" href="css/game.css" />
+</head>
+
+<body>
+  <main class="game" id="game">
+    <header class="top-header" aria-label="Header">
+    <h1 class="title">Scoundrel</h1>
+
+    <div class="top-stats">
+        <div class="stat">
+        <span class="stat-label">cards left</span>
+        <span class="stat-value" id="cardsLeftValue">x</span>
+        </div>
+
+        <div class="stat">
+        <span class="stat-label">hp</span>
+        <span class="stat-value" id="hpValue">x</span>
+        </div>
+    </div>
+    </header>
+
+    <section class="main-row" aria-label="Main row">
+        <section class="deck-area placeholder" aria-label="Deck">
+            <div class="placeholder-label">Deck</div>
+
+            <div class="card-deck" id="deck">
+            <div class="card facedown-card">
+                <img src="images/cards/facedown_card.jpg" alt="Deck" />
+            </div>
+            </div>
+        </section>
+
+        <section class="room-area placeholder" aria-label="Room">
+            <div class="placeholder-label">Room</div>
+            <div class="room" id="room"></div>
+        </section>
+
+        <section class="run-area" aria-label="Run">
+            <button class="run-btn is-hidden" id="runBtn" type="button" aria-label="Run">
+            <img src="images/run.png" alt="" class="run-icon" />
+            <span class="run-text">Run</span>
+            </button>
+        </section>
+    </section>
+
+    <section class="lower-row" aria-label="Lower row">
+    <section class="combat-area placeholder" id="combatArea" aria-label="Combat">
+        <div class="placeholder-label">Combat</div>
+    </section>
+
+    <section class="discard-area placeholder" id="discardArea" aria-label="Discard">
+        <div class="placeholder-label" id="discardLabel">Discard</div>
+        <div class="discard-pile is-hidden" id="discard">
+        <div class="card facedown-card">
+            <img src="images/cards/facedown_card.jpg" alt="Discard pile" />
+        </div>
+        </div>
+    </section>
+    </section>
+
+  </main>
+
+  <script type="module" src="js/game.js"></script>
+  <script type="module" src="js/card.js"></script>
+  <script type="module" src="js/deck.js"></script>
+</body>
+</html>
