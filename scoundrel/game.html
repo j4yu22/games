@@ -32,7 +32,7 @@
         <section class="deck-area placeholder" aria-label="Deck">
             <div class="placeholder-label">Deck</div>
 
-            <div class="card-deck" id="deck">
+            <div class="card-deck stacked" id="deck">
             <div class="card facedown-card">
                 <img src="images/cards/facedown_card.jpg" alt="Deck" />
             </div>
@@ -53,18 +53,14 @@
     </section>
 
     <section class="lower-row" aria-label="Lower row">
-    <section class="combat-area placeholder" id="combatArea" aria-label="Combat">
-        <div class="placeholder-label">Combat</div>
-    </section>
+        <section class="combat-area placeholder" id="combatArea" aria-label="Combat">
+            <div class="placeholder-label">Combat</div>
+        </section>
 
-    <section class="discard-area placeholder" id="discardArea" aria-label="Discard">
-        <div class="placeholder-label" id="discardLabel">Discard</div>
-        <div class="discard-pile is-hidden" id="discard">
-        <div class="card facedown-card">
-            <img src="images/cards/facedown_card.jpg" alt="Discard pile" />
-        </div>
-        </div>
-    </section>
+        <section class="discard-area placeholder" id="discardArea" aria-label="Discard">
+            <div class="placeholder-label" id="discardLabel">Discard</div>
+            <div class="card-deck discard-pile" id="discard"></div>
+        </section>
     </section>
 
   </main>

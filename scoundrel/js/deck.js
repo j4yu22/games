@@ -36,6 +36,40 @@ function createStandardDeck({ includeJokers = false } = {}) {
     return deck;
 }
 
+function buildDeck({ includeJokers = false, deckRules = null } = {}) {
+    /**
+     * Build a deck, optionally applying custom rules (filtering, adding duplicates, etc.).
+     *
+     * Parameters:
+     *      includeJokers (boolean): whether to include jokers in the base deck
+     *      deckRules (object | null): customization rules applied before shuffling
+     *
+     * Returns:
+     *      Array<object>: final deck array (unshuffled)
+     */
+    let deck = createStandardDeck({ includeJokers });
+
+    if (!deckRules) return deck;
+
+    if (Array.isArray(deckRules.remove)) {
+        // remove: array of predicates (card) => boolean (true means remove)
+        for (const predicate of deckRules.remove) {
+            deck = deck.filter(card => !predicate(card));
+        }
+    }
+
+    if (Array.isArray(deckRules.add)) {
+        // add: array of card objects to append (duplicates allowed)
+        deck.push(...deckRules.add);
+    }
+
+    if (typeof deckRules.transform === "function") {
+        // transform: (deck) => newDeck
+        deck = deckRules.transform(deck);
+    }
+
+    return deck;
+}
 
 function mulberry32(seed) {
     let t = seed >>> 0;
@@ -56,16 +90,20 @@ function shuffleInPlace(arr, rng = Math.random) {
     return arr;
 }
 
-
-export function createDeckManager({ includeJokers = false, seed = null } = {}) {
+export function createDeckManager({ includeJokers = false, seed = null, deckRules = null } = {}) {
     let deck = [];
     let drawIndex = 0;
     const rng = seed === null ? Math.random : mulberry32(seed);
 
     function shuffleNewDeck() {
-        deck = createStandardDeck({ includeJokers });
+        deck = buildDeck({ includeJokers, deckRules });
         shuffleInPlace(deck, rng);
         drawIndex = 0;
+    }
+
+    function putOnBottom(cards) {
+        // Inserts cards at the bottom of the remaining deck (end of array)
+        deck.push(...cards);
     }
 
     function drawCard() {
@@ -102,6 +140,7 @@ export function createDeckManager({ includeJokers = false, seed = null } = {}) {
         drawCard,
         drawMany,
         cardsLeft,
-        getDeckOrder
+        getDeckOrder,
+        putOnBottom
     };
 }

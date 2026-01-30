@@ -235,6 +235,13 @@ body {
     background: rgba(255, 255, 255, 0.1);
 }
 
+.combat-area {
+    position: relative;
+}
+
+.combat-weapon { z-index: 1; }
+.combat-monster { z-index: 2; }
+
 
 /* ---------- Mobile layout ---------- */
 
