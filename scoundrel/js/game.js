@@ -20,11 +20,13 @@ const state = {
 const els = {
     room: null,
     hpValue: null,
-    cardsLeftValue: null,
+    cardsLeft: null,
     runBtn: null,
     combatArea: null,
     discardPile: null,
     discardLabel: null,
+    deckLabel: null,
+    deck: null,
 };
 
 let endHandled = false;
@@ -90,8 +92,31 @@ function setHp(value) {
 }
 
 function updateCardsLeft() {
-    if (els.cardsLeftValue && state.deck) {
-        els.cardsLeftValue.textContent = String(state.deck.cardsLeft());
+    const remaining = state.deck.cardsLeft();
+
+    if (els.cardsLeft) {
+        els.cardsLeft.textContent = String(remaining);
+    }
+
+    if (!els.deck) return;
+
+    if (remaining === 0) {
+        // Hide deck visuals completely (like discard)
+        els.deck.classList.add("is-hidden");
+        els.deck.classList.remove("stacked");
+        els.deck.innerHTML = "";
+
+        if (els.deckLabel) els.deckLabel.classList.remove("is-hidden");
+    } else {
+        els.deck.classList.remove("is-hidden");
+        els.deck.classList.add("stacked");
+
+        if (els.deck.children.length === 0) {
+            const card = document.createElement("div");
+            card.className = "card facedown-card";
+            card.innerHTML = `<img src="images/cards/facedown_card.jpg" alt="Deck" />`;
+            els.deck.appendChild(card);
+        }
     }
 }
 
@@ -447,10 +472,12 @@ function initDomRefs() {
     els.room = document.getElementById("room");
     els.combatArea = document.getElementById("combatArea");
     els.hpValue = document.getElementById("hpValue");
-    els.cardsLeftValue = document.getElementById("cardsLeftValue");
+    els.cardsLeft = document.getElementById("cardsLeftValue");
     els.runBtn = document.getElementById("runBtn");
     els.discardPile = document.getElementById("discard");
     els.discardLabel = document.getElementById("discardLabel");
+    els.deckLabel = document.getElementById("deckLabel");
+    els.deck = document.getElementById("deck");
 
     if (els.runBtn) {
         els.runBtn.addEventListener("click", runFromRoom);
